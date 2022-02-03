@@ -1,16 +1,13 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import React, { Component } from 'react';
+import { Text, View } from 'react-native';
+import React from 'react';
+import Login from './components/Login';
 
-export default class App extends Component {
-  render() {
-    return (
-      <View>
-        
-      </View>
-    );
-  }
-}
+const App = () => {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Login />
+    </View>
+  );
+};
 
-const styles = StyleSheet.create({
-  
-})
+export default App;
