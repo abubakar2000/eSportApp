@@ -5,6 +5,7 @@ const AppBar = () => {
     return (
         <View style={[styles.container, styles.center]}>
             <View style={[styles.HorizontalStack, styles.center]}>
+
                 <TouchableOpacity style={[{ flex: 2.5 }]}>
                     <Text>BG</Text>
                 </TouchableOpacity>
