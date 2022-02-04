@@ -3,14 +3,14 @@ import React from 'react';
 
 const Login = () => {
     return (
-        <>
+        <View style={{flex:9,width:'100%',justifyContent:'center',alignItems:'center'}}>
             <Text style={[styles.loginLabel]}>Login</Text>
             <TextInput style={[styles.inputField]} keyboardType='email-address' placeholder='Enter you email' />
             <TextInput style={[styles.inputField]} secureTextEntry={true} placeholder='Enter you password' />
             <TouchableOpacity style={[styles.loginButton]}>
                 <Text>Login</Text>
             </TouchableOpacity>
-        </>
+        </View>
     );
 };
 
@@ -38,5 +38,6 @@ const styles = StyleSheet.create({
         margin: 10,
         alignItems: 'center',
     }
+
 
 });
