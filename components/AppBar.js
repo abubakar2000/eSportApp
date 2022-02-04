@@ -2,19 +2,22 @@ import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 
 const AppBar = () => {
-  return (
-    <View style={[styles.AppBarContainer]}>
-      <Text>App bar works</Text>
-    </View>
-  );
+    return (
+        <View style={[styles.container, styles.center]}>
+            <Text>App bar works</Text>
+        </View>
+    );
 };
 
 export default AppBar;
 
 const styles = StyleSheet.create({
-    AppBarContainer: {
-        flex:1,
-        backgroundColor:'red',
-        width:'100%'
+    container: {
+        height: '100%',
+        width: '100%'
+    },
+    center: {
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })

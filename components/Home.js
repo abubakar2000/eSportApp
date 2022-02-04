@@ -4,11 +4,8 @@ import AppBar from './AppBar';
 
 const Home = () => {
     return (
-        <View style={[styles.container]}>
-            <AppBar />
-            <View style={{flex:9}}>
-
-            </View>
+        <View style={[styles.container, styles.center]}>
+            <Text>Ayesha's code</Text>
         </View>
     );
 };
@@ -17,9 +14,12 @@ export default Home;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 10,
+        flex: 1,
+        height: '100%',
+        width: '100%',
+    },
+    center: {
         alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%'
+        justifyContent: 'center'
     }
 });
