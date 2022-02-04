@@ -1,15 +1,16 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 
 const AppBar = () => {
     return (
         <View style={[styles.container, styles.center]}>
             <View style={[styles.HorizontalStack, styles.center]}>
-                <Text style={[{ flex: 2 }]}>BG</Text>
-                <Text style={[{ flex: 4 }]}>App bar works</Text>
-                <Text style={[{ flex: 1.5 }]}>App bar works</Text>
-                <Text style={[{ flex: 2.5 }]}>App bar works</Text>
-
+                <TouchableOpacity style={[{ flex: 2.5 }]}>
+                    <Text>BG</Text>
+                </TouchableOpacity>
+                <Text style={[{ flex: 4 }]}>App name</Text>
+                <Text style={[{ flex: 1.5 }]}>Notif</Text>
+                <Text style={[{ flex: 2 }]}>Coins</Text>
             </View>
         </View>
     );
@@ -31,6 +32,6 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         flexDirection: 'row',
-        padding: 5
+        padding: 10
     }
 })
