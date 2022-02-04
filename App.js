@@ -1,13 +1,13 @@
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { Drawer } from './routes/Drawer';
 
 const App = () => {
   return (
     <View style={[styles.AppContainer]}>
-
-      <Drawer />
-
+      <SafeAreaView style={[styles.SafeAppContainer]}>
+        <Drawer />
+      </SafeAreaView>
     </View>
   );
 };
@@ -15,15 +15,11 @@ const App = () => {
 export default App;
 const styles = StyleSheet.create({
   AppContainer: {
-    flex: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: 'black'
+    height: '100%',
+    width: '100%'
   },
-  AppBarContainer: {
-    flex: 1
+  SafeAppContainer: {
+    height: '100%',
+    width: '100%'
   },
-  routerOutletContainer: {
-    backgroundColor: 'white',
-    flex: 9
-  }
 })

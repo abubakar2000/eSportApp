@@ -1,17 +1,16 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const AppBar = () => {
+const AppBar = ({ title, navigation }) => {
+    const openNav = () => {
+        navigation.openDrawer()
+    }
     return (
-        <View style={[styles.container, styles.center]}>
-            <View style={[styles.HorizontalStack, styles.center]}>
-
-                <TouchableOpacity style={[{ flex: 2.5 }]}>
-                    <Text>BG</Text>
-                </TouchableOpacity>
-                <Text style={[{ flex: 4 }]}>App name</Text>
-                <Text style={[{ flex: 1.5 }]}>Notif</Text>
-                <Text style={[{ flex: 2 }]}>Coins</Text>
+        <View style={[styles.container]}>
+            <View style={[styles.containerContent]}>
+                <MaterialIcons name='menu' size={28} onPress={openNav} style={styles.ico} />
+                <Text style={[styles.headerText]}>{title}</Text>
             </View>
         </View>
     );
@@ -21,18 +20,28 @@ export default AppBar;
 
 const styles = StyleSheet.create({
     container: {
-        height: '100%',
         width: '100%',
+        height: 60,
+    },
+    containerContent: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    headerText: {
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        color: 'rebeccapurple',
+        fontSize: 20
     },
     center: {
-        alignItems: 'center',
         justifyContent: 'center',
+        alignItems: 'center'
     },
-    HorizontalStack: {
-        flex: 10,
-        height: '100%',
-        width: '100%',
-        flexDirection: 'row',
-        padding: 10
+    ico: {
+
     }
+
 })

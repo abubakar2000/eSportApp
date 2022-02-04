@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import React from 'react';
+import AppBar from '../components/AppBar'
 
 const Home = () => {
     return (
         <View style={[styles.container, styles.center]}>
+            {/* <AppBar /> */}
             <Text>Ayesha's code here</Text>
             <Text>swipe from left to open drawer</Text>
         </View>
@@ -20,6 +22,6 @@ const styles = StyleSheet.create({
     },
     center: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'flex-start'
     }
 });

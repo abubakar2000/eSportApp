@@ -9,14 +9,11 @@ const Drawer =
             {
                 Home: {
                     screen: AppStack,
-                    
                 },
-                Auth: {
+                Profile: {
                     screen: AuthStack,
                 }
-            },
-            
-            
+            }, 
         )
     )
 

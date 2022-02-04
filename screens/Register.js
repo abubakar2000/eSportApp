@@ -22,6 +22,11 @@ const Register = ({ navigation }) => {
                 <Text>Sign in Instead </Text>
                 {/* {navigation.getParam('myTest').hello} */}
             </TouchableOpacity>
+            <TouchableOpacity style={[styles.cancelRegistrationBtn]} >
+                <Text style={[styles.cancelText]} onPress={() => {
+                    navigation.openDrawer();
+                }}>Cancel</Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -57,5 +62,15 @@ const styles = StyleSheet.create({
         width: '80%',
         margin: 10,
         alignItems: 'center',
+    },
+    cancelRegistrationBtn: {
+
+        width: '80%',
+        alignItems: 'flex-end',
+        padding: 10
+    },
+    cancelText: {
+        color:'rebeccapurple',
+        fontWeight:'bold'
     }
 });
