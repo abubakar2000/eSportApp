@@ -4,7 +4,8 @@ import React from 'react';
 const Home = () => {
     return (
         <View style={[styles.container, styles.center]}>
-            <Text>Ayesha's code</Text>
+            <Text>Ayesha's code here</Text>
+            <Text>swipe from left to open drawer</Text>
         </View>
     );
 };

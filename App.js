@@ -1,26 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-
-import AppBar from './components/AppBar';
-import Home from './screens/Home';
-import { AuthStack } from './routes/AuthStack';
-import { AppStack } from './routes/AppStack';
 import { Drawer } from './routes/Drawer';
+
 const App = () => {
   return (
     <View style={[styles.AppContainer]}>
-      {/* Routing will be done later here */}
 
-      {/* <AuthStack /> */}
-      {/* <AppStack /> */}
       <Drawer />
 
-      {/* <View style={[styles.AppBarContainer]}>
-        <AppBar />
-      </View>
-      <View style={[styles.routerOutletContainer]}>
-        <Home />
-      </View> */}
     </View>
   );
 };

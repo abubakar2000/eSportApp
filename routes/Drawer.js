@@ -7,13 +7,16 @@ const Drawer =
     createAppContainer(
         createDrawerNavigator(
             {
-                App: {
+                Home: {
                     screen: AppStack,
+                    
                 },
                 Auth: {
                     screen: AuthStack,
                 }
-            }
+            },
+            
+            
         )
     )
 

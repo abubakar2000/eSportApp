@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import React from 'react';
 
 const Register = ({ navigation }) => {
 
-    const data = navigation.getParam('myTest');
+    // const data = navigation.getParam('myTest');
 
     const onSignInPressed = () => {
         // navigation.goBack();
