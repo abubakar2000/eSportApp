@@ -1,10 +1,13 @@
 import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 
 const Login = ({ navigation }) => {
 
+    const [Test, setTest] = useState({hello:"abubakar"});
+
     const onClickRegister = () => {
-        navigation.navigate('Register')
+        // navigation.navigate('Register',{myTest:Test})
+        navigation.push('Register',{myTest:Test})
     }
 
     return (
