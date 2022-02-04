@@ -1,14 +1,22 @@
 import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
 import React from 'react';
 
-const Login = () => {
+const Login = ({ navigation }) => {
+
+    const onClickRegister = () => {
+        navigation.navigate('Register')
+    }
+
     return (
-        <View style={{flex:9,width:'100%',justifyContent:'center',alignItems:'center'}}>
+        <View style={{ flex: 9, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
             <Text style={[styles.loginLabel]}>Login</Text>
             <TextInput style={[styles.inputField]} keyboardType='email-address' placeholder='Enter you email' />
             <TextInput style={[styles.inputField]} secureTextEntry={true} placeholder='Enter you password' />
-            <TouchableOpacity style={[styles.loginButton]}>
-                <Text>Login</Text>
+            <TouchableOpacity style={[styles.loginButton]} >
+                <Text style={{ color: "white" }}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.registerButton]} onPress={onClickRegister}>
+                <Text >Register</Text>
             </TouchableOpacity>
         </View>
     );
@@ -20,7 +28,7 @@ const styles = StyleSheet.create({
     loginLabel: {
         fontSize: 30,
         margin: 10,
-        color:'rgb(120,120,120)',
+        color: 'rgb(120,120,120)',
     },
     inputField: {
         borderWidth: 1,
@@ -31,13 +39,19 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     loginButton: {
+        backgroundColor: 'blue',
+        padding: 10,
+        borderRadius: 10,
+        width: '80%',
+        margin: 10,
+        alignItems: 'center',
+    },
+    registerButton: {
         backgroundColor: 'rgb(230,230,230)',
         padding: 10,
         borderRadius: 10,
         width: '80%',
         margin: 10,
         alignItems: 'center',
-    }
-
-
+    },
 });
