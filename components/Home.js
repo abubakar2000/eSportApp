@@ -6,7 +6,9 @@ const Home = () => {
     return (
         <View style={[styles.container]}>
             <AppBar />
-            <Text>Ayesha's code be pasted here</Text>
+            <View style={{flex:9}}>
+
+            </View>
         </View>
     );
 };

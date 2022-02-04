@@ -7,6 +7,7 @@ import Home from './components/Home';
 const App = () => {
   return (
     <View style={[styles.AppContainer]}>
+      {/* Routing will be done later here */}
       {/* <Login /> */}
       <Home />
     </View>
@@ -16,7 +17,7 @@ const App = () => {
 export default App;
 const styles = StyleSheet.create({
   AppContainer: {
-    flex: 1,
+    flex: 10,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column'
