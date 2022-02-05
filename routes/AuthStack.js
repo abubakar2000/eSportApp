@@ -7,9 +7,6 @@ const AuthStack =
     // createAppContainer(
     createStackNavigator(
         {
-            Home: {
-                screen: Home
-            },
             Login: {
                 screen: Login,
             },

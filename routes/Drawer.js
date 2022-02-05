@@ -1,19 +1,30 @@
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
-import { AppStack } from "./AppStack";
 import { AuthStack } from "./AuthStack";
+import DrawerMenu from "../components/DrawerMenu";
+import Wallet from "../screens/Wallet";
+import Home from "../screens/Home";
+// import { Text, View } from "react-native";
 
 const Drawer =
     createAppContainer(
         createDrawerNavigator(
             {
                 Home: {
-                    screen: AppStack,
+                    screen: Home,
                 },
                 Profile: {
                     screen: AuthStack,
+                },
+                Wallet: {
+                    screen: Wallet,
                 }
-            }, 
+
+            }
+            ,
+            {
+                contentComponent: ({ navigation }) => <DrawerMenu navigation={navigation} />,
+            }
         )
     )
 

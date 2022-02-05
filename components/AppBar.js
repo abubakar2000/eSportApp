@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -9,7 +9,11 @@ const AppBar = ({ title, navigation }) => {
     return (
         <View style={[styles.container]}>
             <View style={[styles.containerContent]}>
-                <MaterialIcons name='menu' size={28} onPress={openNav} style={styles.ico} />
+                
+                <TouchableOpacity style={styles.ico}>
+                    <MaterialIcons name='menu' size={28} onPress={openNav} />
+                </TouchableOpacity>
+
                 <Text style={[styles.headerText]}>{title}</Text>
             </View>
         </View>
@@ -41,6 +45,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     ico: {
+        borderRadius: 20
 
     }
 

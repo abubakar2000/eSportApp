@@ -2,12 +2,13 @@ import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import React from 'react';
 import AppBar from '../components/AppBar'
 
-const Home = () => {
+const Home = ({navigation}) => {
     return (
         <View style={[styles.container, styles.center]}>
-            {/* <AppBar /> */}
+            <AppBar navigation={navigation} title={"HAEXR"}/>
             <Text>Ayesha's code here</Text>
             <Text>swipe from left to open drawer</Text>
+            <Text>Home component </Text>
         </View>
     );
 };

@@ -3,11 +3,15 @@ import React, { useState } from 'react';
 
 const Login = ({ navigation }) => {
 
-    const [Test, setTest] = useState({hello:"abubakar"});
+    const [Test, setTest] = useState({ hello: "abubakar" });
 
     const onClickRegister = () => {
         // navigation.navigate('Register',{myTest:Test})
-        navigation.push('Register',{myTest:Test})
+        navigation.push('Register', { myTest: Test })
+    }
+    const OpenDrawer = () => {
+        // navigation.navigate('Register',{myTest:Test})
+        navigation.openDrawer()
     }
 
     return (
@@ -20,6 +24,9 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity style={[styles.registerButton]} onPress={onClickRegister}>
                 <Text >Register</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.DrawerOpener]} onPress={OpenDrawer}>
+                <Text>Menu</Text>
             </TouchableOpacity>
         </View>
     );
@@ -56,5 +63,11 @@ const styles = StyleSheet.create({
         width: '80%',
         margin: 10,
         alignItems: 'center',
+    },
+    DrawerOpener: {
+        margin:10,
+        paddingRight:10,
+        width:'80%',
+        alignItems:'flex-end'
     },
 });

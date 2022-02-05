@@ -25,7 +25,7 @@ const Register = ({ navigation }) => {
             <TouchableOpacity style={[styles.cancelRegistrationBtn]} >
                 <Text style={[styles.cancelText]} onPress={() => {
                     navigation.openDrawer();
-                }}>Cancel</Text>
+                }}>Menu</Text>
             </TouchableOpacity>
         </View>
     );
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         padding: 10
     },
     cancelText: {
-        color:'rebeccapurple',
-        fontWeight:'bold'
+        color: 'rebeccapurple',
+        fontWeight: 'bold'
     }
 });
