@@ -35,7 +35,7 @@ const DrawerMenu = ({ navigation }) => {
                     <MaterialCommunityIcons style={[styles.tabIco]} name='gamepad-circle-outline' size={22} />
                     <Text style={[styles.navTabText]}>Tournaments</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Profile')}>
+                <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Teams')}>
                     <FontAwesome5 style={[styles.tabIco]} name='users' size={22} />
                     <Text style={[styles.navTabText]}>My Teams</Text>
                 </TouchableOpacity>

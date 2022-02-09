@@ -5,6 +5,7 @@ import DrawerMenu from "../components/DrawerMenu";
 import Wallet from "../screens/Wallet";
 import Home from "../screens/Home";
 import Account from "../screens/Account";
+import Teams from "../screens/Teams";
 // import { Text, View } from "react-native";
 
 const Drawer =
@@ -21,7 +22,10 @@ const Drawer =
                     screen: Wallet,
                 },
                 AccountInformation: {
-                    screen: Account
+                    screen: Account,
+                },
+                Teams: {
+                    screen: Teams,
                 }
 
             }

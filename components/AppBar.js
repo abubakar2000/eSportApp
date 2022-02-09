@@ -8,7 +8,11 @@ const AppBar = ({ title, navigation, whereTo, showDrawer }) => {
         navigation.openDrawer()
     }
     const onProfileClicked = () => {
-        navigation.navigate(whereTo)
+        if (whereTo) {
+            navigation.navigate(whereTo)
+        }else{
+            navigation.openDrawer()
+        }
     }
     const onPressBack = () => {
         navigation.goBack()
@@ -45,6 +49,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: 60,
+        backgroundColor:'white',
     },
     containerContent: {
         flex: 1,
