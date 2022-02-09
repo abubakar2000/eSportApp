@@ -4,6 +4,7 @@ import { AuthStack } from "./AuthStack";
 import DrawerMenu from "../components/DrawerMenu";
 import Wallet from "../screens/Wallet";
 import Home from "../screens/Home";
+import Account from "../screens/Account";
 // import { Text, View } from "react-native";
 
 const Drawer =
@@ -18,6 +19,9 @@ const Drawer =
                 },
                 Wallet: {
                     screen: Wallet,
+                },
+                AccountInformation: {
+                    screen: Account
                 }
 
             }

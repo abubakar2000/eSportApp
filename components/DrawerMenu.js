@@ -2,7 +2,7 @@ import { Button, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } f
 
 import React from 'react';
 import { FontAwesome, FontAwesome5, Fontisto, MaterialCommunityIcons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
-import { DrawerItems } from 'react-navigation-drawer';
+import profilePicture from '../assets/10.jpg'
 
 
 const DrawerMenu = ({ navigation }) => {
@@ -12,7 +12,7 @@ const DrawerMenu = ({ navigation }) => {
     return (
         <ScrollView>
             <View style={[styles.container]}>
-                <Image source={{ uri: 'https://randomuser.me/api/portraits/women/10.jpg' }} style={[styles.profilePicture]} />
+                <Image source={profilePicture} style={[styles.profilePicture]} />
                 <Text style={[styles.username]}>Ammie</Text>
                 <Text style={[styles.email]}>ammie78@gmail.com</Text>
                 <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Home')}>
