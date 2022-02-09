@@ -6,7 +6,7 @@ const Home = ({navigation}) => {
     return (
         <View style={[styles.container, styles.center]}>
             <AppBar navigation={navigation} title={"HAEXR"} whereTo={'AccountInformation'} showDrawer={true}/>
-            {/* <Text>Ayesha's code here</Text> */}
+            <Text>Ayesha's code here</Text>
             <Text>swipe from left to open drawer</Text>
             <Text>Home component </Text>
         </View>
