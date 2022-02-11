@@ -19,21 +19,13 @@ const DrawerMenu = ({ navigation }) => {
                     <SimpleLineIcons style={[styles.tabIco]} name='home' size={22} />
                     <Text style={[styles.navTabText]}>Home</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Profile')}>
-                    <FontAwesome style={[styles.tabIco]} name='user-o' size={22} />
-                    <Text style={[styles.navTabText]}>Profile</Text>
-                </TouchableOpacity>
                 <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Wallet')}>
                     <SimpleLineIcons style={[styles.tabIco]} name='wallet' size={22} />
                     <Text style={[styles.navTabText]}>Wallet</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Profile')}>
+                <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Matches')}>
                     <Fontisto style={[styles.tabIco]} name='prescription' size={22} />
                     <Text style={[styles.navTabText]}>My Matches</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Profile')}>
-                    <MaterialCommunityIcons style={[styles.tabIco]} name='gamepad-circle-outline' size={22} />
-                    <Text style={[styles.navTabText]}>Tournaments</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Teams')}>
                     <FontAwesome5 style={[styles.tabIco]} name='users' size={22} />

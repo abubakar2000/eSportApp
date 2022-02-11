@@ -6,6 +6,7 @@ import Wallet from "../screens/Wallet";
 import Home from "../screens/Home";
 import Account from "../screens/Account";
 import Teams from "../screens/Teams";
+import Matches from "../screens/Matches";
 // import { Text, View } from "react-native";
 
 const Drawer =
@@ -26,7 +27,10 @@ const Drawer =
                 },
                 Teams: {
                     screen: Teams,
-                }
+                },
+                Matches: {
+                    screen: Matches,
+                }                
 
             }
             ,

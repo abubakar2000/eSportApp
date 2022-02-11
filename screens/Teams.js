@@ -11,19 +11,19 @@ const Teams = ({ navigation }) => {
             icon: "../assets/favicon.png"
         },
         {
-            name: "BGMI",
+            name: "Free fire",
             icon: "../assets/favicon.png"
         },
         {
-            name: "BGMI",
+            name: "COD Mobile",
             icon: "../assets/favicon.png"
         },
         {
-            name: "BGMI",
+            name: "Prototype",
             icon: "../assets/favicon.png"
         },
         {
-            name: "BGMI",
+            name: "COD India",
             icon: "../assets/favicon.png"
         },
         {
@@ -40,7 +40,7 @@ const Teams = ({ navigation }) => {
                     {
                         GameList.map(singleGame => {
                             return (
-                                <TouchableOpacity style={[styles.gameStyle]}>
+                                <TouchableOpacity key={singleGame.name} style={[styles.gameStyle]}>
                                     <Image source={image} style={[styles.gameLogo]} />
                                     <Text style={[styles.grayText, styles.gameName]}>{singleGame.name}</Text>
                                 </TouchableOpacity>
