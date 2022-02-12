@@ -1,38 +1,44 @@
-import { View, Text, StyleSheet, SafeAreaView, Image} from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image } from 'react-native';
 import React from 'react';
 import AppBar from '../components/AppBar'
 import { LinearGradient } from 'expo-linear-gradient'
+import { ScrollView } from 'react-native-web';
 
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
     return (
         <View style={[styles.container, styles.center]}>
-            <AppBar navigation={navigation} title={"HAEXR"} whereTo={'AccountInformation'} showDrawer={true}/>
-                
-            <View style={styles.section1}>
-                <Image 
-                    style={styles.gif}
+            <AppBar navigation={navigation} title={"HAEXR"} whereTo={'AccountInformation'} showDrawer={true} />
+
+            <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', height: '35%',flexDirection:'row', }}>
+                <Image
+                    style={{ width: '95%', borderRadius: 20, height: '95%' }}
+                    source={require('../assets/homepage/giphy.gif')}
+                />
+                <Image
+                    style={{ width: '95%', borderRadius: 20, height: '95%' }}
                     source={require('../assets/homepage/giphy.gif')}
                 />
             </View>
+
             <View style={styles.section2}>
                 <Text style={styles.text}>Ongoing Tournaments & Pro Matches</Text>
                 <View style={styles.section3}>
                     <View>
-                        <LinearGradient 
+                        <LinearGradient
                             colors={['#691B31', '#F4F5F9']}
                             style={styles.boxes}
                         />
                     </View>
                     <View style={styles.break_h}></View>
                     <View>
-                        <LinearGradient 
+                        <LinearGradient
                             colors={['#7E897C', '#F4F5F9']}
                             style={styles.boxes}
                         />
                     </View>
                     <View style={styles.break_h}></View>
                     <View>
-                        <LinearGradient 
+                        <LinearGradient
                             colors={['#447EAB', '#F4F5F9']}
                             style={styles.boxes}
                         />
@@ -50,6 +56,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: '100%',
         width: '100%',
+        backgroundColor: 'rgb(230,230,230)',
     },
     center: {
         alignItems: 'center',
@@ -68,7 +75,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: '40%',
-        //marginRight: 30
     },
     section2: {
         flex: 1,
