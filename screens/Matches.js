@@ -88,16 +88,16 @@ const Matches = ({ navigation }) => {
                                 <Image source={image} style={[styles.imgCont]} />
                             </View>
                             <View style={[styles.secCont]}>
-                                <Text style={{fontSize:13}}>BGMI Scrims #6652</Text>
-                                <Text style={{fontSize:11,color:'gray'}}>Slot 13</Text>
-                                <Text style={{fontSize:13}}>Eagle</Text>
-                                <Text style={{fontSize:11,color:'gray'}}>Tier 3</Text>
-                                <Text style={{fontSize:11}}>ID: 1234</Text>
-                                <Text style={{fontSize:11}}>Password: 1234567</Text>
+                                <Text style={{ fontSize: 13 }}>BGMI Scrims #6652</Text>
+                                <Text style={{ fontSize: 11, color: 'gray' }}>Slot 13</Text>
+                                <Text style={{ fontSize: 13 }}>Eagle</Text>
+                                <Text style={{ fontSize: 11, color: 'gray' }}>Tier 3</Text>
+                                <Text style={{ fontSize: 11 }}>ID: 1234</Text>
+                                <Text style={{ fontSize: 11 }}>Password: 1234567</Text>
                             </View>
                             <View style={[styles.thirdCont]}>
-                                <Text style={{fontSize:10}}>03:00PM 06/06/2020</Text>
-                                <Text style={{fontSize:10}}>Scrims</Text>
+                                <Text style={{ fontSize: 10 }}>03:00PM 06/06/2020</Text>
+                                <Text style={{ fontSize: 10 }}>Scrims</Text>
                                 <Text>Logo here</Text>
                             </View>
                         </View>
@@ -106,23 +106,25 @@ const Matches = ({ navigation }) => {
                 {
                     SelectedTab === Tabs[1] &&
                     <View>
-                        <View style={[styles.liveMatchItemContainer]}>
-                            <View style={[styles.firstCont]}>
-                                <Image source={image} style={[styles.imgCont]} />
+                        <View style={[styles.UMSlideContainer]}>
+                            <View style={[styles.liveMatchItemContainerUM]}>
+                                <View style={[styles.firstCont]}>
+                                    <Image source={image} style={[styles.imgCont]} />
+                                </View>
+                                <View style={[styles.secCont]}>
+                                    <Text style={{ fontSize: 13 }}>BGMI Scrims #6652</Text>
+                                    <Text style={{ fontSize: 11, color: 'gray' }}>Slot 13</Text>
+                                    <Text style={{ fontSize: 13 }}>Eagle</Text>
+                                    <Text style={{ fontSize: 11, color: 'gray' }}>Tier 3</Text>
+                                    <Text style={{ fontSize: 11 }}>ID: 1234</Text>
+                                    <Text style={{ fontSize: 11 }}>Password: 1234567</Text>
+                                </View>
+                                <View style={[styles.thirdCont]}>
+                                    <Text style={{ fontSize: 10 }}>03:00PM 06/06/2020</Text>
+                                    <Text style={{ fontSize: 10 }}>Scrims</Text>
+                                </View>
                             </View>
-                            <View style={[styles.secCont]}>
-                                <Text style={{fontSize:13}}>BGMI Scrims #6652</Text>
-                                <Text style={{fontSize:11,color:'gray'}}>Slot 13</Text>
-                                <Text style={{fontSize:13}}>Eagle</Text>
-                                <Text style={{fontSize:11,color:'gray'}}>Tier 3</Text>
-                                <Text style={{fontSize:11}}>ID: 1234</Text>
-                                <Text style={{fontSize:11}}>Password: 1234567</Text>
-                            </View>
-                            <View style={[styles.thirdCont]}>
-                                <Text style={{fontSize:10}}>03:00PM 06/06/2020</Text>
-                                <Text style={{fontSize:10}}>Scrims</Text>
-
-                            </View>
+                            <Text style={[]}>Hello</Text>
                         </View>
                     </View>
                 }
@@ -197,7 +199,18 @@ const styles = StyleSheet.create({
     liveMatchItemContainer: {
         backgroundColor: 'white',
         flexDirection: 'row',
-        borderRadius:5,
+        borderRadius: 5,
+        padding: 10,
+    },
+
+    liveMatchItemContainerUM: {
+        flexDirection: 'row',
+    },
+    UMSlideContainer: {
+        borderRadius: 5,
+        backgroundColor: 'white',
+        borderBottomWidth: 2,
+        borderBottomColor: 'blue',
         padding:10
     },
     imgCont: {
@@ -216,9 +229,9 @@ const styles = StyleSheet.create({
     },
     thirdCont: {
         flex: 3,
-        justifyContent:'flex-end'
+        justifyContent: 'flex-end'
     },
-    margined:{
-        margin:10,
+    margined: {
+        margin: 10,
     },
 })
