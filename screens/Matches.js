@@ -79,17 +79,51 @@ const Matches = ({ navigation }) => {
                     }
                 </View>
             </View>
-            <View>
+            <View style={[styles.margined]}>
                 {
                     SelectedTab === Tabs[0] &&
                     <View>
-                        <Text>LM</Text>
+                        <View style={[styles.liveMatchItemContainer]}>
+                            <View style={[styles.firstCont]}>
+                                <Image source={image} style={[styles.imgCont]} />
+                            </View>
+                            <View style={[styles.secCont]}>
+                                <Text style={{fontSize:13}}>BGMI Scrims #6652</Text>
+                                <Text style={{fontSize:11,color:'gray'}}>Slot 13</Text>
+                                <Text style={{fontSize:13}}>Eagle</Text>
+                                <Text style={{fontSize:11,color:'gray'}}>Tier 3</Text>
+                                <Text style={{fontSize:11}}>ID: 1234</Text>
+                                <Text style={{fontSize:11}}>Password: 1234567</Text>
+                            </View>
+                            <View style={[styles.thirdCont]}>
+                                <Text style={{fontSize:10}}>03:00PM 06/06/2020</Text>
+                                <Text style={{fontSize:10}}>Scrims</Text>
+                                <Text>Logo here</Text>
+                            </View>
+                        </View>
                     </View>
                 }
                 {
                     SelectedTab === Tabs[1] &&
                     <View>
-                        <Text>uM</Text>
+                        <View style={[styles.liveMatchItemContainer]}>
+                            <View style={[styles.firstCont]}>
+                                <Image source={image} style={[styles.imgCont]} />
+                            </View>
+                            <View style={[styles.secCont]}>
+                                <Text style={{fontSize:13}}>BGMI Scrims #6652</Text>
+                                <Text style={{fontSize:11,color:'gray'}}>Slot 13</Text>
+                                <Text style={{fontSize:13}}>Eagle</Text>
+                                <Text style={{fontSize:11,color:'gray'}}>Tier 3</Text>
+                                <Text style={{fontSize:11}}>ID: 1234</Text>
+                                <Text style={{fontSize:11}}>Password: 1234567</Text>
+                            </View>
+                            <View style={[styles.thirdCont]}>
+                                <Text style={{fontSize:10}}>03:00PM 06/06/2020</Text>
+                                <Text style={{fontSize:10}}>Scrims</Text>
+
+                            </View>
+                        </View>
                     </View>
                 }
                 {
@@ -123,7 +157,7 @@ const styles = StyleSheet.create({
         height: 80,
         width: 80,
         margin: 5,
-        borderRadius: 10,
+        borderRadius: 5,
         borderWidth: 2,
         borderColor: 'transparent',
         alignItems: 'center',
@@ -143,13 +177,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: 'white',
         justifyContent: "space-between",
-        borderRadius: 10,
+        borderRadius: 5,
         marginTop: 10,
         width: '100%'
     },
     tab: {
         padding: 10,
-        borderRadius: 10
+        borderRadius: 5
     },
     tabText: {
         fontSize: 11,
@@ -158,6 +192,33 @@ const styles = StyleSheet.create({
         backgroundColor: 'blue',
     },
     tabTextActive: {
-        color: 'white'
+        color: 'white',
+    },
+    liveMatchItemContainer: {
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        borderRadius:5,
+        padding:10
+    },
+    imgCont: {
+        backgroundColor: 'black',
+        borderRadius: 50,
+    },
+    firstCont: {
+        flex: 1,
+
+        padding: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    secCont: {
+        flex: 3
+    },
+    thirdCont: {
+        flex: 3,
+        justifyContent:'flex-end'
+    },
+    margined:{
+        margin:10,
     },
 })
