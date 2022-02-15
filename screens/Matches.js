@@ -1,7 +1,9 @@
-import { Image, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useRef, useState } from 'react'
 import AppBar from '../components/AppBar'
 import image from '../assets/favicon.png';
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
 
 const Matches = ({ navigation }) => {
     const [Matches, setMatches] = useState([
@@ -43,6 +45,20 @@ const Matches = ({ navigation }) => {
     const handleMatchChange = (singleMatch) => {
         setSelectedMatch(singleMatch)
     }
+    const [selectedCategory, setSelectedCategory] = useState();
+
+
+
+    const pickerRef = useRef();
+
+    const open = () => {
+        pickerRef.current.focus();
+    }
+
+    const close = () => {
+        pickerRef.current.blur();
+    }
+
     return (
         <View style={[styles.root]}>
             <AppBar navigation={navigation} title={'My Matches'}
@@ -88,16 +104,16 @@ const Matches = ({ navigation }) => {
                                 <Image source={image} style={[styles.imgCont]} />
                             </View>
                             <View style={[styles.secCont]}>
-                                <Text style={{ fontSize: 13 }}>BGMI Scrims #6652</Text>
-                                <Text style={{ fontSize: 11, color: 'gray' }}>Slot 13</Text>
-                                <Text style={{ fontSize: 13 }}>Eagle</Text>
-                                <Text style={{ fontSize: 11, color: 'gray' }}>Tier 3</Text>
-                                <Text style={{ fontSize: 11 }}>ID: 1234</Text>
-                                <Text style={{ fontSize: 11 }}>Password: 1234567</Text>
+                                <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>BGMI Scrims #6652</Text>
+                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Slot 13</Text>
+                                <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>Eagle</Text>
+                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier 3</Text>
+                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: 1234</Text>
+                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: 1234567</Text>
                             </View>
                             <View style={[styles.thirdCont]}>
-                                <Text style={{ fontSize: 10 }}>03:00PM 06/06/2020</Text>
-                                <Text style={{ fontSize: 10 }}>Scrims</Text>
+                                <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>03:00PM 06/06/2020</Text>
+                                <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>Scrims</Text>
                                 <Text>Logo here</Text>
                             </View>
                         </View>
@@ -112,26 +128,67 @@ const Matches = ({ navigation }) => {
                                     <Image source={image} style={[styles.imgCont]} />
                                 </View>
                                 <View style={[styles.secCont]}>
-                                    <Text style={{ fontSize: 13 }}>BGMI Scrims #6652</Text>
-                                    <Text style={{ fontSize: 11, color: 'gray' }}>Slot 13</Text>
-                                    <Text style={{ fontSize: 13 }}>Eagle</Text>
-                                    <Text style={{ fontSize: 11, color: 'gray' }}>Tier 3</Text>
-                                    <Text style={{ fontSize: 11 }}>ID: 1234</Text>
-                                    <Text style={{ fontSize: 11 }}>Password: 1234567</Text>
+                                    <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>BGMI Scrims #6652</Text>
+                                    <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Slot 13</Text>
+                                    <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>Eagle</Text>
+                                    <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier 3</Text>
+                                    <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: 1234</Text>
+                                    <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: 1234567</Text>
                                 </View>
                                 <View style={[styles.thirdCont]}>
-                                    <Text style={{ fontSize: 10 }}>03:00PM 06/06/2020</Text>
-                                    <Text style={{ fontSize: 10 }}>Scrims</Text>
+                                    <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>03:00PM 06/06/2020</Text>
+                                    <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>Scrims</Text>
+                                    <View style={[styles.paidSectionIndicator]}>
+                                        <MaterialCommunityIcons name="ticket-confirmation-outline" size={24} color="black" />
+                                        <Text style={[styles.paidIndicatorText]}>Paid</Text>
+                                    </View>
                                 </View>
                             </View>
-                            <Text style={[]}>Hello</Text>
+                            <View style={[styles.lowerSectionUM]}>
+                                <Text>Round 1</Text>
+                                <AntDesign name="down-square-o" size={20} color="black" />
+                            </View>
                         </View>
                     </View>
                 }
                 {
                     SelectedTab === Tabs[2] &&
                     <View>
-                        <Text>cM</Text>
+                        <View>
+                            {/* <Picker
+                            ref={pickerRef}
+                                selectedValue={selectedCategory}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    {
+                                        setSelectedCategory(itemValue)
+                                    }
+                                }
+                            >
+                                <Picker.Item label="HEllo" value="haha2"></Picker.Item>
+                                <Picker.Item label="HEllo" value="haha"></Picker.Item>
+                            </Picker> */}
+                            <View style={[styles.MatchSlideCM]}>
+                                <View style={[styles.liveMatchItemContainer]}>
+                                    <View style={[styles.firstCont]}>
+                                        <Image source={image} style={[styles.imgCont]} />
+                                    </View>
+                                    <View style={[styles.secCont]}>
+                                        <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>BGMI Scrims #6652</Text>
+                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Slot 13</Text>
+                                        <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>Eagle</Text>
+                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier 3</Text>
+                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: 1234</Text>
+                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: 1234567</Text>
+                                    </View>
+                                    <View style={[styles.thirdCont]}>
+                                        <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>03:00PM 06/06/2020</Text>
+                                        <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>Scrims</Text>
+                                        <Text>Logo here</Text>
+                                    </View>
+                                </View>
+                                <TouchableOpacity style={[styles.uploadButton]}><Text>Upload Screenshots</Text></TouchableOpacity>
+                            </View>
+                        </View>
                     </View>
                 }
             </View>
@@ -211,7 +268,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderBottomWidth: 2,
         borderBottomColor: 'blue',
-        padding:10
+        padding: 10
+    },
+
+    MatchSlideCM: {
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        padding:10,
+        borderRadius:8
     },
     imgCont: {
         backgroundColor: 'black',
@@ -233,5 +297,28 @@ const styles = StyleSheet.create({
     },
     margined: {
         margin: 10,
+    },
+    lowerSectionUM: {
+        justifyContent: 'space-between',
+        flexDirection: 'row'
+    },
+    paidSectionIndicator: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 2,
+        marginBottom: 2
+    },
+    paidIndicatorText: {
+        fontSize: 12
+    },
+    uploadButton: {
+        justifyContent:'center',
+        alignItems:'center',
+        paddingTop:10,
+        paddingBottom:10,
+        backgroundColor:'rgb(240,240,240)',
+        marginLeft:15,
+        marginRight:15,
+        borderRadius:8
     },
 })
