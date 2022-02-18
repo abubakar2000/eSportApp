@@ -31,6 +31,7 @@ const Teams = ({ navigation }) => {
             icon: "../assets/10.jpg"
         },
     ])
+    const [SelectedGame, setSelectedGame] = useState(GameList[0])
     return (
         <ScrollView style={[{ backgroundColor: 'rgb(240,240,240)' }]}>
             <AppBar whereTo={''} title={'My Teams'} showDrawer={false} navigation={navigation} />
@@ -40,7 +41,11 @@ const Teams = ({ navigation }) => {
                     {
                         GameList.map(singleGame => {
                             return (
-                                <TouchableOpacity key={singleGame.name} style={[styles.gameStyle]}>
+                                <TouchableOpacity
+                                    key={singleGame.name}
+                                    onPress={()=>setSelectedGame(singleGame)}
+                                    style={[styles.gameStyle,
+                                    singleGame.name === SelectedGame.name ? styles.gameStyleActive : null]}>
                                     <Image source={image} style={[styles.gameLogo]} />
                                     <Text style={[styles.grayText, styles.gameName]}>{singleGame.name}</Text>
                                 </TouchableOpacity>
@@ -50,10 +55,10 @@ const Teams = ({ navigation }) => {
                 </View>
                 <View style={[styles.selectionForm]}>
                     <Text>Game Selected: </Text>
-                    <Text style={[styles.selectedGameTitle]}>BGMI </Text>
+                    <Text style={[styles.selectedGameTitle]}>{SelectedGame.name} </Text>
                 </View>
-                <FormInputComponent placeholder='Enter Team Name' label='Team name'/>
-                <FormInputComponent placeholder='Enter Team Type' label='Team Type'/>
+                <FormInputComponent placeholder='Enter Team Name' label='Team name' />
+                <FormInputComponent placeholder='Enter Team Type' label='Team Type' />
             </View>
             <View style={[styles.footerAndSave]}>
                 <Text style={[styles.notice]}>Make sure to fill proper details & avoid unecessary interruption</Text>
@@ -67,7 +72,7 @@ const Teams = ({ navigation }) => {
                     </View>
                 </View>
             </View>
-            <View style={{height:400}}></View>
+            <View style={{ height: 400 }}></View>
         </ScrollView>
     )
 }
@@ -97,6 +102,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    gameStyleActive: {
+        borderWidth: 2,
+        borderColor: 'blue'
+    },
     gameLogo: {
         height: 60,
         width: 60,
@@ -112,10 +121,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     selectedGameTitle: {
-        color:'blue'
+        color: 'blue'
     },
-    footerAndSave: { padding: 20, flexDirection: 'row',flex:1 },
-    notice: { flex: 3, padding:5,fontSize:12,color:'gray' },
+    footerAndSave: { padding: 20, flexDirection: 'row', flex: 1 },
+    notice: { flex: 3, padding: 5, fontSize: 12, color: 'gray' },
     grow: { flex: 2, justifyContent: 'center', alignItems: 'center', },
     saveButton: { borderRadius: 5, backgroundColor: 'blue', },
     saveButtonInside: { color: 'white', paddingTop: 8, paddingBottom: 8, paddingLeft: 20, paddingRight: 20, },
