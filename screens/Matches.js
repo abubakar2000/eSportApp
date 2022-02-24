@@ -271,8 +271,8 @@ const Matches = ({ navigation }) => {
                                                         <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Slot {match.slot}</Text>
                                                         <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>Eagle</Text>
                                                         <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier {match.tier}</Text>
-                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text>
-                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text>
+                                                        {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text> */}
+                                                        {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text> */}
                                                     </View>
                                                     <View style={[styles.thirdCont]}>
                                                         <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.datetime}</Text>
@@ -286,10 +286,10 @@ const Matches = ({ navigation }) => {
                                                         }
                                                     </View>
                                                 </View>
-                                                <View style={[styles.lowerSectionUM]}>
-                                                    <Text>Round {match.round}</Text>
-                                                    <AntDesign name="down-square-o" size={20} color="black" />
-                                                </View>
+                                                <TouchableOpacity style={[styles.lowerSectionUM, { marginTop: 10 }]}>
+                                                    <Text style={{ color: 'white' }}>Round {match.round}</Text>
+                                                    {/* <AntDesign name="down-square-o" size={20} color="black" /> */}
+                                                </TouchableOpacity>
                                             </View>
                                         </View>
                                     );
@@ -317,16 +317,18 @@ const Matches = ({ navigation }) => {
                                                         <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Slot {match.slot}</Text>
                                                         <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>Eagle</Text>
                                                         <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier {match.tier}</Text>
-                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text>
-                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text>
+                                                        {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text> */}
+                                                        {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text> */}
                                                     </View>
                                                     <View style={[styles.thirdCont]}>
                                                         <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.datetime}</Text>
                                                         <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.type}</Text>
-                                                        <Text>Logo here</Text>
                                                     </View>
                                                 </View>
-                                                <TouchableOpacity style={[styles.uploadButton]}><Text>Upload Screenshots</Text></TouchableOpacity>
+                                                <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
+                                                    <TouchableOpacity style={[styles.uploadButton]}><Text style={{color:'white'}}>View Result</Text></TouchableOpacity>
+                                                    <TouchableOpacity style={[styles.uploadButton]}><Text style={{color:'white'}}>Upload Screenshots</Text></TouchableOpacity>
+                                                </View>
                                             </View>
                                         </View>
                                     );
@@ -414,8 +416,6 @@ const styles = StyleSheet.create({
     UMSlideContainer: {
         borderRadius: 5,
         backgroundColor: 'white',
-        borderBottomWidth: 2,
-        borderBottomColor: 'blue',
         padding: 10
     },
 
@@ -441,14 +441,20 @@ const styles = StyleSheet.create({
     },
     thirdCont: {
         flex: 3,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-start',
+        alignItems:'flex-end'
     },
     margined: {
         margin: 10,
     },
     lowerSectionUM: {
         justifyContent: 'space-between',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: 'blue',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 8,
+        borderRadius: 5
     },
     paidSectionIndicator: {
         flexDirection: 'row',
@@ -464,9 +470,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 10,
         paddingBottom: 10,
-        backgroundColor: 'rgb(240,240,240)',
-        marginLeft: 15,
-        marginRight: 15,
-        borderRadius: 8
+        backgroundColor: 'blue',
+        // marginLeft: 15,
+        // marginRight: 15,
+        borderRadius: 8,
+        width:'45%'
+
     },
 })
