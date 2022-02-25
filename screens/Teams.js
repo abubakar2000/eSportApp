@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, ScrollView, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import AppBar from '../components/AppBar';
 import image from '../assets/favicon.png';
@@ -33,47 +33,50 @@ const Teams = ({ navigation }) => {
     ])
     const [SelectedGame, setSelectedGame] = useState(GameList[0])
     return (
-        <ScrollView style={[{ backgroundColor: 'rgb(240,240,240)' }]}>
-            <AppBar whereTo={''} title={'My Teams'} showDrawer={false} navigation={navigation} />
-            <View style={[styles.container]}>
-                <Text style={[styles.grayText]}>Choose a game to continue</Text>
-                <View style={[styles.gameListContainer]}>
-                    {
-                        GameList.map(singleGame => {
-                            return (
-                                <TouchableOpacity
-                                    key={singleGame.name}
-                                    onPress={()=>setSelectedGame(singleGame)}
-                                    style={[styles.gameStyle,
-                                    singleGame.name === SelectedGame.name ? styles.gameStyleActive : null]}>
-                                    <Image source={image} style={[styles.gameLogo]} />
-                                    <Text style={[styles.grayText, styles.gameName]}>{singleGame.name}</Text>
-                                </TouchableOpacity>
-                            )
-                        })
-                    }
+        <SafeAreaView>
+            <ScrollView style={[{ backgroundColor: 'rgb(240,240,240)' }]}>
+                <AppBar whereTo={''} title={'My Teams'} showDrawer={false} navigation={navigation} />
+                <View style={[styles.container]}>
+                    <Text style={[styles.grayText]}>Choose a game to continue</Text>
+                    <View style={[styles.gameListContainer]}>
+                        {
+                            GameList.map(singleGame => {
+                                return (
+                                    <TouchableOpacity
+                                        key={singleGame.name}
+                                        onPress={() => setSelectedGame(singleGame)}
+                                        style={[styles.gameStyle,
+                                        singleGame.name === SelectedGame.name ? styles.gameStyleActive : null]}>
+                                        <Image source={image} style={[styles.gameLogo]} />
+                                        <Text style={[styles.grayText, styles.gameName]}>{singleGame.name}</Text>
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
+                    </View>
+                    <View style={[styles.selectionForm]}>
+                        <Text>Game Selected: </Text>
+                        <Text style={[styles.selectedGameTitle]}>{SelectedGame.name} </Text>
+                    </View>
+                    <FormInputComponent placeholder='Enter Team Name' label='Team name' />
+                    <FormInputComponent placeholder='Enter Team Type' label='Team Type' />
                 </View>
-                <View style={[styles.selectionForm]}>
-                    <Text>Game Selected: </Text>
-                    <Text style={[styles.selectedGameTitle]}>{SelectedGame.name} </Text>
-                </View>
-                <FormInputComponent placeholder='Enter Team Name' label='Team name' />
-                <FormInputComponent placeholder='Enter Team Type' label='Team Type' />
-            </View>
-            <View style={[styles.footerAndSave]}>
-                <Text style={[styles.notice]}>Make sure to fill proper details & avoid unecessary interruption</Text>
-                <View style={[styles.grow]}>
-                    <View>
-                        <TouchableOpacity style={[styles.saveButton]}>
-                            <Text style={[styles.saveButtonInside]}>
-                                Save Details
-                            </Text>
-                        </TouchableOpacity>
+                <View style={[styles.footerAndSave]}>
+                    <Text style={[styles.notice]}>Make sure to fill proper details & avoid unecessary interruption</Text>
+                    <View style={[styles.grow]}>
+                        <View>
+                            <TouchableOpacity style={[styles.saveButton]}>
+                                <Text style={[styles.saveButtonInside]}>
+                                    Save Details
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            </View>
-            <View style={{ height: 400 }}></View>
-        </ScrollView>
+                <View style={{ height: 400 }}></View>
+
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 

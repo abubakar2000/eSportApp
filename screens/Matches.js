@@ -1,8 +1,9 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useRef, useState } from 'react'
 import AppBar from '../components/AppBar'
 import image from '../assets/favicon.png';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import ActionSheet from '../components/ActionSheet';
 
 /**
  * Matches can be Scrims Pro Match and Tournament
@@ -71,7 +72,7 @@ const Matches = ({ navigation }) => {
                         game: "COD",
                     },
                     {
-                        name: "Freefire Scrims #6653",
+                        name: "Freefire Scrims #665344",
                         slot: 13,
                         teamName: 'Dolphons',
                         tier: 3,
@@ -148,7 +149,7 @@ const Matches = ({ navigation }) => {
                         game: "COD"
                     },
                     {
-                        name: "valorant Scrims #6653",
+                        name: "valorant Scrims #6657",
                         slot: 13,
                         teamName: 'Tigers',
                         tier: 3,
@@ -174,171 +175,175 @@ const Matches = ({ navigation }) => {
     const [selectedCategory, setSelectedCategory] = useState();
 
     return (
-
-        <ScrollView style={[styles.root]}>
-            <AppBar navigation={navigation} title={'My Matches'}
-                showDrawer={false} whereTo={''} />
-            <View style={[styles.container]}>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.myMatchList]}>
-                    {
-                        Games.map(singleMatch => {
-                            return (
-                                <TouchableOpacity key={singleMatch.name} onPress={() => handleMatchChange(singleMatch)}>
-                                    <View
-                                        style={[styles.matchItem, SelectedGame.name === singleMatch.name ? styles.matchItemActive : null]}>
-                                        <Image source={singleMatch.image} style={[styles.image]} />
-                                        <Text>{singleMatch.name}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            );
-                        })
-                    }
-                </ScrollView>
-                <View style={[styles.tabContainer]}>
-                    {
-                        StateObject.map(tabItem => {
-                            return (
-                                <TouchableOpacity
-                                    key={tabItem.Category}
-                                    onPress={() => setSelectedTab(tabItem.Category)}
-                                    style={[styles.tab, tabItem.Category === SelectedTab
-                                        ? styles.tabActive : null]}>
-                                    <Text
-                                        style={[styles.tabText, tabItem.Category === SelectedTab
-                                            ? styles.tabTextActive : null]}>{tabItem.Category}</Text>
-                                </TouchableOpacity>
-                            );
-                        })
-                    }
-                </View>
-            </View>
-            <View style={[styles.margined]}>
-                {
-                    SelectedTab === Tabs[0] &&
-                    <View>
-                        {
-                            StateObject[0].Matches
-                                .filter(m => m.game.toLowerCase() === SelectedGame.name.toLocaleLowerCase())
-                                .map(match => {
+        <View>
+            <SafeAreaView>
+                <ScrollView style={[styles.root]}>
+                    <AppBar navigation={navigation} title={'My Matches'}
+                        showDrawer={false} whereTo={''} />
+                    <View style={[styles.container]}>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.myMatchList]}>
+                            {
+                                Games.map(singleMatch => {
                                     return (
-                                        <View
-                                            key={match.id}
-                                            style={[styles.liveMatchItemContainer]}>
-                                            <View style={[styles.firstCont]}>
-                                                <Image source={match.image} style={[styles.imgCont]} />
+                                        <TouchableOpacity key={singleMatch.name} onPress={() => handleMatchChange(singleMatch)}>
+                                            <View
+                                                style={[styles.matchItem, SelectedGame.name === singleMatch.name ? styles.matchItemActive : null]}>
+                                                <Image source={singleMatch.image} style={[styles.image]} />
+                                                <Text>{singleMatch.name}</Text>
                                             </View>
-                                            <View style={[styles.secCont]}>
-                                                <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>{match.name}</Text>
-                                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>{match.slot}</Text>
-                                                <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>{match.teamName}</Text>
-                                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier {match.tier}</Text>
-                                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text>
-                                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text>
-                                            </View>
-                                            <View style={[styles.thirdCont]}>
-                                                <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.datetime}</Text>
-                                                <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.type}</Text>
-                                                {match.paid &&
-                                                    <View style={[styles.paidSectionIndicator]}>
-                                                        <MaterialCommunityIcons name="ticket-confirmation-outline" size={20} color="orange" />
-                                                        <Text style={[styles.paidIndicatorText]}>Paid</Text>
-                                                    </View>
-                                                }
-                                                <Text>Logo here</Text>
-                                            </View>
-                                        </View>
+                                        </TouchableOpacity>
                                     );
                                 })
-                        }
-                    </View>
-                }
-                {
-                    SelectedTab === Tabs[1] &&
-                    <View>
-                        {
-                            StateObject[1].Matches
-                                .filter(m => m.game.toLowerCase() === SelectedGame.name.toLocaleLowerCase())
-                                .map(match => {
+                            }
+                        </ScrollView>
+                        <View style={[styles.tabContainer]}>
+                            {
+                                StateObject.map(tabItem => {
                                     return (
-                                        <View>
-                                            <View style={[styles.UMSlideContainer]}>
-                                                <View style={[styles.liveMatchItemContainerUM]}>
+                                        <TouchableOpacity
+                                            key={tabItem.Category}
+                                            onPress={() => setSelectedTab(tabItem.Category)}
+                                            style={[styles.tab, tabItem.Category === SelectedTab
+                                                ? styles.tabActive : null]}>
+                                            <Text
+                                                style={[styles.tabText, tabItem.Category === SelectedTab
+                                                    ? styles.tabTextActive : null]}>{tabItem.Category}</Text>
+                                        </TouchableOpacity>
+                                    );
+                                })
+                            }
+                        </View>
+                    </View>
+                    <View style={[styles.margined]}>
+                        {
+                            SelectedTab === Tabs[0] &&
+                            <View>
+                                {
+                                    StateObject[0].Matches
+                                        .filter(m => m.game.toLowerCase() === SelectedGame.name.toLocaleLowerCase())
+                                        .map(match => {
+                                            return (
+                                                <View
+                                                    key={match.id}
+                                                    style={[styles.liveMatchItemContainer]}>
                                                     <View style={[styles.firstCont]}>
                                                         <Image source={match.image} style={[styles.imgCont]} />
                                                     </View>
                                                     <View style={[styles.secCont]}>
                                                         <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>{match.name}</Text>
-                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Slot {match.slot}</Text>
-                                                        <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>Eagle</Text>
+                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>{match.slot}</Text>
+                                                        <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>{match.teamName}</Text>
                                                         <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier {match.tier}</Text>
-                                                        {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text> */}
-                                                        {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text> */}
+                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text>
+                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text>
                                                     </View>
                                                     <View style={[styles.thirdCont]}>
                                                         <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.datetime}</Text>
                                                         <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.type}</Text>
-                                                        {
-                                                            match.paid &&
+                                                        {match.paid &&
                                                             <View style={[styles.paidSectionIndicator]}>
                                                                 <MaterialCommunityIcons name="ticket-confirmation-outline" size={20} color="orange" />
                                                                 <Text style={[styles.paidIndicatorText]}>Paid</Text>
                                                             </View>
                                                         }
+                                                        <Text>Logo here</Text>
                                                     </View>
                                                 </View>
-                                                <TouchableOpacity style={[styles.lowerSectionUM, { marginTop: 10 }]}>
-                                                    <Text style={{ color: 'white' }}>Round {match.round}</Text>
-                                                    {/* <AntDesign name="down-square-o" size={20} color="black" /> */}
-                                                </TouchableOpacity>
-                                            </View>
-                                        </View>
-                                    );
-                                })
+                                            );
+                                        })
+                                }
+                            </View>
                         }
-                    </View>
-
-                }
-                {
-                    SelectedTab === Tabs[2] &&
-                    <View>
                         {
-                            StateObject[2].Matches
-                                .filter(m => m.game.toLowerCase() === SelectedGame.name.toLocaleLowerCase())
-                                .map(match => {
-                                    return (
-                                        <View>
-                                            <View style={[styles.MatchSlideCM]}>
-                                                <View style={[styles.liveMatchItemContainer]}>
-                                                    <View style={[styles.firstCont]}>
-                                                        <Image source={match.image} style={[styles.imgCont]} />
-                                                    </View>
-                                                    <View style={[styles.secCont]}>
-                                                        <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>{match.name}</Text>
-                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Slot {match.slot}</Text>
-                                                        <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>Eagle</Text>
-                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier {match.tier}</Text>
-                                                        {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text> */}
-                                                        {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text> */}
-                                                    </View>
-                                                    <View style={[styles.thirdCont]}>
-                                                        <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.datetime}</Text>
-                                                        <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.type}</Text>
+                            SelectedTab === Tabs[1] &&
+                            <View>
+                                {
+                                    StateObject[1].Matches
+                                        .filter(m => m.game.toLowerCase() === SelectedGame.name.toLocaleLowerCase())
+                                        .map(match => {
+                                            return (
+                                                <View>
+                                                    <View style={[styles.UMSlideContainer]}>
+                                                        <View style={[styles.liveMatchItemContainerUM]}>
+                                                            <View style={[styles.firstCont]}>
+                                                                <Image source={match.image} style={[styles.imgCont]} />
+                                                            </View>
+                                                            <View style={[styles.secCont]}>
+                                                                <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>{match.name}</Text>
+                                                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Slot {match.slot}</Text>
+                                                                <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>Eagle</Text>
+                                                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier {match.tier}</Text>
+                                                                {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text> */}
+                                                                {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text> */}
+                                                            </View>
+                                                            <View style={[styles.thirdCont]}>
+                                                                <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.datetime}</Text>
+                                                                <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.type}</Text>
+                                                                {
+                                                                    match.paid &&
+                                                                    <View style={[styles.paidSectionIndicator]}>
+                                                                        <MaterialCommunityIcons name="ticket-confirmation-outline" size={20} color="orange" />
+                                                                        <Text style={[styles.paidIndicatorText]}>Paid</Text>
+                                                                    </View>
+                                                                }
+                                                            </View>
+                                                        </View>
+                                                        <TouchableOpacity style={[styles.lowerSectionUM, { marginTop: 10 }]}>
+                                                            <Text style={{ color: 'white' }}>Round {match.round}</Text>
+                                                            {/* <AntDesign name="down-square-o" size={20} color="black" /> */}
+                                                        </TouchableOpacity>
                                                     </View>
                                                 </View>
-                                                <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
-                                                    <TouchableOpacity style={[styles.uploadButton]}><Text style={{color:'white'}}>View Result</Text></TouchableOpacity>
-                                                    <TouchableOpacity style={[styles.uploadButton]}><Text style={{color:'white'}}>Upload Screenshots</Text></TouchableOpacity>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    );
-                                })
-                        }
+                                            );
+                                        })
+                                }
+                            </View>
 
+                        }
+                        {
+                            SelectedTab === Tabs[2] &&
+                            <View>
+                                {
+                                    StateObject[2].Matches
+                                        .filter(m => m.game.toLowerCase() === SelectedGame.name.toLocaleLowerCase())
+                                        .map(match => {
+                                            return (
+                                                <View>
+                                                    <View style={[styles.MatchSlideCM]}>
+                                                        <View style={[styles.liveMatchItemContainer]}>
+                                                            <View style={[styles.firstCont]}>
+                                                                <Image source={match.image} style={[styles.imgCont]} />
+                                                            </View>
+                                                            <View style={[styles.secCont]}>
+                                                                <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>{match.name}</Text>
+                                                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Slot {match.slot}</Text>
+                                                                <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>Eagle</Text>
+                                                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier {match.tier}</Text>
+                                                                {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text> */}
+                                                                {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text> */}
+                                                            </View>
+                                                            <View style={[styles.thirdCont]}>
+                                                                <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.datetime}</Text>
+                                                                <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.type}</Text>
+                                                            </View>
+                                                        </View>
+                                                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                                                            <TouchableOpacity style={[styles.uploadButton]}><Text style={{ color: 'white' }}>View Result</Text></TouchableOpacity>
+                                                            <TouchableOpacity style={[styles.uploadButton]}><Text style={{ color: 'white' }}>Upload Screenshots</Text></TouchableOpacity>
+                                                        </View>
+                                                    </View>
+                                                </View>
+                                            );
+                                        })
+                                }
+
+                            </View>
+                        }
                     </View>
-                }
-            </View>
-        </ScrollView>
+                </ScrollView>
+            </SafeAreaView>
+            <ActionSheet />
+        </View>
     )
 }
 
@@ -347,6 +352,7 @@ export default Matches
 const styles = StyleSheet.create({
     root: {
         backgroundColor: 'rgb(240,240,240)',
+        height: '100%'
     },
     container: {
 
@@ -442,7 +448,7 @@ const styles = StyleSheet.create({
     thirdCont: {
         flex: 3,
         justifyContent: 'flex-start',
-        alignItems:'flex-end'
+        alignItems: 'flex-end'
     },
     margined: {
         margin: 10,
@@ -474,7 +480,7 @@ const styles = StyleSheet.create({
         // marginLeft: 15,
         // marginRight: 15,
         borderRadius: 8,
-        width:'45%'
+        width: '45%'
 
     },
 })

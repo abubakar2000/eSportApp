@@ -14,7 +14,7 @@ const Home = ({navigation}) => {
   
     return (
         <ScrollView>
-            <View style={[styles.container, styles.center]}>
+            <SafeAreaView style={[styles.container, styles.center]}>
                 <AppBar navigation={navigation} title={"HAEXR"} whereTo={'AccountInformation'} showDrawer={true}/>
 
                 <View>
@@ -58,7 +58,7 @@ const Home = ({navigation}) => {
                     <Text style={styles.text}>Games & More</Text>
                     </View>
                 </View>
-            </View>
+            </SafeAreaView>
         </ScrollView>
     );
 };

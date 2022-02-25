@@ -5,9 +5,10 @@ import { Drawer } from './routes/Drawer';
 const App = () => {
   return (
     <View style={[styles.AppContainer]}>
-      <SafeAreaView style={[styles.SafeAppContainer]}>
+      <View style={[styles.SafeAppContainer]}>
         <Drawer />
-      </SafeAreaView>
+      </View>
+
     </View>
   );
 };
@@ -21,6 +22,6 @@ const styles = StyleSheet.create({
   },
   SafeAppContainer: {
     height: '100%',
-    width: '100%'
+    width: '100%',
   },
 })
