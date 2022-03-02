@@ -4,6 +4,7 @@ import Gif from '../components/Gif'
 import AppBar from '../components/AppBar'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Directions } from 'react-native-gesture-handler';
+import Card from '../components/Card';
 
 const LINKS = {
     image1: require("../assets/homepage/giphy.gif"),
@@ -53,11 +54,20 @@ const Home = ({navigation}) => {
                             </LinearGradient>
                         </View>
                     </ScrollView>
+                </View>
 
-                    <View style={styles.break_v}>
-                    <Text style={styles.text}>Games & More</Text>
+                <View style={styles.section2}>
+                    <View style={{paddingBottom: 20}}>
+                        <Text style={styles.text}>Games & More</Text>
+                    </View>
+
+                    <View style={{paddingBottom: 20}}>
+                        <Card />
+                        <Card />
+                        <Card />
                     </View>
                 </View>
+
             </SafeAreaView>
         </ScrollView>
     );
@@ -88,7 +98,8 @@ const styles = StyleSheet.create({
     section3: {
         marginRight: 15,
         marginLeft: 15,
-        paddingTop: 20
+        paddingTop: 20,
+        height: 210
     },
     text: {
         justifyContent: 'center',
