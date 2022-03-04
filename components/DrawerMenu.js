@@ -1,4 +1,4 @@
-import { Button, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import React from 'react';
 import { FontAwesome, FontAwesome5, Fontisto, MaterialCommunityIcons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
@@ -10,37 +10,39 @@ const DrawerMenu = ({ navigation }) => {
         navigation.navigate(screen)
     }
     return (
-        <ScrollView>
-            <View style={[styles.container]}>
-                <Image source={profilePicture} style={[styles.profilePicture]} />
-                <Text style={[styles.username]}>Ammie</Text>
-                <Text style={[styles.email]}>ammie78@gmail.com</Text>
-                <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Home')}>
-                    <SimpleLineIcons style={[styles.tabIco]} name='home' size={22} />
-                    <Text style={[styles.navTabText]}>Home</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Wallet')}>
-                    <SimpleLineIcons style={[styles.tabIco]} name='wallet' size={22} />
-                    <Text style={[styles.navTabText]}>Wallet</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Matches')}>
-                    <Fontisto style={[styles.tabIco]} name='prescription' size={22} />
-                    <Text style={[styles.navTabText]}>My Matches</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Teams')}>
-                    <FontAwesome5 style={[styles.tabIco]} name='users' size={22} />
-                    <Text style={[styles.navTabText]}>My Teams</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Profile')}>
-                    <MaterialIcons style={[styles.tabIco]} name='support-agent' size={22} />
-                    <Text style={[styles.navTabText]}>Support</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Profile')}>
-                    <MaterialIcons style={[styles.tabIco]} name='logout' size={22} />
-                    <Text style={[styles.navTabText]}>Logout</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
+        <SafeAreaView>
+            <ScrollView>
+                <View style={[styles.container]}>
+                    <Image source={profilePicture} style={[styles.profilePicture]} />
+                    <Text style={[styles.username]}>Ammie</Text>
+                    <Text style={[styles.email]}>ammie78@gmail.com</Text>
+                    <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Home')}>
+                        <SimpleLineIcons style={[styles.tabIco]} name='home' size={22} />
+                        <Text style={[styles.navTabText]}>Home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Wallet')}>
+                        <SimpleLineIcons style={[styles.tabIco]} name='wallet' size={22} />
+                        <Text style={[styles.navTabText]}>Wallet</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Matches')}>
+                        <Fontisto style={[styles.tabIco]} name='prescription' size={22} />
+                        <Text style={[styles.navTabText]}>My Matches</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Teams')}>
+                        <FontAwesome5 style={[styles.tabIco]} name='users' size={22} />
+                        <Text style={[styles.navTabText]}>My Teams</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Support')}>
+                        <MaterialIcons style={[styles.tabIco]} name='support-agent' size={22} />
+                        <Text style={[styles.navTabText]}>Support</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Profile')}>
+                        <MaterialIcons style={[styles.tabIco]} name='logout' size={22} />
+                        <Text style={[styles.navTabText]}>Logout</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     );
 };
 

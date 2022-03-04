@@ -7,6 +7,7 @@ import Home from "../screens/Home";
 import Account from "../screens/Account";
 import Teams from "../screens/Teams";
 import Matches from "../screens/Matches";
+import Support from "../screens/Support";
 // import { Text, View } from "react-native";
 
 const Drawer =
@@ -15,6 +16,9 @@ const Drawer =
             {
                 Home: {
                     screen: Home,
+                },
+                Support: {
+                    screen: Support,
                 },
                 Profile: {
                     screen: AuthStack,

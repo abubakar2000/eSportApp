@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Animated, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useRef, useState } from 'react'
 import AppBar from '../components/AppBar'
 import image from '../assets/favicon.png';
@@ -173,7 +173,15 @@ const Matches = ({ navigation }) => {
         setSelectedGame(singleMatch)
     }
     const [selectedCategory, setSelectedCategory] = useState();
-
+    const [alignment, setAlignment] = useState(new Animated.Value(0));
+    const hideTheActionSheet = () => {
+    Animated.timing(alignment, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: false
+    }).start();
+  }
+    
     return (
         <View>
             <SafeAreaView>
@@ -262,7 +270,7 @@ const Matches = ({ navigation }) => {
                                         .filter(m => m.game.toLowerCase() === SelectedGame.name.toLocaleLowerCase())
                                         .map(match => {
                                             return (
-                                                <View>
+                                                <View key={match}>
                                                     <View style={[styles.UMSlideContainer]}>
                                                         <View style={[styles.liveMatchItemContainerUM]}>
                                                             <View style={[styles.firstCont]}>
@@ -288,7 +296,9 @@ const Matches = ({ navigation }) => {
                                                                 }
                                                             </View>
                                                         </View>
-                                                        <TouchableOpacity style={[styles.lowerSectionUM, { marginTop: 10 }]}>
+                                                        <TouchableOpacity
+                                                        onPress={hideTheActionSheet}
+                                                        style={[styles.lowerSectionUM, { marginTop: 10 }]}>
                                                             <Text style={{ color: 'white' }}>Round {match.round}</Text>
                                                             {/* <AntDesign name="down-square-o" size={20} color="black" /> */}
                                                         </TouchableOpacity>
@@ -308,7 +318,7 @@ const Matches = ({ navigation }) => {
                                         .filter(m => m.game.toLowerCase() === SelectedGame.name.toLocaleLowerCase())
                                         .map(match => {
                                             return (
-                                                <View>
+                                                <View key={match}>
                                                     <View style={[styles.MatchSlideCM]}>
                                                         <View style={[styles.liveMatchItemContainer]}>
                                                             <View style={[styles.firstCont]}>
@@ -328,8 +338,8 @@ const Matches = ({ navigation }) => {
                                                             </View>
                                                         </View>
                                                         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                                            <TouchableOpacity style={[styles.uploadButton]}><Text style={{ color: 'white' }}>View Result</Text></TouchableOpacity>
-                                                            <TouchableOpacity style={[styles.uploadButton]}><Text style={{ color: 'white' }}>Upload Screenshots</Text></TouchableOpacity>
+                                                            <TouchableOpacity style={[styles.uploadButton]}><Text style={{ color: 'white' }} onPress={hideTheActionSheet}>View Result</Text></TouchableOpacity>
+                                                            <TouchableOpacity style={[styles.uploadButton]}><Text style={{ color: 'white' }} onPress={hideTheActionSheet}>Upload Screenshots</Text></TouchableOpacity>
                                                         </View>
                                                     </View>
                                                 </View>
@@ -342,7 +352,7 @@ const Matches = ({ navigation }) => {
                     </View>
                 </ScrollView>
             </SafeAreaView>
-            <ActionSheet />
+            <ActionSheet hideTheActionSheet={hideTheActionSheet} alignment={alignment} setAlignment={setAlignment}/>
         </View>
     )
 }
