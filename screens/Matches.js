@@ -184,7 +184,7 @@ const Matches = ({ navigation }) => {
     
     return (
         <View>
-            <SafeAreaView>
+            <View>
                 <ScrollView style={[styles.root]}>
                     <AppBar navigation={navigation} title={'My Matches'}
                         showDrawer={false} whereTo={''} />
@@ -351,7 +351,7 @@ const Matches = ({ navigation }) => {
                         }
                     </View>
                 </ScrollView>
-            </SafeAreaView>
+            </View>
             <ActionSheet hideTheActionSheet={hideTheActionSheet} alignment={alignment} setAlignment={setAlignment}/>
         </View>
     )

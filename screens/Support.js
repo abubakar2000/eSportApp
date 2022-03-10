@@ -4,7 +4,7 @@ import Picture from '../assets/favicon.png'
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 const Support = ({ navigation }) => {
     return (
-        <SafeAreaView>
+        <View>
             <AppBar title={"Support"} showDrawer={false} navigation={navigation} whereTo={''} />
             <View style={{ backgroundColor: 'rgb(245,245,245)', height: '100%', width: '100%' }}>
                 <View>
@@ -111,7 +111,7 @@ const Support = ({ navigation }) => {
                     </View>
                 </View>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

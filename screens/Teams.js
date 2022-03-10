@@ -33,7 +33,7 @@ const Teams = ({ navigation }) => {
     ])
     const [SelectedGame, setSelectedGame] = useState(GameList[0])
     return (
-        <SafeAreaView>
+        <View>
             <ScrollView style={[{ backgroundColor: 'rgb(240,240,240)' }]}>
                 <AppBar whereTo={''} title={'My Teams'} showDrawer={false} navigation={navigation} />
                 <View style={[styles.container]}>
@@ -76,7 +76,7 @@ const Teams = ({ navigation }) => {
                 <View style={{ height: 400 }}></View>
 
             </ScrollView>
-        </SafeAreaView>
+        </View>
     )
 }
 

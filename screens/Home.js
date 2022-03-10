@@ -15,8 +15,8 @@ const Home = ({navigation}) => {
   
     return (
         <ScrollView>
-            <SafeAreaView style={[styles.container, styles.center]}>
-                <AppBar navigation={navigation} title={"HAEXR"} whereTo={'AccountInformation'} showDrawer={true}/>
+            <View style={[styles.container, styles.center]}>
+                <AppBar navigation={navigation} title={"HAEXR"} whereTo={'Account'} showDrawer={true}/>
 
                 <View>
                     <ScrollView horizontal={true} style={{maxHeight: 330, paddingTop: 120}}>
@@ -68,7 +68,7 @@ const Home = ({navigation}) => {
                     </View>
                 </View>
 
-            </SafeAreaView>
+            </View>
         </ScrollView>
     );
 };

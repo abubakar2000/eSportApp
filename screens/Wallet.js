@@ -4,10 +4,10 @@ import AppBar from '../components/AppBar';
 
 const Wallet = ({ navigation }) => {
     return (
-        <SafeAreaView>
+        <View>
             <AppBar navigation={navigation} title={"Wallet"} showDrawer={false}/>
             <Text>My Wallet</Text>
-        </SafeAreaView>
+        </View>
     );
 };
 
