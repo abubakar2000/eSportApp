@@ -108,8 +108,7 @@ const styles = StyleSheet.create({
     boxes: {
         height: 170,
         width: 165,
-        borderTopRightRadius: 30,
-        borderTopLeftRadius: 30,
+        borderRadius:40,
         padding: 20
     }
 });
