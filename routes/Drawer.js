@@ -1,14 +1,13 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 // import { AuthStack } from "./AuthStack";
-import Wallet from "../screens/Wallet";
 import Home from "../screens/Home";
 import Account from "../screens/Account";
 import Teams from "../screens/Teams";
 import Matches from "../screens/Matches";
 import Support from "../screens/Support";
-import { Text, View } from "react-native";
 import DrawerMenu from "../components/DrawerMenu";
+import Wallet from "../screens/Wallet";
 
 
 const Drawer = createDrawerNavigator();

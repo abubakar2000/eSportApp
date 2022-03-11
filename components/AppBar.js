@@ -3,7 +3,7 @@ import React from 'react';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import ProfilePicture from '../assets/10.jpg';
 
-const AppBar = ({ title, navigation, whereTo, showDrawer }) => {
+const AppBar = ({ title, navigation, whereTo, showDrawer, centerFocused = true }) => {
     const openNav = () => {
         navigation.openDrawer()
     }
@@ -33,7 +33,14 @@ const AppBar = ({ title, navigation, whereTo, showDrawer }) => {
                     </TouchableOpacity>
                 }
 
-                <Text style={[styles.headerText]}>{title}</Text>
+                {
+                    centerFocused === true &&
+                    <Text style={[styles.headerText]}>{title}</Text>
+                }
+                {
+                    centerFocused === false &&
+                    <Text style={[styles.headerText2]}>{title}</Text>
+                }
 
                 <TouchableOpacity style={[styles.accountContainer]} onPress={onProfileClicked}>
                     <Image source={ProfilePicture} style={[styles.profilePicture]} />
@@ -64,6 +71,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         flex: 1,
         textAlign: 'center'
+    },
+    headerText2: {
+        color: 'black',
+        fontSize: 20,
+        flex: 4,
+        textAlign: 'left'
     },
     center: {
         justifyContent: 'center',
