@@ -9,21 +9,19 @@ import Card from '../components/Card';
 const LINKS = {
     image1: require("../assets/homepage/giphy.gif"),
     image2: require("../assets/homepage/giphy-2.gif")
-  };
+};
 
-const Home = ({navigation}) => {
-  
+const Home = ({ navigation }) => {
+
     return (
         <ScrollView>
             <View style={[styles.container, styles.center]}>
-                <AppBar navigation={navigation} title={"HAEXR"} whereTo={'Account'} showDrawer={true}/>
-
-                <View>
-                    <ScrollView horizontal={true} style={{maxHeight: 330, paddingTop: 120}}>
+                <AppBar navigation={navigation} title={"HAEXR"} whereTo={'Account'} showDrawer={true} />
+                <View style={{ width: '100%', }}>
+                    <ScrollView style={{ backgroundColor: 'white', }} horizontal={true} >
                         <Gif />
                     </ScrollView>
                 </View>
-
                 <View style={styles.section2}>
                     <Text style={styles.text}>Ongoing Tournaments & Pro Matches</Text>
                     <ScrollView horizontal={true} style={styles.section3}>
@@ -53,6 +51,7 @@ const Home = ({navigation}) => {
 
                             </LinearGradient>
                         </View>
+                        <View style={{width:50}}></View>
                     </ScrollView>
                 </View>
 
@@ -67,7 +66,6 @@ const Home = ({navigation}) => {
                         <Card />
                     </View>
                 </View>
-
             </View>
         </ScrollView>
     );
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     },
     break_h: {
-        width: 10
+        width: 10,
     },
     break_v: {
         paddingTop: 10
@@ -96,8 +94,8 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     section3: {
-        marginRight: 15,
-        marginLeft: 15,
+        paddingLeft:15,
+        paddingRight:15,
         paddingTop: 20,
         height: 210
     },
@@ -110,7 +108,8 @@ const styles = StyleSheet.create({
     boxes: {
         height: 170,
         width: 165,
-        borderRadius: 30,
+        borderTopRightRadius: 30,
+        borderTopLeftRadius: 30,
         padding: 20
     }
 });

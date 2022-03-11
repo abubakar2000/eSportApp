@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: '100%',
         width: '100%',
-        paddingTop: 20,
+        paddingTop: 50,
     },
     profilePicture: {
         height: 100,
