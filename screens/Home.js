@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     boxes: {
         height: 170,
         width: 165,
-        borderRadius:40,
+        borderRadius:20,
         padding: 20
     }
 });
