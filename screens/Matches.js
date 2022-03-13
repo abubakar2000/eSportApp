@@ -1,8 +1,8 @@
-import { Animated, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useRef, useState } from 'react'
+import { Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
 import AppBar from '../components/AppBar'
 import image from '../assets/favicon.png';
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ActionSheet from '../components/ActionSheet';
 
 /**
@@ -172,16 +172,20 @@ const Matches = ({ navigation }) => {
     const handleMatchChange = (singleMatch) => {
         setSelectedGame(singleMatch)
     }
+
+
+
     const [selectedCategory, setSelectedCategory] = useState();
     const [alignment, setAlignment] = useState(new Animated.Value(0));
-    const hideTheActionSheet = () => {
-    Animated.timing(alignment, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: false
-    }).start();
-  }
-    
+    const showActionSheet = () => {
+        Animated.timing(alignment, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: false
+        }).start();
+
+    }
+
     return (
         <View>
             <View>
@@ -190,6 +194,7 @@ const Matches = ({ navigation }) => {
                         showDrawer={false} whereTo={''} />
                     <View style={[styles.container]}>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.myMatchList]}>
+                            <View style={{width:5}}></View>
                             {
                                 Games.map(singleMatch => {
                                     return (
@@ -197,12 +202,13 @@ const Matches = ({ navigation }) => {
                                             <View
                                                 style={[styles.matchItem, SelectedGame.name === singleMatch.name ? styles.matchItemActive : null]}>
                                                 <Image source={singleMatch.image} style={[styles.image]} />
-                                                <Text>{singleMatch.name}</Text>
+                                                <Text style={{ color: 'black', fontSize: 13 }}>{singleMatch.name}</Text>
                                             </View>
                                         </TouchableOpacity>
                                     );
                                 })
                             }
+                            <View style={{width:5}}></View>
                         </ScrollView>
                         <View style={[styles.tabContainer]}>
                             {
@@ -215,7 +221,7 @@ const Matches = ({ navigation }) => {
                                                 ? styles.tabActive : null]}>
                                             <Text
                                                 style={[styles.tabText, tabItem.Category === SelectedTab
-                                                    ? styles.tabTextActive : null]}>{tabItem.Category}</Text>
+                                                    ? styles.tabTextActive : { color: 'black' }]}>{tabItem.Category}</Text>
                                         </TouchableOpacity>
                                     );
                                 })
@@ -297,8 +303,8 @@ const Matches = ({ navigation }) => {
                                                             </View>
                                                         </View>
                                                         <TouchableOpacity
-                                                        onPress={hideTheActionSheet}
-                                                        style={[styles.lowerSectionUM, { marginTop: 10 }]}>
+                                                            onPress={showActionSheet}
+                                                            style={[styles.lowerSectionUM, { marginTop: 10 }]}>
                                                             <Text style={{ color: 'white' }}>Round {match.round}</Text>
                                                             {/* <AntDesign name="down-square-o" size={20} color="black" /> */}
                                                         </TouchableOpacity>
@@ -338,8 +344,8 @@ const Matches = ({ navigation }) => {
                                                             </View>
                                                         </View>
                                                         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                                            <TouchableOpacity style={[styles.uploadButton]}><Text style={{ color: 'white' }} onPress={hideTheActionSheet}>View Result</Text></TouchableOpacity>
-                                                            <TouchableOpacity style={[styles.uploadButton]}><Text style={{ color: 'white' }} onPress={hideTheActionSheet}>Upload Screenshots</Text></TouchableOpacity>
+                                                            <TouchableOpacity style={[styles.uploadButton]}><Text style={{ color: 'white' }} onPress={showActionSheet}>View Result</Text></TouchableOpacity>
+                                                            <TouchableOpacity style={[styles.uploadButton]}><Text style={{ color: 'white' }} onPress={showActionSheet}>Upload Screenshots</Text></TouchableOpacity>
                                                         </View>
                                                     </View>
                                                 </View>
@@ -352,7 +358,9 @@ const Matches = ({ navigation }) => {
                     </View>
                 </ScrollView>
             </View>
-            <ActionSheet hideTheActionSheet={hideTheActionSheet} alignment={alignment} setAlignment={setAlignment}/>
+            <ActionSheet showActionSheetMethod={showActionSheet}
+                content={"Rounds"}
+                alignment={alignment} setAlignment={setAlignment} />
         </View>
     )
 }
@@ -370,7 +378,7 @@ const styles = StyleSheet.create({
     myMatchList: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-
+        marginTop: 10,
     },
     matchItem: {
         backgroundColor: 'white',

@@ -9,6 +9,7 @@ import Animated, {
 
 import 'react-native-gesture-handler';
 import AppDrawer from './routes/Drawer';
+import { AuthStack } from './routes/AuthStack';
 
 
 
@@ -16,7 +17,8 @@ const App = () => {
   return (
     <View style={[styles.AppContainer]}>
       <View style={[styles.SafeAppContainer]}>
-        <AppDrawer />
+        {/* <AppDrawer /> */}
+        <AuthStack/>
       </View>
     </View>
   );
