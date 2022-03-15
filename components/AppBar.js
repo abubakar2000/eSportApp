@@ -10,7 +10,7 @@ const AppBar = ({ title, navigation, whereTo, showDrawer, centerFocused = true }
     const onProfileClicked = () => {
         if (whereTo) {
             navigation.navigate(whereTo)
-        }else{
+        } else{
             navigation.openDrawer()
         }
     }

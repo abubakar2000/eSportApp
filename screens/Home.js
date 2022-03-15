@@ -71,8 +71,6 @@ const Home = ({ navigation }) => {
     );
 };
 
-export default Home;
-
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
@@ -112,3 +110,5 @@ const styles = StyleSheet.create({
         padding: 20
     }
 });
+
+export default Home;
