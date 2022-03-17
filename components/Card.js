@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: 80,
         borderRadius: 10,
-        marginBottom: 10,
     },
     heading: {
 

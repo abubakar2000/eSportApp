@@ -3,7 +3,7 @@ import React from 'react';
 import Gif from '../components/Gif'
 import AppBar from '../components/AppBar'
 import { LinearGradient } from 'expo-linear-gradient'
-import { Directions } from 'react-native-gesture-handler';
+import { Directions, TouchableOpacity } from 'react-native-gesture-handler';
 import Card from '../components/Card';
 
 const LINKS = {
@@ -13,13 +13,19 @@ const LINKS = {
 
 const Home = ({ navigation }) => {
 
+    const onNavigate = (screen) => {
+        navigation.navigate(screen)
+    }
+
     return (
         <ScrollView>
             <View style={[styles.container, styles.center]}>
                 <AppBar navigation={navigation} title={"HAEXR"} whereTo={'Account'} showDrawer={true} />
                 <View style={{ width: '100%', }}>
                     <ScrollView style={{ backgroundColor: 'white', }} horizontal={true} >
-                        <Gif />
+                        <TouchableOpacity onPress={() => onNavigate('Scrims')}>
+                            <Gif />
+                        </TouchableOpacity>
                     </ScrollView>
                 </View>
                 <View style={styles.section2}>
