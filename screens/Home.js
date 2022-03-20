@@ -5,6 +5,7 @@ import AppBar from '../components/AppBar'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Directions, TouchableOpacity } from 'react-native-gesture-handler';
 import Card from '../components/Card';
+import GradientCard from '../components/GradientCard';
 
 const LINKS = {
     image1: require("../assets/homepage/giphy.gif"),
@@ -12,6 +13,8 @@ const LINKS = {
 };
 
 const Home = ({ navigation }) => {
+
+    var colorArr = ['#691B31', '#7E897C', '#447EAB'];
 
     const onNavigate = (screen) => {
         navigation.navigate(screen)
@@ -31,33 +34,10 @@ const Home = ({ navigation }) => {
                 <View style={styles.section2}>
                     <Text style={styles.text}>Ongoing Tournaments & Pro Matches</Text>
                     <ScrollView horizontal={true} style={styles.section3}>
-                        <View>
-                            <LinearGradient 
-                                colors={['#691B31', '#F4F5F9']}
-                                style={styles.boxes}
-                            >
-                                
-                            </LinearGradient>
-                        </View>
+                        <GradientCard colorGrad={colorArr[0]}/>
+                        <GradientCard colorGrad={colorArr[1]}/>
+                        <GradientCard colorGrad={colorArr[2]}/>
                         <View style={styles.break_h}></View>
-                        <View>
-                            <LinearGradient 
-                                colors={['#7E897C', '#F4F5F9']}
-                                style={styles.boxes}
-                            >
-
-                            </LinearGradient>
-                        </View>
-                        <View style={styles.break_h}></View>
-                        <View>
-                            <LinearGradient 
-                                colors={['#447EAB', '#F4F5F9']}
-                                style={styles.boxes}
-                            >
-
-                            </LinearGradient>
-                        </View>
-                        <View style={{width:50}}></View>
                     </ScrollView>
                 </View>
 
@@ -87,7 +67,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     },
     break_h: {
-        width: 10,
+        width: 20,
     },
     break_v: {
         paddingTop: 10
@@ -98,7 +78,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     section3: {
-        paddingLeft:15,
+        paddingLeft:10,
         paddingRight:15,
         paddingTop: 20,
         height: 210
