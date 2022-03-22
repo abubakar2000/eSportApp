@@ -19,7 +19,7 @@ const Card = () => {
                     <Text style={styles.text}>Battle Royale</Text>
                 </View>
                 <View style={{flexDirection:'row', paddingLeft: 5, flex:1}}>
-                    <View style={{paddingTop:29}}>
+                    <View style={{paddingTop:30}}>
                         <Image 
                             style={styles.infoImg}
                             source={require('../assets/info.png')}  

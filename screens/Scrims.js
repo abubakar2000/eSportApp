@@ -25,35 +25,32 @@ const Scrims = ({navigation}) => {
 
     return (
         <View>
-            <ScrollView>
-                <View style={[styles.container, styles.center]}>
-                    <BackMenu navigation={navigation} whereTo={'Home'} title={'Battle Grounds Mobile India'} />
-                    <View style={{ width: '100%', }}>
-                        <ScrollView style={{ backgroundColor: 'white', }} horizontal={true}>
-                            <Gif />
-                        </ScrollView>
-                    </View>
-
-                    <FlatList
-                        data={cardData}
-                        style={{width:dimensions.width}}
-                        scrollEnabled={false}
-                        renderItem={({item}) => (
-                            <View style={styles.section2}>
-                                <View style={{paddingBottom: 10}}>
-                                    <Text style={styles.text}>{item.title}</Text>
-                                </View>
-
-                                <TouchableOpacity onPress={() => onNavigate(item.nextPage, item.title)}>
-                                    <Card />
-                                </TouchableOpacity>
-                            </View>
-                        )}
-                    />
+            <View style={[styles.container, styles.center]}>
+                <BackMenu navigation={navigation} whereTo={'Home'} title={'Battle Grounds Mobile India'} />
+                <View style={{ width: '100%', }}>
+                    <ScrollView style={{ backgroundColor: 'white', }} horizontal={true}>
+                        <Gif />
+                    </ScrollView>
                 </View>
-            </ScrollView>
+
+                <FlatList
+                    data={cardData}
+                    style={{width:dimensions.width}}
+                    renderItem={({item}) => (
+                        <View style={styles.section2}>
+                            <View style={{paddingBottom: 10}}>
+                                <Text style={styles.text}>{item.title}</Text>
+                            </View>
+
+                            <TouchableOpacity onPress={() => onNavigate(item.nextPage, item.title)}>
+                                <Card />
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                />
+            </View>
             <View>
-                
             </View>
         </View>
     )
