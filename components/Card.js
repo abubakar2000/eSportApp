@@ -7,23 +7,27 @@ const imageWidth = dimensions.width - 100;
 const Card = () => {
     return (
         <View style={styles.card}>
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
                 <View style={styles.imgContainer}>
                     <Image
                         style={styles.img}
                         source={require('../assets/general/valorant.jpg')}     
                     />
                 </View>
-                <View style={{paddingTop:22, width:'50%'}}>
+                <View style={{width:'50%', justifyContent: 'center'}}>
                     <Text style={styles.heading}>Battle Grounds Mobile India</Text>
                     <Text style={styles.text}>Battle Royale</Text>
                 </View>
-                <View style={{paddingTop:20, flexDirection:'row', paddingLeft: 5}}>
-                    <Image 
-                        style={styles.infoImg}
-                        source={require('../assets/info.png')}  
-                    />
-                    <Text style={styles.infoText}>Pro Matches & Scrims</Text>
+                <View style={{flexDirection:'row', paddingLeft: 5, flex:1}}>
+                    <View style={{paddingTop:29}}>
+                        <Image 
+                            style={styles.infoImg}
+                            source={require('../assets/info.png')}  
+                        />
+                    </View>
+                    <View style={{height: '100%', justifyContent:'center'}}>
+                        <Text style={styles.infoText}>Pro Matches & Scrims</Text>
+                    </View>
                 </View>
             </View>
         </View>
@@ -35,9 +39,9 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         backgroundColor: '#fff',
-        height: 80,
+        height: 100,
         borderRadius: 10,
-        marginBottom: 10
+        marginBottom: 10,
     },
     heading: {
         maxHeight: 20,
@@ -66,8 +70,11 @@ const styles = StyleSheet.create({
         borderRadius: 40,
     },
     imgContainer: {
-        padding: 12,
-        marginLeft: 1
+        marginLeft: 1,
+        height: '100%',
+        width: '21%',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 

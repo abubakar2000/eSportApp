@@ -5,7 +5,7 @@ import ProfilePicture from '../assets/10.jpg';
 const dimensions = Dimensions.get('window');
 const scrHeight = dimensions.height / 100 * 11;
 
-const BackMenu = ({navigation, whereTo}) => {
+const BackMenu = ({navigation, whereTo, title}) => {
 
     const onProfileClicked = () => {
         if (whereTo) {
@@ -27,7 +27,7 @@ const BackMenu = ({navigation, whereTo}) => {
                 </TouchableOpacity>
             </View>
             <View style={{width:'70%'}}>
-                <Text style={{fontSize:16, fontWeight:'400'}}>Battle Grounds India</Text>
+                <Text style={{fontSize:16, fontWeight:'400'}}>{title}</Text>
             </View>
             <View>
                 <TouchableOpacity style={[styles.accountContainer]} onPress={onProfileClicked}>

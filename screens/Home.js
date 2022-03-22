@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { Directions, TouchableOpacity } from 'react-native-gesture-handler';
 import Card from '../components/Card';
 import GradientCard from '../components/GradientCard';
+import Footer from '../components/Footer';
 
 const LINKS = {
     image1: require("../assets/homepage/giphy.gif"),
@@ -21,39 +22,42 @@ const Home = ({ navigation }) => {
     }
 
     return (
-        <ScrollView>
-            <View style={[styles.container, styles.center]}>
-                <AppBar navigation={navigation} title={"HAEXR"} whereTo={'Account'} showDrawer={true} />
-                <View style={{ width: '100%', }}>
-                    <ScrollView style={{ backgroundColor: 'white', }} horizontal={true} >
-                        <TouchableOpacity onPress={() => onNavigate('Scrims')}>
-                            <Gif />
-                        </TouchableOpacity>
-                    </ScrollView>
-                </View>
-                <View style={styles.section2}>
-                    <Text style={styles.text}>Ongoing Tournaments & Pro Matches</Text>
-                    <ScrollView horizontal={true} style={styles.section3}>
-                        <GradientCard colorGrad={colorArr[0]}/>
-                        <GradientCard colorGrad={colorArr[1]}/>
-                        <GradientCard colorGrad={colorArr[2]}/>
-                        <View style={styles.break_h}></View>
-                    </ScrollView>
-                </View>
-
-                <View style={styles.section2}>
-                    <View style={{paddingBottom: 20}}>
-                        <Text style={styles.text}>Games & More</Text>
+        <View style={{flex:1}}>
+            <ScrollView>
+                <View style={[styles.container, styles.center]}>
+                    <AppBar navigation={navigation} title={"HAEXR"} whereTo={'Account'} showDrawer={true} />
+                    <View style={{ width: '100%', }}>
+                        <ScrollView style={{ backgroundColor: 'white', }} horizontal={true} >
+                            <TouchableOpacity onPress={() => onNavigate('Scrims')}>
+                                <Gif />
+                            </TouchableOpacity>
+                        </ScrollView>
+                    </View>
+                    <View style={styles.section2}>
+                        <Text style={styles.text}>Ongoing Tournaments & Pro Matches</Text>
+                        <ScrollView horizontal={true} style={styles.section3}>
+                            <GradientCard colorGrad={colorArr[0]}/>
+                            <GradientCard colorGrad={colorArr[1]}/>
+                            <GradientCard colorGrad={colorArr[2]}/>
+                            <View style={styles.break_h}></View>
+                        </ScrollView>
                     </View>
 
-                    <View style={{paddingBottom: 20}}>
-                        <Card />
-                        <Card />
-                        <Card />
+                    <View style={styles.section2}>
+                        <View style={{paddingBottom: 20}}>
+                            <Text style={styles.text}>Games & More</Text>
+                        </View>
+
+                        <View style={{paddingBottom: 20}}>
+                            <Card />
+                            <Card />
+                            <Card />
+                        </View>
                     </View>
                 </View>
-            </View>
-        </ScrollView>
+            </ScrollView>
+            <Footer />
+        </View>
     );
 };
 

@@ -10,13 +10,14 @@ const AppBar = ({ title, navigation, whereTo, showDrawer, centerFocused = true }
     const onProfileClicked = () => {
         if (whereTo) {
             navigation.navigate(whereTo)
-        } else{
+        } else {
             navigation.openDrawer()
         }
     }
     const onPressBack = () => {
         navigation.goBack()
     }
+    
     return (
         <View style={[styles.container]}>
             <View style={[styles.containerContent]}>
