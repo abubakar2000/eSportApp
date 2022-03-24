@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 
 import RoundsList from './RoundsList';
 import Rewards from './Rewards';
+import UploadScreenShots from './UploadScreenShots';
+import ViewResults from './ViewResults';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -29,7 +31,7 @@ const ActionSheet = ({ showActionSheetMethod, alignment, setAlignment, content }
 
   const actionSheetInterpolate = alignment.interpolate({
     inputRange: [0, 1],
-    outputRange: [-(height / 2.4), 0]
+    outputRange: [-(height), 0]
   })
 
   const actionSheetStyle = {
@@ -49,12 +51,20 @@ const ActionSheet = ({ showActionSheetMethod, alignment, setAlignment, content }
           onTouchStart={hideActionSheet}
           onScroll={(e) => gestureHandler(e)} style={[styles.grabber]}></ScrollView>
       </View>
-      <View style={{ width: '100%', paddingBottom: 40 }}>
+      <View style={{ width: '100%', paddingBottom: 30, marginTop: 20 }}>
         {content === "Rounds" &&
           <RoundsList/>
         }
         {content === "Rewards" &&
-          <Rewards/>
+          <Rewards />
+        }
+        {content === "ViewResults" &&
+          <View style={{ height: 200 }}>
+            <ViewResults />
+          </View>
+        }
+        {content === "UploadScreenshots" &&
+          <UploadScreenShots />
         }
       </View>
     </Animated.View>

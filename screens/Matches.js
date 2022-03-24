@@ -173,8 +173,6 @@ const Matches = ({ navigation }) => {
         setSelectedGame(singleMatch)
     }
 
-
-
     const [selectedCategory, setSelectedCategory] = useState();
     const [alignment, setAlignment] = useState(new Animated.Value(0));
     const showActionSheet = () => {
@@ -186,6 +184,9 @@ const Matches = ({ navigation }) => {
 
     }
 
+    // which Action sheet to show
+    const [ActionSheetCategory, setActionSheetCategory] = useState("Round")
+
     return (
         <View>
             <View>
@@ -194,7 +195,7 @@ const Matches = ({ navigation }) => {
                         showDrawer={false} whereTo={''} />
                     <View style={[styles.container]}>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.myMatchList]}>
-                            <View style={{width:5}}></View>
+                            <View style={{ width: 5 }}></View>
                             {
                                 Games.map(singleMatch => {
                                     return (
@@ -208,7 +209,7 @@ const Matches = ({ navigation }) => {
                                     );
                                 })
                             }
-                            <View style={{width:5}}></View>
+                            <View style={{ width: 5 }}></View>
                         </ScrollView>
                         <View style={[styles.tabContainer]}>
                             {
@@ -303,7 +304,10 @@ const Matches = ({ navigation }) => {
                                                             </View>
                                                         </View>
                                                         <TouchableOpacity
-                                                            onPress={showActionSheet}
+                                                            onPress={() => {
+                                                                setActionSheetCategory("Rounds")
+                                                                showActionSheet();
+                                                            }}
                                                             style={[styles.lowerSectionUM, { marginTop: 10 }]}>
                                                             <Text style={{ color: 'white' }}>Round {match.round}</Text>
                                                             {/* <AntDesign name="down-square-o" size={20} color="black" /> */}
@@ -344,8 +348,18 @@ const Matches = ({ navigation }) => {
                                                             </View>
                                                         </View>
                                                         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                                            <TouchableOpacity style={[styles.uploadButton]}><Text style={{ color: 'white' }} onPress={showActionSheet}>View Result</Text></TouchableOpacity>
-                                                            <TouchableOpacity style={[styles.uploadButton]}><Text style={{ color: 'white' }} onPress={showActionSheet}>Upload Screenshots</Text></TouchableOpacity>
+                                                            <TouchableOpacity style={[styles.uploadButton2]}
+                                                                onPress={() => {
+                                                                    setActionSheetCategory("ViewResults")
+                                                                    showActionSheet();
+                                                                }}
+                                                            ><Text style={{ color: 'blue' }} >View Result</Text></TouchableOpacity>
+                                                            <TouchableOpacity style={[styles.uploadButton]}
+                                                                onPress={() => {
+                                                                    setActionSheetCategory("UploadScreenshots")
+                                                                    showActionSheet()
+                                                                }}
+                                                            ><Text style={{ color: 'white' }}>Upload Screenshots</Text></TouchableOpacity>
                                                         </View>
                                                     </View>
                                                 </View>
@@ -359,7 +373,7 @@ const Matches = ({ navigation }) => {
                 </ScrollView>
             </View>
             <ActionSheet showActionSheetMethod={showActionSheet}
-                content={"Rounds"}
+                content={ActionSheetCategory}
                 alignment={alignment} setAlignment={setAlignment} />
         </View>
     )
@@ -495,6 +509,19 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         backgroundColor: 'blue',
+        // marginLeft: 15,
+        // marginRight: 15,
+        borderRadius: 8,
+        width: '45%'
+
+    },
+    uploadButton2: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderWidth: 1,
+        borderColor: 'blue',
         // marginLeft: 15,
         // marginRight: 15,
         borderRadius: 8,
