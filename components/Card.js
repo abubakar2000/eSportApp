@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: 100,
         borderRadius: 10,
-        marginBottom: 10,
+        marginBottom: 5
     },
     heading: {
         maxHeight: 20,
