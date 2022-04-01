@@ -36,7 +36,7 @@ const DrawerMenu = ({ navigation }) => {
                         <MaterialIcons style={[styles.tabIco]} name='support-agent' size={22} />
                         <Text style={[styles.navTabText]}>Support</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.navTab]} onPress={() => onNavigate('Profile')}>
+                    <TouchableOpacity style={[styles.navTab]} onPress={() => navigation.pop()}>
                         <MaterialIcons style={[styles.tabIco]} name='logout' size={22} />
                         <Text style={[styles.navTabText]}>Logout</Text>
                     </TouchableOpacity>

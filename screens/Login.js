@@ -1,44 +1,104 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native';
+import axios from 'axios';
+import apiip from '../serverConfig';
+import { Modal } from 'react-native';
+import { Dimensions } from 'react-native';
+
 const Login = ({ navigation }) => {
 
-    const [Test, setTest] = useState({ hello: "abubakar" });
+    const [Email, setEmail] = useState("");
+    const [Password, setPassword] = useState("");
 
     const onClickRegister = () => {
         // navigation.navigate('Register',{myTest:Test})
-        navigation.push('Register', { myTest: Test })
+        navigation.push('Register')
     }
     const OpenDrawer = () => {
-        // navigation.navigate('Register',{myTest:Test})
         navigation.openDrawer()
     }
 
     const onLoginPressed = () => {
-        navigation.navigate("AppDrawer");
+        axios.post(`${apiip}/login`, {
+            "Email": Email,
+            "Password": Password,
+        })
+            .then(res => {
+                console.log(res.data);
+                if (res.data === "OK") {
+                    setMessage("Successfully Logged In")
+                    setShowMessage(true)
+                    setTimeout(() => {
+                        setShowMessage(false)
+                        navigation.navigate("AppDrawer");
+                    }, 1500);
+                } else {
+                    setMessage("Incorrect Email or Password")
+                    setShowMessage(true)
+                    setTimeout(() => {
+                        setShowMessage(false)
+                    }, 1500);
+                    console.log("Error 1");
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                setMessage("Incorrect Email or Password")
+                setShowMessage(true)
+                setTimeout(() => {
+                    setShowMessage(false)
+                }, 1500);
+            })
     }
-
+    const [ShowMessage, setShowMessage] = useState(false)
+    const [Message, setMessage] = useState("")
     return (
-        <ScrollView style={{ }}>
-            <View style={{width:'100%',justifyContent:'center',alignItems:'center',}}>
-                <Text style={{ fontSize: 37, color: 'gray',paddingTop:130 }}>Haexr</Text>
+        <ScrollView style={{}}>
+            <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', }}>
+                <Modal
+                    transparent={true}
+                    visible={ShowMessage}
+                    animationType="fade"
+                >
+                    <View style={{
+                        height: Dimensions.get("screen").height, width: '100%',
+                        alignItems: 'center', justifyContent: 'center'
+                    }}>
+                        <View style={{backgroundColor:'white',padding:15,shadowColor:'gray',
+                    shadowOffset:{width:0,height:0},shadowOpacity:1,shadowRadius:5,elevation:5,
+                    borderRadius:10}}>
+                            <Text style={{fontSize:20}}>{Message}</Text>
+                        </View>
+                    </View>
+                </Modal>
+                <Text style={{ fontSize: 37, color: 'gray', marginTop: 170 }}>Haexr</Text>
                 <Text style={styles.inputFieldLabel}>Email</Text>
-                <TextInput style={[styles.inputField]} keyboardType='email-address' placeholder='Enter you email' />
+                <TextInput
+                    onChangeText={text => setEmail(text)}
+                    value={Email}
+                    style={[styles.inputField]}
+                    keyboardType='email-address'
+                    placeholder='Enter you email'
+                />
                 <Text style={styles.inputFieldLabel}>Password</Text>
-                <TextInput style={[styles.inputField]} secureTextEntry={true} placeholder='Enter you password' />
-                <TouchableOpacity 
-                onPress={onLoginPressed}
-                style={[styles.loginButton]} >
+                <TextInput
+                    value={Password}
+                    onChangeText={text => setPassword(text)}
+                    style={[styles.inputField]} secureTextEntry={true} placeholder='Enter you password' />
+                <TouchableOpacity
+                    onPress={onLoginPressed}
+                    style={[styles.loginButton]} >
                     <Text style={{ color: "white" }}>Login</Text>
                 </TouchableOpacity>
                 <Text style={{ marginTop: 10 }}>Need help? <Text style={{ color: '#394D82', }}>Click here</Text></Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20,marginBottom:10 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20, marginBottom: 10 }}>
                     <View style={{ flex: 5, borderWidth: 0.5, height: 1 }}></View>
                     <Text style={{ flex: 1, textAlign: 'center', }}>OR</Text>
                     <View style={{ flex: 5, borderWidth: 0.5, height: 1 }}></View>
                 </View>
-                <Text style={{margin:10}}>Continue with</Text>
+                <Text style={{ margin: 10 }}>Continue with</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity style={styles.signupservicecontainer}>
                         <MaterialCommunityIcons style={styles.signupservice} name='google' color={'red'} size={30} />
@@ -51,14 +111,11 @@ const Login = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                    <Text style={{padding:15,color:'#554F82'}}>New User? </Text>
+                    <Text style={{ padding: 15, color: '#554F82' }}>New User? </Text>
                     <TouchableOpacity style={[styles.registerButton]} onPress={onClickRegister}>
                         <Text >Register</Text>
                     </TouchableOpacity>
                 </View>
-                {/* <TouchableOpacity style={[styles.DrawerOpener]} onPress={OpenDrawer}>
-                <Text>Menu</Text>
-            </TouchableOpacity> */}
             </View>
         </ScrollView>
     );
@@ -93,7 +150,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         width: '50%',
-        borderColor:'#394D82'
+        borderColor: '#394D82'
     },
     DrawerOpener: {
         margin: 10,
