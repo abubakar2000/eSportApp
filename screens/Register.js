@@ -27,13 +27,7 @@ const Register = ({ navigation }) => {
                 setShowSuccess(false)
             }, 2000);
         } else {
-            setMessage("Successfully Registered")
-            setShowSuccess(true)
-            setTimeout(() => {
-                setShowSuccess(false)
-                navigation.navigate("Login")
-                handleRegister();
-            }, 2000);
+            handleRegister();
         }
     }
     const [ShowSuccess, setShowSuccess] = useState(false)
@@ -58,7 +52,7 @@ const Register = ({ navigation }) => {
     })
     const [UserGamesInformation, setUserGamesInformation] = useState([])
     const handleRegister = () => {
-        axios.post(`${apiip}/register?code=123`,
+        axios.post(`${apiip}/register`,
             {
                 "User_uuid": "some random id", //TODO
                 "Email": Email,
@@ -81,9 +75,19 @@ const Register = ({ navigation }) => {
         )
             .then(res => {
                 console.log(res.data);
+                setMessage("Successfully Registered")
+                setShowSuccess(true)
+                setTimeout(() => {
+                    setShowSuccess(false)
+                    navigation.navigate("Login")
+                }, 2000);
             })
             .catch(err => {
-
+                setMessage("Couldn't Register")
+                setShowSuccess(true)
+                setTimeout(() => {
+                    setShowSuccess(false)
+                }, 2000);
             })
     }
     return (

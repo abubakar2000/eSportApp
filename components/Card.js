@@ -1,32 +1,35 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Image, Text, Dimensions } from 'react-native';
+import apiip from '../serverConfig';
 
 const dimensions = Dimensions.get('window');
 const imageWidth = dimensions.width - 100;
 
-const Card = () => {
+const Card = ({ GameID, GameName, GameTeamType, GameLogo }) => {
     return (
         <View style={styles.card}>
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
                 <View style={styles.imgContainer}>
                     <Image
                         style={styles.img}
-                        source={require('../assets/general/valorant.jpg')}     
+                        source={{ uri: `${apiip}/${GameLogo}` }}
                     />
                 </View>
-                <View style={{width:'50%', justifyContent: 'center'}}>
-                    <Text style={styles.heading}>Battle Grounds Mobile India</Text>
-                    <Text style={styles.text}>Battle Royale</Text>
+                <View style={{ width: '50%', justifyContent: 'center' }}>
+                    <Text style={styles.heading}>{GameName}</Text>
+                    <Text style={styles.text}>{GameTeamType[0]}</Text>
                 </View>
-                <View style={{flexDirection:'row', paddingLeft: 5, flex:1}}>
-                    <View style={{paddingTop:30}}>
-                        <Image 
+                <View style={{ flexDirection: 'row', paddingLeft: 5, flex: 1 }}>
+                    <View style={{ paddingTop: 30 }}>
+                        <Image
                             style={styles.infoImg}
-                            source={require('../assets/info.png')}  
+                            source={require('../assets/info.png')}
                         />
                     </View>
-                    <View style={{height: '100%', justifyContent:'center'}}>
-                        <Text style={styles.infoText}>Pro Matches & Scrims</Text>
+                    <View style={{ height: '100%', justifyContent: 'center' }}>
+                        <Text style={styles.infoText}>Pro Matches & Scrims</Text>  
+                        {/* //TODO */}
                     </View>
                 </View>
             </View>
@@ -60,9 +63,10 @@ const styles = StyleSheet.create({
         color: '#8C8C8C'
     },
     img: {
-        maxHeight: 55,
-        maxWidth: 55,
+        height: 55,
+        width: 55,
         borderRadius: 40,
+        resizeMode:'contain'
     },
     infoImg: {
         maxHeight: 15,
