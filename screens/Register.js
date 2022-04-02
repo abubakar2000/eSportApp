@@ -6,6 +6,7 @@ import axios from 'axios';
 import apiip from '../serverConfig';
 import { Modal } from 'react-native';
 import { Dimensions } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const Register = ({ navigation }) => {
 
@@ -51,6 +52,12 @@ const Register = ({ navigation }) => {
         "Bonus_cash": 0
     })
     const [UserGamesInformation, setUserGamesInformation] = useState([])
+
+    const [showCountryModal, setShowCountryModal] = useState(true)
+    const [CountriesList, setCountriesList] = useState([
+        "India", "Pakistan", "Canada", "Germany", "Denmark", "Sri Lanka"
+    ])
+
     const handleRegister = () => {
         axios.post(`${apiip}/register`,
             {
@@ -96,6 +103,43 @@ const Register = ({ navigation }) => {
                 flex: 9, width: '100%', justifyContent: 'center',
                 alignItems: 'center',
             }}>
+                <Modal
+                    visible={showCountryModal}
+                    animationType='slide'
+                    transparent={true}
+                >
+                    <View style={{
+                        width: '100%', height: Dimensions.get('screen').height,
+                        alignItems: 'center', justifyContent: 'center'
+                    }}>
+                        <View style={{ padding: 10, backgroundColor: 'white', width: '80%',height:Dimensions.get('screen').height/3,
+                        shadowOffset:{height:0,width:0},shadowColor:'gray',shadowRadius:5,shadowOpacity:0.5,elevation:10 }}>
+                            <Text style={{padding:10,color:'gray'}}>Scroll to find you country</Text>
+                            <ScrollView>
+                                {
+                                    CountriesList.map(country => (
+                                        <TouchableOpacity
+                                            onPress={() => setCountry(country)}
+                                            key={country}>
+                                            <View style={{ padding: 5, margin: 5, alignItems: 'stretch', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                <Text>{country}</Text>
+                                                <Text style={{ textAlign: 'left' }}>{country === Country ? '✔' : ''}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    ))
+                                }
+                            </ScrollView>
+                            <TouchableOpacity
+                                onPress={() => setShowCountryModal(false)}
+                            ><Text style={{
+                                textAlign: 'center', padding: 10, backgroundColor: '#394D82',
+                                color: 'white', marginTop: 20
+                            }}>
+                                    OK
+                                </Text></TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
                 <Modal
                     animationType='fade'
                     transparent={true}
@@ -144,6 +188,17 @@ const Register = ({ navigation }) => {
                         setConfirmedPassword(text)
                     }}
                     style={[styles.inputField]} secureTextEntry={true} placeholder='confirm password' />
+                <Text style={styles.labelFieldStyle}>Country</Text>
+                <TextInput
+                    
+                    onPressIn={() => {
+                        setShowCountryModal(true)
+                    }}
+                    value={Country}
+                    // onChangeText={text => {
+                    // setConfirmedPassword(text)
+                    // }}
+                    style={[styles.inputField]} placeholder='confirm password' />
                 <View style={{ marginTop: 40, marginBottom: 10 }}>
                     <Text style={{ fontSize: 11, textAlign: 'center' }}>By Continuing you agree to Clossum's</Text>
                     <Text style={{ fontSize: 11, textAlign: 'center' }}>Terms of use and Privacy Policy</Text>

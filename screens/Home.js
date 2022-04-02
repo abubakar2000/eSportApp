@@ -19,18 +19,16 @@ const Home = ({ navigation }) => {
     const [GamesList, setGamesList] = useState([])
 
     useEffect(() => {
-        setInterval(() => {
+        // setInterval(() => {
             axios.get(`${apiip}/enlistgames`)
                 .then(res => {
-                    console.log("Ran2");
-                    console.log(res.data);
                     setGamesList(res.data)
                 })
                 .catch(err => {
 
                 })
-        }, 3000);
-    }, [])
+        // }, 3000);
+    }, [axios,GamesList])
 
 
     var colorArr = ['#691B31', '#7E897C', '#447EAB'];
