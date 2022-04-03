@@ -1,26 +1,21 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import Animated, {
-  useSharedValue,
-  withTiming,
-  useAnimatedStyle,
-  Easing,
-} from 'react-native-reanimated';
-
 import 'react-native-gesture-handler';
-import AppDrawer from './routes/Drawer';
 import { AuthStack } from './routes/AuthStack';
 
+import { Provider } from 'react-redux';
+import store from './data/store';
 
 
 const App = () => {
   return (
-    <View style={[styles.AppContainer]}>
-      <View style={[styles.SafeAppContainer]}>
-        {/* <AppDrawer /> */}
-        <AuthStack/>
+    <Provider store={store}>
+      <View style={[styles.AppContainer]}>
+        <View style={[styles.SafeAppContainer]}>
+          <AuthStack />
+        </View>
       </View>
-    </View>
+    </Provider>
   );
 };
 

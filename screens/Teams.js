@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import AppBar from '../components/AppBar';
 import image from '../assets/favicon.png';
 import FormInputComponent from '../components/FormInputComponent';
+import ProfilePicture from '../assets/10.jpg';
 
 const Teams = ({ navigation }) => {
     const [GameList, setGameList] = useState([
@@ -35,7 +36,7 @@ const Teams = ({ navigation }) => {
     return (
         <View>
             <ScrollView style={[{ backgroundColor: 'rgb(240,240,240)' }]}>
-                <AppBar whereTo={''} title={'My Teams'} showDrawer={false} navigation={navigation} />
+                <AppBar whereTo={''} profilePicture={ProfilePicture} title={'My Teams'} showDrawer={false} navigation={navigation} />
                 <View style={[styles.container]}>
                     <Text style={[styles.grayText]}>Choose a game to continue</Text>
                     <View style={[styles.gameListContainer]}>

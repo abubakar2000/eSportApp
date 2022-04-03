@@ -2,6 +2,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Text } from "react-native";
+import { useSelector } from "react-redux";
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 import Scrims from "../screens/Scrims";

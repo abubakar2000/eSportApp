@@ -8,6 +8,7 @@ import GradientCard from '../components/GradientCard';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import apiip from '../serverConfig';
+import ProfilePicture from '../assets/10.jpg';
 
 const LINKS = {
     image1: require("../assets/homepage/giphy.gif"),
@@ -19,16 +20,25 @@ const Home = ({ navigation }) => {
     const [GamesList, setGamesList] = useState([])
 
     useEffect(() => {
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
         // setInterval(() => {
-            axios.get(`${apiip}/enlistgames`)
-                .then(res => {
-                    setGamesList(res.data)
-                })
-                .catch(err => {
-
-                })
+        axios.get(`${apiip}/enlistgames`,{cancelToken:source.token})
+            .then(res => {
+                setGamesList(res.data)
+            })
+            .catch(err => {
+                if (axios.isCancel(err)) {
+                    console.log("Successfully aborted");
+                }else{
+                    console.log("Could abort the request loop");
+                }
+            })
         // }, 3000);
-    }, [axios,GamesList])
+        return () => {
+            source.cancel()
+        }
+    }, [axios, GamesList, setGamesList])
 
 
     var colorArr = ['#691B31', '#7E897C', '#447EAB'];
@@ -42,7 +52,7 @@ const Home = ({ navigation }) => {
         <View style={{ flex: 1 }}>
             <ScrollView>
                 <View style={[styles.container, styles.center]}>
-                    <AppBar navigation={navigation} title={"HAEXR"} whereTo={'Account'} showDrawer={true} />
+                    <AppBar navigation={navigation} profilePicture={ProfilePicture} title={"HAEXR"} whereTo={'Account'} showDrawer={true} />
                     <View style={{ width: '100%', }}>
                         <ScrollView style={{ backgroundColor: 'white', }} horizontal={true} >
                             <TouchableOpacity onPress={() => onNavigate('Scrims')}>

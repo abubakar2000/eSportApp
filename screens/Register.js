@@ -87,7 +87,7 @@ const Register = ({ navigation }) => {
                 setTimeout(() => {
                     setShowSuccess(false)
                     navigation.navigate("Login")
-                }, 2000);
+                }, 1000);
             })
             .catch(err => {
                 setMessage("Couldn't Register")

@@ -4,8 +4,14 @@ import AppBar from '../components/AppBar'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { ScrollView, TouchableOpacity } from 'react-native'
 import ActionSheet from '../components/ActionSheet'
+import { useEffect } from 'react'
+import axios from 'axios'
+import apiip from '../serverConfig'
+import { useSelector } from 'react-redux';
+import ProfilePicture from '../assets/10.jpg';
 
 const InformationBox = ({ typeIndex = 2, Cash = 200, applicableIn = ["Scrims"] }) => {
+
     const [CashType, setCashType] = useState([
         { type: "Add Cash" },
         { type: "Withdraw" },
@@ -90,10 +96,45 @@ const Wallet = ({ navigation }) => {
         }).start();
 
     }
+    const [BonusCash, setBonusCash] = useState(0)
+    const [Withdrawable, setWithdrawable] = useState(0)
+    const [DepositeCash, setDepositeCash] = useState(0)
+    const emailState = useSelector(state => state.appState.email);
+    const passwordState = useSelector(state => state.appState.password);
+
+    useEffect(() => {
+
+        const CancelToken = axios.CancelToken
+        const source = CancelToken.source();
+        axios.post(`${apiip}/getuserinfo`,
+            {
+                "Email": emailState,
+                "Password": passwordState
+            }, { cancelToken: source.token }
+        ).then(res => {
+            console.log(res.data);
+            setDepositeCash(res.data.UserWallet.Deposit_cash)
+            setBonusCash(res.data.UserWallet.Bonus_cash)
+            setWithdrawable(res.data.UserWallet.Winning_cash)
+
+
+        }).catch(err => {
+            if (axios.isCancel(err)) {
+                console.log("Successfully unmoounted");
+            }
+            console.log(err);
+        })
+
+        return () => {
+            source.cancel();
+        }
+    }, [axios, setDepositeCash, setBonusCash, setWithdrawable])
+
+
     return (
         <View>
             <ScrollView>
-                <AppBar navigation={navigation} title={"Wallet"}
+                <AppBar profilePicture={ProfilePicture} navigation={navigation} title={"Wallet"}
                     showDrawer={false} whereTo={"Account"}
                     centerFocused={false}
                 />
@@ -105,7 +146,7 @@ const Wallet = ({ navigation }) => {
                         flexDirection: 'row', justifyContent: 'space-between',
                         alignItems: 'flex-end', marginBottom: 20
                     }}>
-                        <Text style={styles.balance}>₹200</Text>
+                        <Text style={styles.balance}>₹{BonusCash + DepositeCash + Withdrawable}</Text>
                         <View style={{ flexDirection: 'row' }}>
                             <MaterialCommunityIcons style={{ marginRight: 5 }} name='information-outline' size={15} />
                             <View style={{ flexDirection: 'column' }}>
@@ -115,9 +156,9 @@ const Wallet = ({ navigation }) => {
                         </View>
                     </View>
                     <View>
-                        <InformationBox Cash={200} typeIndex={0} />
-                        <InformationBox Cash={12000} typeIndex={1} />
-                        <InformationBox Cash={1222} typeIndex={2} applicableIn={["Scrims", "Tournaments"]} />
+                        <InformationBox Cash={DepositeCash} typeIndex={0} />
+                        <InformationBox Cash={Withdrawable} typeIndex={1} />
+                        <InformationBox Cash={BonusCash} typeIndex={2} applicableIn={["Scrims", "Tournaments"]} />
                     </View>
                     <View>
                         <Text style={{ paddingTop: 15, paddingBottom: 15 }}>Others</Text>
@@ -149,7 +190,7 @@ const Wallet = ({ navigation }) => {
                 alignment={alignment}
                 setAlignment={setAlignment}
                 content={"Rewards"}
-                />
+            />
         </View>
     )
 }

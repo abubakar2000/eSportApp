@@ -1,11 +1,12 @@
 import { Image, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import AppBar from "../components/AppBar";
 import Picture from '../assets/favicon.png'
+import ProfilePicture from '../assets/10.jpg';
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 const Support = ({ navigation }) => {
     return (
         <View>
-            <AppBar title={"Support"} showDrawer={false} navigation={navigation} whereTo={''} />
+            <AppBar title={"Support"} profilePicture={ProfilePicture} showDrawer={false} navigation={navigation} whereTo={''} />
             <View style={{ backgroundColor: 'rgb(245,245,245)', height: '100%', width: '100%' }}>
                 <View>
                     <Text style={{ padding: 20 }}>Social Handles</Text>

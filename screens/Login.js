@@ -6,8 +6,16 @@ import axios from 'axios';
 import apiip from '../serverConfig';
 import { Modal } from 'react-native';
 import { Dimensions } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setEmailState, setPasswordState } from '../data/stateSlice';
+
+
+
 
 const Login = ({ navigation }) => {
+    const emailState = useSelector(state => state.appState.email);
+    const passwordState = useSelector(state => state.appState.password);
+    const dispatch = useDispatch()
 
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
@@ -29,11 +37,14 @@ const Login = ({ navigation }) => {
                 console.log(res.data);
                 if (res.data === "OK") {
                     setMessage("Successfully Logged In")
+                    dispatch(setEmailState(Email))
+                    dispatch(setPasswordState(Password))
+                    navigation.navigate("AppDrawer");
                     setShowMessage(true)
                     setTimeout(() => {
                         setShowMessage(false)
-                        navigation.navigate("AppDrawer");
-                    }, 1500);
+
+                    }, 100);
                 } else {
                     setMessage("Incorrect Email or Password")
                     setShowMessage(true)
@@ -66,10 +77,12 @@ const Login = ({ navigation }) => {
                         height: Dimensions.get("screen").height, width: '100%',
                         alignItems: 'center', justifyContent: 'center'
                     }}>
-                        <View style={{backgroundColor:'white',padding:15,shadowColor:'gray',
-                    shadowOffset:{width:0,height:0},shadowOpacity:1,shadowRadius:5,elevation:5,
-                    borderRadius:10}}>
-                            <Text style={{fontSize:20}}>{Message}</Text>
+                        <View style={{
+                            backgroundColor: 'white', padding: 15, shadowColor: 'gray',
+                            shadowOffset: { width: 0, height: 0 }, shadowOpacity: 1, shadowRadius: 5, elevation: 5,
+                            borderRadius: 10
+                        }}>
+                            <Text style={{ fontSize: 20 }}>{Message}</Text>
                         </View>
                     </View>
                 </Modal>

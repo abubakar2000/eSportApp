@@ -1,34 +1,78 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { StyleSheet } from 'react-native'
 import AppBar from '../components/AppBar'
-
+import { Ionicons } from '@expo/vector-icons'
 import profilePicture from '../assets/10.jpg'
 import gameImage from '../assets/favicon.png';
-
+// import ProfilePicture from '../assets/10.jpg';
 import FormInputComponent from '../components/FormInputComponent'
 import GamelgnandidComponent from '../components/GamelgnandidComponent'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import apiip from '../serverConfig'
 
 function Account({ navigation }) {
+
+    const emailState = useSelector(state => state.appState.email)
+    const passwordState = useSelector(state => state.appState.password)
 
     const [FirstName, setFirstName] = useState("Amie");
     const [LastName, setLastName] = useState("Richards")
     const [Phone, setPhone] = useState("12345678")
     const [Email, setEmail] = useState("ammie78@gmail.com")
     const [Address, setAddress] = useState("House 79b, Gali 7, Kashmir Rd 51310, Punjab")
+    const [ProfileImage, setProfileImage] = useState("")
 
+    useEffect(() => {
+
+        const CancelToken = axios.CancelToken
+        const source = CancelToken.source()
+
+        axios.post(`${apiip}/getuserinfo`, {
+            "Email": emailState,
+            "Password": passwordState
+        }, { CancelToken: source.token })
+            .then(res => {
+                setFirstName(res.data.Fname)
+                setLastName(res.data.Lname)
+                setPhone(res.data.Telephone)
+                setEmail(res.data.Email)
+                setAddress(res.data.Address)
+                setProfileImage(res.data.ProfileImage)
+            })
+            .catch(err => {
+                console.log(err);
+                if (axios.isCancel(err)) {
+                    console.log('Successfully unsubscribed');
+                }
+            })
+        return () => {
+            source.cancel()
+        }
+    }, [])
 
 
     return (
         <ScrollView style={[{ backgroundColor: 'rgb(240,240,240)' }]}>
-            <AppBar title={"Profile"} showDrawer={false} navigation={navigation} whereTo={''} />
+            <AppBar profilePicture={ProfileImage} title={"Profile"} showDrawer={false} navigation={navigation} whereTo={''} />
             <View style={[styles.topContainer]}>
                 <View style={[styles.imageContainer]}>
-                    <Image source={profilePicture} style={[styles.profilePicture]} />
+                    {
+                        ProfileImage !== "" &&
+                        // <Image source={ProfileImage} style={[styles.profilePicture]} />
+                        <Image source={{uri:`${apiip}/${ProfileImage}`}} style={[styles.profilePicture]} />
+                    }
+                    {
+                        ProfileImage === "" &&
+                        <TouchableOpacity style={[styles.profilePictureBlank]}>
+                            <Ionicons name='camera-outline' size={40} color={'rgb(130,130,130)'} />
+                        </TouchableOpacity>
+                    }
                 </View>
                 <View style={[styles.usernameEmailContainer]}>
-                    <Text style={[styles.username]}>Ammie</Text>
-                    <Text style={[styles.email, styles.grayText]}>amie**@gmail.com</Text>
+                    <Text style={[styles.username]}>{FirstName} {LastName}</Text>
+                    <Text style={[styles.email, styles.grayText]}>{Email}</Text>
                 </View>
             </View>
             <View style={[styles.secondContainer]}>
@@ -70,8 +114,12 @@ export default Account
 
 const styles = StyleSheet.create({
     topContainer: { width: '100%', flex: 1, flexDirection: 'row', },
-    imageContainer: { flex: 1, },
+    imageContainer: { width: 130, height: 130, justifyContent: 'center', alignItems: 'center', },
     profilePicture: { borderRadius: 50, height: 100, width: 100, margin: 20, },
+    profilePictureBlank: {
+        borderRadius: 50, backgroundColor: 'rgb(220,220,220)', height: 100, width: 100,
+        justifyContent: 'center', alignItems: 'center',
+    },
     usernameEmailContainer: { flex: 2, justifyContent: 'center', },
     username: { marginLeft: 20, fontSize: 15, },
     email: { marginLeft: 20, fontSize: 12, },

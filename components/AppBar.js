@@ -1,9 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import ProfilePicture from '../assets/10.jpg';
 
-const AppBar = ({ title, navigation, whereTo, showDrawer, centerFocused = true }) => {
+const AppBar = ({ title, navigation, whereTo, showDrawer, profilePicture,centerFocused = true }) => {
     const openNav = () => {
         navigation.openDrawer()
     }
@@ -44,7 +43,7 @@ const AppBar = ({ title, navigation, whereTo, showDrawer, centerFocused = true }
                 }
 
                 <TouchableOpacity style={[styles.accountContainer]} onPress={onProfileClicked}>
-                    <Image source={ProfilePicture} style={[styles.profilePicture]} />
+                    <Image source={profilePicture} style={[styles.profilePicture]} />
                 </TouchableOpacity>
             </View>
         </View>

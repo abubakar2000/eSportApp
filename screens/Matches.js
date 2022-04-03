@@ -4,6 +4,7 @@ import AppBar from '../components/AppBar'
 import image from '../assets/favicon.png';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ActionSheet from '../components/ActionSheet';
+import ProfilePicture from '../assets/10.jpg';
 
 /**
  * Matches can be Scrims Pro Match and Tournament
@@ -191,7 +192,7 @@ const Matches = ({ navigation }) => {
         <View>
             <View>
                 <ScrollView style={[styles.root]}>
-                    <AppBar navigation={navigation} title={'My Matches'}
+                    <AppBar navigation={navigation} profilePicture={ProfilePicture} title={'My Matches'}
                         showDrawer={false} whereTo={''} />
                     <View style={[styles.container]}>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.myMatchList]}>
