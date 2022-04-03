@@ -1,38 +1,78 @@
-import { StyleSheet, Text, ScrollView, View, Image, TouchableOpacity, SafeAreaView } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, ScrollView, View, Image, TouchableOpacity, Picker } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import AppBar from '../components/AppBar';
 import image from '../assets/favicon.png';
 import FormInputComponent from '../components/FormInputComponent';
 import ProfilePicture from '../assets/10.jpg';
+import axios from 'axios';
+import apiip from '../serverConfig';
 
 const Teams = ({ navigation }) => {
     const [GameList, setGameList] = useState([
         {
-            name: "BGMI",
-            icon: "../assets/favicon.png"
-        },
-        {
-            name: "Free fire",
-            icon: "../assets/favicon.png"
-        },
-        {
-            name: "COD Mobile",
-            icon: "../assets/favicon.png"
-        },
-        {
-            name: "Prototype",
-            icon: "../assets/favicon.png"
-        },
-        {
-            name: "COD India",
-            icon: "../assets/favicon.png"
-        },
-        {
-            name: "BGMI2",
-            icon: "../assets/10.jpg"
-        },
+            GameName: "BGMI",
+            GameLogo: "../assets/favicon.png"
+        }
     ])
-    const [SelectedGame, setSelectedGame] = useState(GameList[0])
+
+    // Retrieve Games List from Database
+    const [GamesList, setGamesList] = useState([])
+
+    useEffect(() => {
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
+
+        axios.get(`${apiip}/enlistgames`,{cancelToken:source.token})
+            .then(res => {
+                setGamesList(res.data)
+            })
+            .catch(err => {
+                if (axios.isCancel(err)) {
+                    console.log("Successfully aborted");
+                } else{
+                    console.log("Could abort the request loop");
+                }
+            })  
+        return () => {
+            source.cancel()
+        }
+    }, [axios, GamesList, setGamesList])
+
+    // Get Game Team Type from Fetched Data
+
+    const [SelectedGame, setSelectedGame] = useState(GameList[0]);
+    const [GameTeamType, setGameTeamType] = useState([]);
+
+    function getGameTypes(gameName) {
+        for(let i = 0; i < GamesList.length; i++) {
+            if (GamesList[i].GameName == gameName)
+                setGameTeamType(GamesList[i].GameTeamType)
+        }
+    }
+
+    function changeSelectedGame(game) {
+        setSelectedGame(game);
+        getGameTypes(game.GameName);
+    }
+
+    // Dropdown Menu Selection
+
+    const [selectedLabel, setSelectedLabel] = useState("");
+
+    function show(value) {
+        setSelectedLabel(value)
+    }
+
+    function loadDropdownValues() {
+        return (
+            GameTeamType.map(type => {
+                return (
+                    <Picker.Item label={type} value={type} />
+                )
+            })
+        )
+    }
+
     return (
         <View>
             <ScrollView style={[{ backgroundColor: 'rgb(240,240,240)' }]}>
@@ -41,26 +81,37 @@ const Teams = ({ navigation }) => {
                     <Text style={[styles.grayText]}>Choose a game to continue</Text>
                     <View style={[styles.gameListContainer]}>
                         {
-                            GameList.map(singleGame => {
+                            GamesList.map(singleGame => {
                                 return (
                                     <TouchableOpacity
-                                        key={singleGame.name}
-                                        onPress={() => setSelectedGame(singleGame)}
+                                        key={singleGame.GameID}
+                                        onPress={() => changeSelectedGame(singleGame)}
                                         style={[styles.gameStyle,
-                                        singleGame.name === SelectedGame.name ? styles.gameStyleActive : null]}>
-                                        <Image source={image} style={[styles.gameLogo]} />
-                                        <Text style={[styles.grayText, styles.gameName]}>{singleGame.name}</Text>
-                                    </TouchableOpacity>
+                                        singleGame.GameName === SelectedGame.GameName ? styles.gameStyleActive : null]}>
+                                        <Image source={{ uri: `${apiip}/${singleGame.GameLogo}` }} style={[styles.gameLogo]} />
+                                        <Text style={[styles.grayText, styles.gameName]}>{singleGame.GameName}</Text>
+                                    </TouchableOpacity> 
                                 )
                             })
                         }
                     </View>
                     <View style={[styles.selectionForm]}>
                         <Text>Game Selected: </Text>
-                        <Text style={[styles.selectedGameTitle]}>{SelectedGame.name} </Text>
+                        <Text style={[styles.selectedGameTitle]}>{SelectedGame.GameName} </Text>
                     </View>
-                    <FormInputComponent placeholder='Enter Team Name' label='Team name' />
-                    <FormInputComponent placeholder='Enter Team Type' label='Team Type' />
+                    <View>
+                        <FormInputComponent placeholder='Enter Team Name' label='Team Name' />
+                    </View>
+                    <View>
+                        <Picker
+                            selectedValue={selectedLabel}
+                            onValueChange={show.bind()}
+                        >
+                                <Picker.Item label="Solo" value="0" />
+                                <Picker.Item label="Duo" value="1" />
+                                <Picker.Item label="Squad" value="2" />
+                        </Picker>
+                    </View>
                 </View>
                 <View style={[styles.footerAndSave]}>
                     <Text style={[styles.notice]}>Make sure to fill proper details & avoid unecessary interruption</Text>
@@ -87,6 +138,10 @@ const styles = StyleSheet.create({
     container: {
         padding: 20,
     },
+    dropdownContainer: {
+        paddingTop: 40,
+        alignItems: "center"
+    },
     grayText: {
         color: 'gray',
     },
@@ -108,7 +163,7 @@ const styles = StyleSheet.create({
     },
     gameStyleActive: {
         borderWidth: 2,
-        borderColor: 'blue'
+        borderColor: '#374E82'
     },
     gameLogo: {
         height: 60,
@@ -125,11 +180,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     selectedGameTitle: {
-        color: 'blue'
+        color: '#374E82'
     },
     footerAndSave: { padding: 20, flexDirection: 'row', flex: 1 },
     notice: { flex: 3, padding: 5, fontSize: 12, color: 'gray' },
     grow: { flex: 2, justifyContent: 'center', alignItems: 'center', },
-    saveButton: { borderRadius: 5, backgroundColor: 'blue', },
+    saveButton: { borderRadius: 5, backgroundColor: '#374E82', },
     saveButtonInside: { color: 'white', paddingTop: 8, paddingBottom: 8, paddingLeft: 20, paddingRight: 20, },
 })
