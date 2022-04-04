@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         padding: 12,
     },
     labelContainer: {
-        margin: 5,
+        margin: 10,
         color: 'gray',
         fontSize: 12,
     },
