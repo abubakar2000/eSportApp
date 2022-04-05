@@ -23,14 +23,14 @@ const Home = ({ navigation }) => {
         const CancelToken = axios.CancelToken;
         const source = CancelToken.source();
         // setInterval(() => {
-        axios.get(`${apiip}/enlistgames`,{cancelToken:source.token})
+        axios.get(`${apiip}/enlistgames`, { cancelToken: source.token })
             .then(res => {
                 setGamesList(res.data)
             })
             .catch(err => {
                 if (axios.isCancel(err)) {
                     console.log("Successfully aborted");
-                }else{
+                } else {
                     console.log("Could abort the request loop");
                 }
             })
@@ -55,7 +55,7 @@ const Home = ({ navigation }) => {
                     <AppBar navigation={navigation} profilePicture={ProfilePicture} title={"HAEXR"} whereTo={'Account'} showDrawer={true} />
                     <View style={{ width: '100%', }}>
                         <ScrollView style={{ backgroundColor: 'white', }} horizontal={true} >
-                            <TouchableOpacity onPress={() => onNavigate('Scrims')}>
+                            <TouchableOpacity>
                                 <Gif />
                             </TouchableOpacity>
                         </ScrollView>
@@ -80,11 +80,12 @@ const Home = ({ navigation }) => {
                                 GamesList.map(game => {
                                     return (
                                         <Card
+                                            navigation={navigation}
                                             key={game.GameID}
                                             GameID={game.GameID}
                                             GameLogo={game.GameLogo}
                                             GameName={game.GameName}
-                                            GameTeamType={game.GameTeamType}
+                                            GameTeamType={game.GameTeamType[0]}
                                         />
                                     )
                                 })

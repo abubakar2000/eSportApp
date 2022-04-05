@@ -1,14 +1,18 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Image, Text, Dimensions } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import apiip from '../serverConfig';
 
 const dimensions = Dimensions.get('window');
 const imageWidth = dimensions.width - 100;
 
-const Card = ({ GameID, GameName, GameTeamType, GameLogo }) => {
+const Card = ({ GameID, GameName, GameTeamType, GameLogo, navigation }) => {
+    const onNavigate = (screen) => {
+        navigation.navigate(screen)
+    }
     return (
-        <View style={styles.card}>
+        <TouchableOpacity onPress={() => onNavigate('Scrims')} style={styles.card}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
                 <View style={styles.imgContainer}>
                     <Image
@@ -18,7 +22,7 @@ const Card = ({ GameID, GameName, GameTeamType, GameLogo }) => {
                 </View>
                 <View style={{ width: '50%', justifyContent: 'center' }}>
                     <Text style={styles.heading}>{GameName}</Text>
-                    <Text style={styles.text}>{GameTeamType[0]}</Text>
+                    <Text style={styles.text}>{GameTeamType}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', paddingLeft: 5, flex: 1 }}>
                     <View style={{ paddingTop: 30 }}>
@@ -28,12 +32,12 @@ const Card = ({ GameID, GameName, GameTeamType, GameLogo }) => {
                         />
                     </View>
                     <View style={{ height: '100%', justifyContent: 'center' }}>
-                        <Text style={styles.infoText}>Pro Matches & Scrims</Text>  
+                        <Text style={styles.infoText}>Pro Matches & Scrims</Text>
                         {/* //TODO */}
                     </View>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 
@@ -66,7 +70,7 @@ const styles = StyleSheet.create({
         height: 55,
         width: 55,
         borderRadius: 40,
-        resizeMode:'contain'
+        resizeMode: 'contain'
     },
     infoImg: {
         maxHeight: 15,
