@@ -11,21 +11,9 @@ import apiip from '../serverConfig';
 const Teams = ({ navigation }) => {
     const [GameList, setGameList] = useState([
         {
-            GameName: "BGMI",
+            GameName: "",
             GameLogo: "../assets/favicon.png"
-        },
-        {
-            GameName: "BGMI",
-            GameLogo: "../assets/favicon.png"
-        },
-        {
-            GameName: "BGMI",
-            GameLogo: "../assets/favicon.png"
-        },
-        {
-            GameName: "BGMI",
-            GameLogo: "../assets/favicon.png"
-        },
+        }
     ])
 
     // Retrieve Games List from Database
@@ -81,12 +69,21 @@ const Teams = ({ navigation }) => {
         setDefaultTeamType(type);
     }
 
+    function checkOpen () {
+        if (SelectedGame === GameList[0]) {
+            alert("Please select a game!");
+        }
+        else {
+            setModalVisible(true);
+        }
+    }
+
     return (
         <View>
             <ScrollView style={[{ backgroundColor: 'rgb(240,240,240)' }]}>
                 <AppBar whereTo={''} profilePicture={ProfilePicture} title={'My Teams'} showDrawer={false} navigation={navigation} />
                 <View style={[styles.container]}>
-                    <Text style={[styles.grayText]}>Choose a game to continue</Text>
+                    <Text style={[styles.grayText]}>Choose a game to continue:</Text>
                     <ScrollView horizontal={true} style={[styles.gameListContainer]}>
                         {
                             GamesList.map(singleGame => {
@@ -141,7 +138,7 @@ const Teams = ({ navigation }) => {
                         </Modal>
                         <Pressable
                             style={[styles.button, styles.buttonOpen]}
-                            onPress={() => setModalVisible(true)}
+                            onPress={() => checkOpen()}
                         >
                             <Text style={[styles.textStyle, selected ? styles.textStyle1 : null]}>{defaultTeamType}</Text>
                         </Pressable>
