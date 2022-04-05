@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, ScrollView, View, Image, TouchableOpacity, Modal, Pressable } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import {Picker} from '@react-native-picker/picker'
 import AppBar from '../components/AppBar';
@@ -55,6 +55,7 @@ const Teams = ({ navigation }) => {
 
     const [SelectedGame, setSelectedGame] = useState(GameList[0]);
     const [GameTeamType, setGameTeamType] = useState([]);
+    const [defaultTeamType, setDefaultTeamType] = useState("Choose a Team Type");
 
     function getGameTypes(gameName) {
         for(let i = 0; i < GamesList.length; i++) {
@@ -66,24 +67,18 @@ const Teams = ({ navigation }) => {
     function changeSelectedGame(game) {
         setSelectedGame(game);
         getGameTypes(game.GameName);
+        setDefaultTeamType("Choose a Team Type");
     }
 
-    // Dropdown Menu Selection
+    // Modal Functionality
 
-    const [selectedLabel, setSelectedLabel] = useState("");
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selected, setSelected] = useState(false);
 
-    function show(value) {
-        setSelectedLabel(value)
-    }
-
-    function loadDropdownValues() {
-        return (
-            GameTeamType.map(type => {
-                return (
-                    <Picker.Item label={type} value={type} />
-                )
-            })
-        )
+    function changeLabel (type) {
+        setModalVisible(!modalVisible);
+        setSelected(true);
+        setDefaultTeamType(type);
     }
 
     return (
@@ -117,18 +112,43 @@ const Teams = ({ navigation }) => {
                         <FormInputComponent placeholder='Enter Team Name' label='Team Name' />
                     </View>
                     <View>
-                        <Picker
-                            selectedValue={selectedLabel}
-                            onValueChange={show.bind()}
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => {
+                            Alert.alert("Modal has been closed.");
+                            setModalVisible(!modalVisible);
+                            }}
                         >
-                                <Picker.Item label="Solo" value="0" />
-                                <Picker.Item label="Duo" value="1" />
-                                <Picker.Item label="Squad" value="2" />
-                        </Picker>
+                            <View style={styles.centeredView}>
+                            <View style={styles.modalView}>
+                                <Text style={styles.modalText}>title</Text>
+                                {
+                                    GameTeamType.map(type => {
+                                        return (
+                                            <Pressable
+                                                key={type}
+                                                onPress={() => changeLabel(type)}
+                                                style={[styles.button, styles.buttonClose]}>
+                                                <Text style={styles.textStyle}>{type}</Text>
+                                            </Pressable> 
+                                        )
+                                    })
+                                }
+                            </View>
+                            </View>
+                        </Modal>
+                        <Pressable
+                            style={[styles.button, styles.buttonOpen]}
+                            onPress={() => setModalVisible(true)}
+                        >
+                            <Text style={[styles.textStyle, selected ? styles.textStyle1 : null]}>{defaultTeamType}</Text>
+                        </Pressable>
                     </View>
                 </View>
                 <View style={[styles.footerAndSave]}>
-                    <Text style={[styles.notice]}>Make sure to fill proper details & avoid unecessary interruption</Text>
+                    <Text style={[styles.notice]}>Make sure to fill proper details & avoid unecessary interruption.z</Text>
                     <View style={[styles.grow]}>
                         <View>
                             <TouchableOpacity style={[styles.saveButton]}>
@@ -158,19 +178,17 @@ const styles = StyleSheet.create({
     },
     grayText: {
         color: 'gray',
-        padding: 20
+        margin: 20
     },
     grayText2: {
         color: 'gray',
         padding: 0
     },
     gameListContainer: {
-        marginTop: 10,
+        marginBottom: 10,
         flexDirection: 'row',
         flexWrap: 'wrap',
         paddingLeft:10,
-        // justifyContent: 'center',
-        // alignItems: 'center',
     },
     gameStyle: {
         minHeight: 100,
@@ -212,4 +230,51 @@ const styles = StyleSheet.create({
     grow: { flex: 2, justifyContent: 'center', alignItems: 'center', },
     saveButton: { borderRadius: 5, backgroundColor: '#374E82', },
     saveButtonInside: { color: 'white', paddingTop: 8, paddingBottom: 8, paddingLeft: 20, paddingRight: 20, },
+
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
+      button: {
+        borderRadius: 5,
+        padding: 10,
+        elevation: 2,
+        borderBottomColor: '#374E82',
+        borderBottomWidth: 2,
+      },
+      buttonOpen: {
+        backgroundColor: "#fff",
+        margin:10
+      },
+      buttonClose: {
+      },
+      textStyle: {
+        color: "#C6C6C8",
+        fontSize: 14,
+      },
+      textStyle1: {
+          color: "#000",
+        fontSize: 14,
+      },
+      modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+      }
 })
