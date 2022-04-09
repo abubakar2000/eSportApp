@@ -38,7 +38,7 @@ const Home = ({ navigation }) => {
         return () => {
             source.cancel()
         }
-    }, [axios, GamesList, setGamesList])
+    }, [])
 
 
     var colorArr = ['#691B31', '#7E897C', '#447EAB'];

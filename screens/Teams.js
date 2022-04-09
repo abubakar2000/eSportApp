@@ -19,6 +19,10 @@ const Teams = ({ navigation }) => {
     // Retrieve Games List from Database
     const [GamesList, setGamesList] = useState([])
 
+     // Get User Team List from Database
+    const [AllTeams, setAllTeams] = useState([])
+    const [SelectedGameTeams, setSelectedGameTeams] = useState([])
+
     useEffect(() => {
         const CancelToken = axios.CancelToken;
         const source = CancelToken.source();
@@ -34,12 +38,26 @@ const Teams = ({ navigation }) => {
                     console.log("Could abort the request loop");
                 }
             })  
+
+        axios.get(`${apiip}/getteams_whole`,{cancelToken:source.token})
+            .then(res => {
+                setAllTeams(res.data)
+                console.log(AllTeams)
+            })
+            .catch(err => {
+                if (axios.isCancel(err)) {
+                    console.log("Successfully aborted");
+                } else{
+                    console.log("Could abort the request loop");
+                }
+            })
+
         return () => {
             source.cancel()
-        }
-    }, [axios, GamesList, setGamesList])
+        } 
+    }, [])
 
-    // Get Game Team Type from Fetched Data
+    // Get Game Team Type and All Teamd for Selected Game from Fetched Data
 
     const [SelectedGame, setSelectedGame] = useState(GameList[0]);
     const [GameTeamType, setGameTeamType] = useState([]);
@@ -56,6 +74,7 @@ const Teams = ({ navigation }) => {
         setSelectedGame(game);
         getGameTypes(game.GameName);
         setDefaultTeamType("Choose a Team Type");
+        setSelected(false);
     }
 
     // Modal Functionality
@@ -77,6 +96,11 @@ const Teams = ({ navigation }) => {
             setModalVisible(true);
         }
     }
+
+    // Create Teams for Games
+
+    const [MyTeam, setMyTeam] = useState([])
+    const [memberModal, setMemberModal] = useState([])
 
     return (
         <View>
@@ -114,13 +138,12 @@ const Teams = ({ navigation }) => {
                             transparent={true}
                             visible={modalVisible}
                             onRequestClose={() => {
-                            Alert.alert("Modal has been closed.");
-                            setModalVisible(!modalVisible);
+                                Alert.alert("Modal has been closed.");
+                                setModalVisible(!modalVisible);
                             }}
                         >
                             <View style={styles.centeredView}>
                             <View style={styles.modalView}>
-                                <Text style={styles.modalText}>title</Text>
                                 {
                                     GameTeamType.map(type => {
                                         return (
@@ -128,7 +151,7 @@ const Teams = ({ navigation }) => {
                                                 key={type}
                                                 onPress={() => changeLabel(type)}
                                                 style={[styles.button, styles.buttonClose]}>
-                                                <Text style={styles.textStyle}>{type}</Text>
+                                                <Text style={styles.textStyle1}>{type}</Text>
                                             </Pressable> 
                                         )
                                     })
@@ -140,8 +163,62 @@ const Teams = ({ navigation }) => {
                             style={[styles.button, styles.buttonOpen]}
                             onPress={() => checkOpen()}
                         >
-                            <Text style={[styles.textStyle, selected ? styles.textStyle1 : null]}>{defaultTeamType}</Text>
+                            <Text style={[selected ? styles.textStyle1 : styles.textStyle]}>{defaultTeamType}</Text>
                         </Pressable>
+                    </View>
+                </View>
+
+                {/* Teams Implementation */}
+
+                <View style={{margin: 20, backgroundColor: "#fff", borderRadius: 8, alignItems: 'center'}}>
+                    <View style={[selected ? styles.teamView : styles.teamViewDisabled]}>
+                        {
+                            GamesList.map(singleGame => {
+                                return (
+                                    <View
+                                        key={singleGame.GameID}
+                                        onPress={() => changeSelectedGame(singleGame)}
+                                        style={styles.addCircle} 
+                                    >
+                                        <Image source={{ uri: `${apiip}/${singleGame.GameLogo}` }} style={[styles.gameLogo]} />
+                                    </View> 
+                            )
+                            })
+                        }
+                        <View>
+                            <Modal
+                                animationType="slide"
+                                transparent={true}
+                                visible={memberModal}
+                                onRequestClose={() => {
+                                    Alert.alert("Modal has been closed.");
+                                    setMemberModal(!memberModal);
+                                }}
+                            >
+                                <View style={styles.centeredView}>
+                                <View style={styles.modalView}>
+                                    {
+                                        GameTeamType.map(type => {
+                                            return (
+                                                <Pressable
+                                                    key={type}
+                                                    onPress={() => setMemberModal(!memberModal)}
+                                                    style={[styles.button, styles.buttonClose]}>
+                                                    <Text style={styles.textStyle1}>{type}</Text>
+                                                </Pressable> 
+                                            )
+                                        })
+                                    }
+                                </View>
+                                </View>
+                            </Modal>
+                            <TouchableOpacity
+                                style={styles.addCircle}
+                                onPress={() => setMemberModal(true)}
+                            >
+                                <Image source={require('../assets/plus.png')} style={{width: 30, height: 30}} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
                 <View style={[styles.footerAndSave]}>
@@ -222,19 +299,40 @@ const styles = StyleSheet.create({
     selectedGameTitle: {
         color: '#374E82'
     },
-    footerAndSave: { padding: 20, flexDirection: 'row', flex: 1 },
-    notice: { flex: 3, padding: 5, fontSize: 12, color: 'gray' },
-    grow: { flex: 2, justifyContent: 'center', alignItems: 'center', },
-    saveButton: { borderRadius: 5, backgroundColor: '#374E82', },
-    saveButtonInside: { color: 'white', paddingTop: 8, paddingBottom: 8, paddingLeft: 20, paddingRight: 20, },
-
+    footerAndSave: { 
+        padding: 20, 
+        flexDirection: 'row', 
+        flex: 1 
+    },
+    notice: { 
+        flex: 3, 
+        padding: 5, 
+        fontSize: 12, 
+        color: 'gray' 
+    },
+    grow: { 
+        flex: 2, 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+    },
+    saveButton: { 
+        borderRadius: 5, 
+        backgroundColor: '#374E82', 
+    },
+    saveButtonInside: { 
+        color: 'white', 
+        paddingTop: 8, 
+        paddingBottom: 8, 
+        paddingLeft: 20, 
+        paddingRight: 20, 
+    },
     centeredView: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         marginTop: 22
-      },
-      modalView: {
+    },
+    modalView: {
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
@@ -242,36 +340,59 @@ const styles = StyleSheet.create({
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 2
+            width: 0,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
-      },
-      button: {
+    },
+    button: {
         borderRadius: 5,
         padding: 10,
         elevation: 2,
         borderBottomColor: '#374E82',
         borderBottomWidth: 2,
-      },
-      buttonOpen: {
+    },
+    buttonOpen: {
         backgroundColor: "#fff",
         margin:10
-      },
-      buttonClose: {
-      },
-      textStyle: {
+    },
+    textStyle: {
         color: "#C6C6C8",
         fontSize: 14,
-      },
-      textStyle1: {
-          color: "#000",
+    },
+    textStyle1: {
+        color: "#000",
         fontSize: 14,
-      },
-      modalText: {
+    },
+    modalText: {
         marginBottom: 15,
-        textAlign: "center"
-      }
+        textAlign: "center",
+    },
+    teamView: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        flexWrap: 'wrap',
+        justifyContent: 'flex-start',
+        padding: 10,
+        width: '90%'
+    },
+    teamViewDisabled: {
+        display:'none'
+    },
+    addCircle: {
+        width: 60,
+        height: 60,
+        backgroundColor: '#DCDCDC',
+        borderRadius: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
+        marginBottom: 10,
+        marginRight: 5,
+        marginLeft: 5
+    }
 })
