@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
     },
     matchItemActive: {
         borderWidth: 2,
-        borderColor: 'blue',
+        borderColor: 'rgb(54, 79, 130)',
     },
     image: {
         height: '60%',
@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
     },
     tabActive: {
-        backgroundColor: 'blue',
+        backgroundColor: 'rgb(54, 79, 130)',
     },
     tabTextActive: {
         color: 'white',
@@ -489,7 +489,7 @@ const styles = StyleSheet.create({
     lowerSectionUM: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-        backgroundColor: 'blue',
+        backgroundColor: 'rgb(54, 79, 130)',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 8,
@@ -509,7 +509,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 10,
         paddingBottom: 10,
-        backgroundColor: 'blue',
+        backgroundColor: 'rgb(54, 79, 130)',
         // marginLeft: 15,
         // marginRight: 15,
         borderRadius: 8,
@@ -522,7 +522,7 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         borderWidth: 1,
-        borderColor: 'blue',
+        borderColor: 'rgb(54, 79, 130)',
         // marginLeft: 15,
         // marginRight: 15,
         borderRadius: 8,
