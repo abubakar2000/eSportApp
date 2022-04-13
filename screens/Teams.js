@@ -55,7 +55,7 @@ const Teams = ({ navigation }) => {
         return () => {
             source.cancel()
         } 
-    }, [])
+    }, [axios])
 
     // Get Game Team Type and All Teamd for Selected Game from Fetched Data
 

@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     headerText: {
         color: 'rebeccapurple',
         fontSize: 20,
-        flex: 1,
+        flex: 4,
         textAlign: 'center'
     },
     headerText2: {

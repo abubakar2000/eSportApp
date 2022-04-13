@@ -1,10 +1,13 @@
 import { Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AppBar from '../components/AppBar'
 import image from '../assets/favicon.png';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import ActionSheet from '../components/ActionSheet';
 import ProfilePicture from '../assets/10.jpg';
+import axios from 'axios';
+import apiip from '../serverConfig';
+import { Dimensions } from 'react-native';
 
 /**
  * Matches can be Scrims Pro Match and Tournament
@@ -14,33 +17,15 @@ import ProfilePicture from '../assets/10.jpg';
 const Tournaments = ({ navigation }) => {
 
     // Data state maintenance
-    const [Games, setGames] = useState([
-        {
-            name: "BGMI",
-            image: image,
-        },
-        {
-            name: "Free fire",
-            image: image,
-        },
-        {
-            name: "Cod",
-            image: image,
-        },
-        {
-            name: "Valorant 2",
-            image: image,
-        },
-        {
-            name: "Valorant",
-            image: image,
-        },
-    ])
+    const [Games, setGames] = useState([])
     const [Tabs, setTabs] = useState([
         'Live Matches',
         'Upcoming Matches',
         'Completed Matches'
     ])
+
+
+    // Whatever the selected game is selected shows here
     const [StateObject, setStateObject] = useState(
         [
             {
@@ -169,7 +154,13 @@ const Tournaments = ({ navigation }) => {
 
     // UI States maintenance
     const [SelectedTab, setSelectedTab] = useState(Tabs[0]);
-    const [SelectedGame, setSelectedGame] = useState(Games[0])
+    const [SelectedGame, setSelectedGame] = useState({
+        GameCategory: ["",],
+        GameID: "",
+        GameLogo: "",
+        GameName: "",
+        GameTeamType: ["",],
+    })
     const handleMatchChange = (singleMatch) => {
         setSelectedGame(singleMatch)
     }
@@ -188,11 +179,57 @@ const Tournaments = ({ navigation }) => {
     // which Action sheet to show
     const [ActionSheetCategory, setActionSheetCategory] = useState("Round")
 
+
+    // The tournaments list, this changes depending what game is selecting
+    // localhost:3000/gettournamentbygame {GameID:""} is the body format
+    const [Tournaments, setTournaments] = useState([1, 2, 3, 4])
+    useEffect(() => {
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
+
+        // Getting all the games
+        axios.get(`${apiip}/enlistgames`, { cancelToken: source.token })
+            .then(res => {
+                setGames(res.data)
+            })
+            .catch(err => {
+                if (axios.isCancel(err)) {
+                    console.log("Successfully aborted");
+                } else {
+                    console.log("Could abort the request loop");
+                }
+            })
+
+        LoadGameTournaments()
+        return () => {
+        }
+    }, [axios])
+
+    const LoadGameTournaments = () => {
+        axios.post(`${apiip}/gettournamentbygame`, {
+            "GameID": SelectedGame.GameID
+        })
+            .then(res => {
+                // You click on the game icon on the top and this will fetch the tournaments of that game
+                console.log("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"); 
+                setTournaments(res.data)
+                console.log(res.data); 
+                console.log("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"); 
+            })
+            .catch(err => {
+                if (axios.isCancel(err)) {
+                    console.log("Successfully aborted");
+                } else {
+                    console.log("Could abort the request loop");
+                }
+            })
+    }
+
     return (
         <View>
             <View>
                 <ScrollView style={[styles.root]}>
-                    <AppBar navigation={navigation} profilePicture={ProfilePicture} title={'Tournaments'}
+                    <AppBar centerFocused={false} navigation={navigation} profilePicture={ProfilePicture} title={`${SelectedGame.GameName}`}
                         showDrawer={false} whereTo={''} />
                     <View style={[styles.container]}>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.myMatchList]}>
@@ -200,11 +237,14 @@ const Tournaments = ({ navigation }) => {
                             {
                                 Games.map(singleMatch => {
                                     return (
-                                        <TouchableOpacity key={singleMatch.name} onPress={() => handleMatchChange(singleMatch)}>
+                                        <TouchableOpacity key={singleMatch.GameName} onPress={() => {
+                                            LoadGameTournaments()
+                                            handleMatchChange(singleMatch)
+                                        }}>
                                             <View
-                                                style={[styles.matchItem, SelectedGame.name === singleMatch.name ? styles.matchItemActive : null]}>
-                                                <Image source={singleMatch.image} style={[styles.image]} />
-                                                <Text style={{ color: 'black', fontSize: 13 }}>{singleMatch.name}</Text>
+                                                style={[styles.matchItem, SelectedGame.GameName === singleMatch.GameName ? styles.matchItemActive : null]}>
+                                                <Image source={{ uri: `${apiip}/${singleMatch.GameLogo}` }} style={[styles.image]} />
+                                                <Text style={{ color: 'black', fontSize: 13 }}>{singleMatch.GameName}</Text>
                                             </View>
                                         </TouchableOpacity>
                                     );
@@ -233,40 +273,34 @@ const Tournaments = ({ navigation }) => {
                     <View style={[styles.margined]}>
                         {
                             SelectedTab === Tabs[0] &&
-                            <View>
+                            <View style={{ flexDirection: 'row', justifyContent: Tournaments.length === 1 ? "flex-start":"space-around", flexWrap: 'wrap' }}>
                                 {
-                                    StateObject[0].Matches
-                                        .filter(m => m.game.toLowerCase() === SelectedGame.name.toLocaleLowerCase())
-                                        .map(match => {
-                                            return (
-                                                <View
-                                                    key={match.id}
-                                                    style={[styles.liveMatchItemContainer]}>
-                                                    <View style={[styles.firstCont]}>
-                                                        <Image source={match.image} style={[styles.imgCont]} />
-                                                    </View>
-                                                    <View style={[styles.secCont]}>
-                                                        <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>{match.name}</Text>
-                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>{match.slot}</Text>
-                                                        <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>{match.teamName}</Text>
-                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier {match.tier}</Text>
-                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text>
-                                                        <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text>
-                                                    </View>
-                                                    <View style={[styles.thirdCont]}>
-                                                        <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.datetime}</Text>
-                                                        <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.type}</Text>
-                                                        {match.paid &&
-                                                            <View style={[styles.paidSectionIndicator]}>
-                                                                <MaterialCommunityIcons name="ticket-confirmation-outline" size={20} color="orange" />
-                                                                <Text style={[styles.paidIndicatorText]}>Paid</Text>
-                                                            </View>
-                                                        }
-                                                        <Text>Logo here</Text>
+                                    Tournaments.map(tournament => (
+                                        <View key={tournament} style={{
+                                            width: Dimensions.get('screen').width / 2 - 20, height: Dimensions.get('screen').width / 2 - 20,
+                                            backgroundColor: 'white', borderRadius: 10, marginTop: 5, marginBottom: 10
+                                        }}>
+                                            <Image source={{ uri: `${apiip}/${tournament.Banner}` }}
+                                                style={{ height: '60%', width: '100%', borderTopRightRadius: 10, borderTopLeftRadius: 10, resizeMode: 'stretch' }} />
+                                            <View style={{ width: '100%', height: '40%', flexDirection: 'row', paddingLeft: 5 }}>
+                                                <View style={{ flex: 1.5, borderBottomLeftRadius: 10, padding: 5, justifyContent: 'center', }}>
+                                                    <Text style={{ fontSize: 13 }}>BGMI Tourney</Text>
+                                                    <Text style={{ fontSize: 11, color: 'gray', marginTop: 3, marginBottom: 3 }}>Haexr eSports</Text>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                        <AntDesign name='infocirlceo' size={11} style={{ marginRight: 5 }} />
+                                                        <Text style={{ fontSize: 10 }}>20 Coins</Text>
                                                     </View>
                                                 </View>
-                                            );
-                                        })
+                                                <View style={{ flex: 1, borderBottomLeftRadius: 10, padding: 5, justifyContent: 'center', }}>
+                                                    <Text style={{ fontSize: 10, color: 'gray', marginTop: 3, marginBottom: 3 }}>06/6/2022</Text>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                                                        <AntDesign name='team' size={10} />
+                                                        <Text style={{ fontSize: 10, marginTop: 3, marginBottom: 3 }}>69/1000</Text>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    ))
                                 }
                             </View>
                         }
@@ -275,7 +309,7 @@ const Tournaments = ({ navigation }) => {
                             <View>
                                 {
                                     StateObject[1].Matches
-                                        .filter(m => m.game.toLowerCase() === SelectedGame.name.toLocaleLowerCase())
+                                        .filter(m => m.game.toLowerCase() === SelectedGame.GameName.toLocaleLowerCase())
                                         .map(match => {
                                             return (
                                                 <View key={match}>
@@ -326,7 +360,7 @@ const Tournaments = ({ navigation }) => {
                             <View>
                                 {
                                     StateObject[2].Matches
-                                        .filter(m => m.game.toLowerCase() === SelectedGame.name.toLocaleLowerCase())
+                                        .filter(m => m.game.toLowerCase() === SelectedGame.GameName.toLocaleLowerCase())
                                         .map(match => {
                                             return (
                                                 <View key={match}>
@@ -372,11 +406,11 @@ const Tournaments = ({ navigation }) => {
                         }
                     </View>
                 </ScrollView>
-            </View>
+            </View >
             <ActionSheet showActionSheetMethod={showActionSheet}
                 content={ActionSheetCategory}
                 alignment={alignment} setAlignment={setAlignment} />
-        </View>
+        </View >
     )
 }
 
