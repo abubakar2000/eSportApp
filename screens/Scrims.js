@@ -17,13 +17,13 @@ const Scrims = ({ navigation, route }) => {
 
     const [titles, settitles] = useState(route.params.GameCategory)
 
-    const onNavigate = (screen, title) => {
+    const onNavigate = (screen, params) => {
         // var sendTitle = 'BGMI ' + title;
         var sendTitle = route.params.GameName
         // console.log("Going to");
         // console.log(screen);
         // console.log(title);
-        navigation.navigate(screen, sendTitle);
+        navigation.navigate(screen, params);
     }
 
     // const [cardData, setCardData] = useState([
@@ -50,13 +50,19 @@ const Scrims = ({ navigation, route }) => {
 
                 {
                     route.params.GameCategory.map(cat => (
-                        <View>
-                            <Text style={{padding:10,marginLeft:10}}>{cat}</Text>
+                        <View key={cat}>
+                            <Text style={{ padding: 10, marginLeft: 10 }}>{cat}</Text>
                             <TouchableOpacity onPress={() => onNavigate(
-                                cat === "Tournaments"?"Tournaments":
-                                cat === "Pro Matches"?"ProMatches":
-                                cat === "Scrims"?"ScrimsMatches":"ScrimsMatches"
-                            )} style={styles.card}>
+                                cat === "Tournaments" ? "Tournaments" :
+                                    cat === "Pro Matches" ? "ProMatches" :
+                                        cat === "Scrims" ? "ScrimsMatches" : "ScrimsMatches"
+                            ,{
+                                GameID: route.params.GameID,
+                                GameName: route.params.GameName,
+                                GameLogo: route.params.GameLogo,
+                                GameCategory: route.params.GameCategory,
+                                GameTeamType: route.params.GameTeamType,
+                            })} style={styles.card}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
                                     <View style={styles.imgContainer}>
                                         <Image
@@ -77,9 +83,7 @@ const Scrims = ({ navigation, route }) => {
                                         </View>
                                         <View style={{ height: '100%', justifyContent: 'center' }}>
                                             {route.params.GameCategory !== undefined &&
-                                                // route.params.GameCategory.map(cat => (
                                                 <Text key={cat} style={styles.infoText}>{cat}</Text>
-                                                // ))
                                             }
                                         </View>
                                     </View>

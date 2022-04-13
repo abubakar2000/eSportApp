@@ -14,7 +14,7 @@ import { Dimensions } from 'react-native';
  * Can also be a Paid or not
  */
 
-const Tournaments = ({ navigation }) => {
+const Tournaments = ({ navigation, route }) => {
 
     // Data state maintenance
     const [Games, setGames] = useState([])
@@ -155,14 +155,15 @@ const Tournaments = ({ navigation }) => {
     // UI States maintenance
     const [SelectedTab, setSelectedTab] = useState(Tabs[0]);
     const [SelectedGame, setSelectedGame] = useState({
-        GameCategory: ["",],
-        GameID: "",
-        GameLogo: "",
-        GameName: "",
-        GameTeamType: ["",],
+        GameCategory: route.params.GameCategory,
+        GameID: route.params.GameID,
+        GameLogo: route.params.GameLogo,
+        GameName: route.params.GameName,
+        GameTeamType: route.params.GameTeamType,
     })
     const handleMatchChange = (singleMatch) => {
         setSelectedGame(singleMatch)
+        LoadGameTournaments(singleMatch.GameID)
     }
 
     const [selectedCategory, setSelectedCategory] = useState();
@@ -182,8 +183,10 @@ const Tournaments = ({ navigation }) => {
 
     // The tournaments list, this changes depending what game is selecting
     // localhost:3000/gettournamentbygame {GameID:""} is the body format
-    const [Tournaments, setTournaments] = useState([1, 2, 3, 4])
+    const [Tournaments, setTournaments] = useState([])
     useEffect(() => {
+        // setSelectedGame(route.params)
+
         const CancelToken = axios.CancelToken;
         const source = CancelToken.source();
 
@@ -191,6 +194,7 @@ const Tournaments = ({ navigation }) => {
         axios.get(`${apiip}/enlistgames`, { cancelToken: source.token })
             .then(res => {
                 setGames(res.data)
+                LoadGameTournaments(SelectedGame.GameID)
             })
             .catch(err => {
                 if (axios.isCancel(err)) {
@@ -199,22 +203,18 @@ const Tournaments = ({ navigation }) => {
                     console.log("Could abort the request loop");
                 }
             })
-
-        LoadGameTournaments()
         return () => {
         }
-    }, [axios])
+    }, [route, axios, LoadGameTournaments])
 
-    const LoadGameTournaments = () => {
+    const LoadGameTournaments = (gid) => {
+        setTournaments([])
         axios.post(`${apiip}/gettournamentbygame`, {
-            "GameID": SelectedGame.GameID
+            "GameID": gid
         })
             .then(res => {
                 // You click on the game icon on the top and this will fetch the tournaments of that game
-                console.log("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"); 
                 setTournaments(res.data)
-                console.log(res.data); 
-                console.log("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"); 
             })
             .catch(err => {
                 if (axios.isCancel(err)) {
@@ -223,6 +223,10 @@ const Tournaments = ({ navigation }) => {
                     console.log("Could abort the request loop");
                 }
             })
+    }
+
+    const onNavigateToBookTournamentSlot = (tournament) => {
+        navigation.navigate( "BookTournaments",tournament)
     }
 
     return (
@@ -237,10 +241,7 @@ const Tournaments = ({ navigation }) => {
                             {
                                 Games.map(singleMatch => {
                                     return (
-                                        <TouchableOpacity key={singleMatch.GameName} onPress={() => {
-                                            LoadGameTournaments()
-                                            handleMatchChange(singleMatch)
-                                        }}>
+                                        <TouchableOpacity key={singleMatch.GameName} onPress={() => handleMatchChange(singleMatch)}>
                                             <View
                                                 style={[styles.matchItem, SelectedGame.GameName === singleMatch.GameName ? styles.matchItemActive : null]}>
                                                 <Image source={{ uri: `${apiip}/${singleMatch.GameLogo}` }} style={[styles.image]} />
@@ -273,33 +274,36 @@ const Tournaments = ({ navigation }) => {
                     <View style={[styles.margined]}>
                         {
                             SelectedTab === Tabs[0] &&
-                            <View style={{ flexDirection: 'row', justifyContent: Tournaments.length === 1 ? "flex-start":"space-around", flexWrap: 'wrap' }}>
+                            <View style={{ flexDirection: 'row', justifyContent: Tournaments.length === 1 ? "flex-start" : "flex-start", flexWrap: 'wrap' }}>
                                 {
                                     Tournaments.map(tournament => (
-                                        <View key={tournament} style={{
-                                            width: Dimensions.get('screen').width / 2 - 20, height: Dimensions.get('screen').width / 2 - 20,
-                                            backgroundColor: 'white', borderRadius: 10, marginTop: 5, marginBottom: 10
-                                        }}>
+                                        <TouchableOpacity
+                                            onPress={() => onNavigateToBookTournamentSlot(tournament)}
+                                            key={tournament.Title} style={{
+                                                width: Dimensions.get('screen').width / 2 - 20, height: Dimensions.get('screen').width / 2 - 20,
+                                                backgroundColor: 'white', borderRadius: 5, margin: 5,
+                                                shadowRadius: 5, shadowOpacity: 0.5, shadowColor: 'gray'
+                                            }}>
                                             <Image source={{ uri: `${apiip}/${tournament.Banner}` }}
-                                                style={{ height: '60%', width: '100%', borderTopRightRadius: 10, borderTopLeftRadius: 10, resizeMode: 'stretch' }} />
+                                                style={{ height: '60%', width: '100%', borderTopRightRadius: 5, borderTopLeftRadius: 5, resizeMode: 'stretch' }} />
                                             <View style={{ width: '100%', height: '40%', flexDirection: 'row', paddingLeft: 5 }}>
                                                 <View style={{ flex: 1.5, borderBottomLeftRadius: 10, padding: 5, justifyContent: 'center', }}>
-                                                    <Text style={{ fontSize: 13 }}>BGMI Tourney</Text>
-                                                    <Text style={{ fontSize: 11, color: 'gray', marginTop: 3, marginBottom: 3 }}>Haexr eSports</Text>
+                                                    <Text style={{ fontSize: 13 }}>{tournament.Title}</Text>
+                                                    <Text style={{ fontSize: 11, color: 'gray', marginTop: 3, marginBottom: 3 }}>{tournament.Sponsor}</Text>
                                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                         <AntDesign name='infocirlceo' size={11} style={{ marginRight: 5 }} />
-                                                        <Text style={{ fontSize: 10 }}>20 Coins</Text>
+                                                        <Text style={{ fontSize: 10 }}>{tournament.Entrancefee} Coins</Text>
                                                     </View>
                                                 </View>
-                                                <View style={{ flex: 1, borderBottomLeftRadius: 10, padding: 5, justifyContent: 'center', }}>
-                                                    <Text style={{ fontSize: 10, color: 'gray', marginTop: 3, marginBottom: 3 }}>06/6/2022</Text>
+                                                <View style={{ flex: 1, borderBottomLeftRadius: 5, padding: 5, justifyContent: 'center', }}>
+                                                    <Text style={{ fontSize: 10, color: 'gray', marginTop: 3, marginBottom: 3 }}>{tournament.TournamentStartDate}</Text>
                                                     <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                                                         <AntDesign name='team' size={10} />
-                                                        <Text style={{ fontSize: 10, marginTop: 3, marginBottom: 3 }}>69/1000</Text>
+                                                        <Text style={{ fontSize: 10, marginTop: 3, marginBottom: 3 }}>0/{tournament.TotalTeams}</Text>
                                                     </View>
                                                 </View>
                                             </View>
-                                        </View>
+                                        </TouchableOpacity>
                                     ))
                                 }
                             </View>
