@@ -9,6 +9,9 @@ import Wallet from "../screens/Wallet";
 import Scrims from "../screens/Scrims";
 import ScrimsExt from "../screens/ScrimsExt";
 import Login from "../screens/Login";
+import Tournaments from "../screens/Tournaments";
+import ProMatches from "../screens/ProMatches";
+import ScrimsMatches from "../screens/ScrimsMatches";
 
 const Drawer = createDrawerNavigator();
 
@@ -36,6 +39,9 @@ const AppDrawer = () => {
       <Drawer.Screen options={{ headerShown: false }} name="Teams" component={Teams} />
       <Drawer.Screen options={{ headerShown: false }} name="Matches" component={Matches} />
       <Drawer.Screen options={{ headerShown: false }} name="Scrims" component={Scrims} />
+      <Drawer.Screen options={{ headerShown: false }} name="ScrimsMatches" component={ScrimsMatches} />
+      <Drawer.Screen options={{ headerShown: false }} name="ProMatches" component={ProMatches} />
+      <Drawer.Screen options={{ headerShown: false }} name="Tournaments" component={Tournaments} />
       <Drawer.Screen options={{ headerShown: false }} name="ScrimsExt" component={ScrimsExt} />
       <Drawer.Screen options={{ headerShown: false }} name="Login" component={Login} />
     </Drawer.Navigator>

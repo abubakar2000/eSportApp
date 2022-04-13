@@ -52,7 +52,11 @@ const Scrims = ({ navigation, route }) => {
                     route.params.GameCategory.map(cat => (
                         <View>
                             <Text style={{padding:10,marginLeft:10}}>{cat}</Text>
-                            <TouchableOpacity onPress={() => onNavigate('Matches')} style={styles.card}>
+                            <TouchableOpacity onPress={() => onNavigate(
+                                cat === "Tournaments"?"Tournaments":
+                                cat === "Pro Matches"?"ProMatches":
+                                cat === "Scrims"?"ScrimsMatches":"ScrimsMatches"
+                            )} style={styles.card}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
                                     <View style={styles.imgContainer}>
                                         <Image
