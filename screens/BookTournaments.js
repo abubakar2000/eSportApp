@@ -2,6 +2,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AppBar from '../components/AppBar';
 import ProfilePicture from '../assets/10.jpg';
+import Gif from '../components/Gif'
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 const BookTournaments = ({ navigation, route }) => {
     const [Tournament, setTournament] = useState(route.params)
@@ -14,7 +16,15 @@ const BookTournaments = ({ navigation, route }) => {
 
     return (
         <View>
-            <AppBar navigation={navigation} showDrawer={true} centerFocused={false} title={Tournament.Title}/>
+            <AppBar navigation={navigation} showDrawer={true} centerFocused={false} title={Tournament.Title} profilePicture={ProfilePicture} />
+            <View style={{ width: '100%', }}>
+                <ScrollView style={{}} horizontal={true} >
+                    <TouchableOpacity>
+                        <Gif />
+                    </TouchableOpacity>
+                </ScrollView>
+            </View>
+
             <Text>{Tournament.Banner}</Text>
             <Text>{Tournament.Entrancefee}</Text>
             <Text>{Tournament.GameID}</Text>

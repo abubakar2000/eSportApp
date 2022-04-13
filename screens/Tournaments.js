@@ -355,6 +355,8 @@ const Tournaments = ({ navigation, route }) => {
                         SelectedTab === Tabs[2] &&
                         <View>
                             {
+                                // This one needs data for the rounds of tournament. Remember the room concept, teams go into the room. 
+                                // Its the data of that room we need here
                                 Tournaments.map(tournament => (
                                     <View style={{ backgroundColor: 'white', minHeight: 40, margin: 15, borderRadius: 10, padding: 15 }}>
                                         <View style={{
@@ -386,16 +388,16 @@ const Tournaments = ({ navigation, route }) => {
                                             </View>
                                         </View>
                                         <View style={{ paddingTop: 15 }}>
-                                            <TouchableOpacity style={{borderRadius:5,backgroundColor: "#384d82",width: 100, }}>
+                                            <TouchableOpacity style={{ borderRadius: 5, backgroundColor: "#384d82", width: 100, }}>
                                                 <Text style={{ textAlign: 'center', padding: 13, color: 'white', }}>Check In</Text>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
                                 ))
                             }
-
+                            {/* Not deleting from here cebause we might need some data from the old data idk why but have a gut feeling */}
                             {/* 
-                            
+
                                  <TouchableOpacity
                                         onPress={() => onNavigateToBookTournamentSlot(tournament)}
                                         key={tournament.Title} style={{
