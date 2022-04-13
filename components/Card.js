@@ -7,9 +7,16 @@ import apiip from '../serverConfig';
 const dimensions = Dimensions.get('window');
 const imageWidth = dimensions.width - 100;
 
-const Card = ({ GameID, GameName, GameTeamType, GameLogo, navigation }) => {
+const Card = ({ GameID, GameName, GameTeamType, GameLogo, GameCategory, navigation }) => {
+    
     const onNavigate = (screen) => {
-        navigation.navigate(screen)
+        navigation.navigate(screen,{
+            GameID:GameID, 
+            GameName:GameName, 
+            GameTeamType:GameTeamType, 
+            GameLogo:GameLogo, 
+            GameCategory:GameCategory
+        })
     }
     return (
         <TouchableOpacity onPress={() => onNavigate('Scrims')} style={styles.card}>
@@ -24,16 +31,19 @@ const Card = ({ GameID, GameName, GameTeamType, GameLogo, navigation }) => {
                     <Text style={styles.heading}>{GameName}</Text>
                     <Text style={styles.text}>{GameTeamType}</Text>
                 </View>
-                <View style={{ flexDirection: 'row', paddingLeft: 5, flex: 1 }}>
-                    <View style={{ paddingTop: 30 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 5, flex: 1 }}>
+                    <View style={{}}>
                         <Image
                             style={styles.infoImg}
                             source={require('../assets/info.png')}
                         />
                     </View>
                     <View style={{ height: '100%', justifyContent: 'center' }}>
-                        <Text style={styles.infoText}>Pro Matches & Scrims</Text>
-                        {/* //TODO */}
+                        {GameCategory !== undefined &&
+                            GameCategory.map(cat => (
+                                <Text key={cat} style={styles.infoText}>{cat}</Text>
+                            ))
+                        }
                     </View>
                 </View>
             </View>
@@ -61,7 +71,7 @@ const styles = StyleSheet.create({
         color: '#8C8C8C'
     },
     infoText: {
-        maxWidth: 70,
+        maxWidth: 130,
         paddingLeft: 5,
         fontSize: 12,
         color: '#8C8C8C'

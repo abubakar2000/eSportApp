@@ -8,22 +8,6 @@ import Register from '../screens/Register';
 import Scrims from "../screens/Scrims";
 import AppDrawer from "./Drawer";
 
-// const AuthStack =
-//     createStackNavigator(
-//         {
-//             Login: {
-//                 screen: Login,
-//             },
-//             Register: {
-//                 screen: Register,
-//             }
-//         }, {
-//         defaultNavigationOptions: {
-//             headerShown: false
-//         }
-//     }
-//     );
-
 const Stack = createStackNavigator();
 
 const AuthStack = ({ navigation }) => {

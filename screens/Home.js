@@ -22,19 +22,35 @@ const Home = ({ navigation }) => {
     useEffect(() => {
         const CancelToken = axios.CancelToken;
         const source = CancelToken.source();
-        // setInterval(() => {
+
+
+        axios.get(`${apiip}/enlistgames`, { cancelToken: source.token })
+            .then(res => {
+                setGamesList(res.data)
+                console.log(res.data);
+            })
+            .catch(err => {
+                if (axios.isCancel(err)) {
+                    // console.log("Successfully aborted");
+                } else {
+                    // console.log("Could abort the request loop");
+                }
+            })
+
+
+        setInterval(() => {
         axios.get(`${apiip}/enlistgames`, { cancelToken: source.token })
             .then(res => {
                 setGamesList(res.data)
             })
             .catch(err => {
                 if (axios.isCancel(err)) {
-                    console.log("Successfully aborted");
+                    // console.log("Successfully aborted");
                 } else {
-                    console.log("Could abort the request loop");
+                    // console.log("Could abort the request loop");
                 }
             })
-        // }, 3000);
+        }, 5000);
         return () => {
             source.cancel()
         }
@@ -86,6 +102,7 @@ const Home = ({ navigation }) => {
                                             GameLogo={game.GameLogo}
                                             GameName={game.GameName}
                                             GameTeamType={game.GameTeamType[0]}
+                                            GameCategory={game.GameCategory}
                                         />
                                     )
                                 })
