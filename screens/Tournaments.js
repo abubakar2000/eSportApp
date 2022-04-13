@@ -8,6 +8,12 @@ import ProfilePicture from '../assets/10.jpg';
 import axios from 'axios';
 import apiip from '../serverConfig';
 import { Dimensions } from 'react-native';
+import Gif from '../components/Gif'
+
+const LINKS = {
+    image1: require("../assets/homepage/giphy.gif"),
+    image2: require("../assets/homepage/giphy-2.gif")
+};
 
 /**
  * Matches can be Scrims Pro Match and Tournament
@@ -19,9 +25,9 @@ const Tournaments = ({ navigation, route }) => {
     // Data state maintenance
     const [Games, setGames] = useState([])
     const [Tabs, setTabs] = useState([
-        'Live Matches',
         'Upcoming Matches',
-        'Completed Matches'
+        'Joined Matches',
+        'Live Matches',
     ])
 
 
@@ -226,7 +232,7 @@ const Tournaments = ({ navigation, route }) => {
     }
 
     const onNavigateToBookTournamentSlot = (tournament) => {
-        navigation.navigate( "BookTournaments",tournament)
+        navigation.navigate("BookTournaments", tournament)
     }
 
     return (
@@ -255,16 +261,16 @@ const Tournaments = ({ navigation, route }) => {
                         </ScrollView>
                         <View style={[styles.tabContainer]}>
                             {
-                                StateObject.map(tabItem => {
+                                Tabs.map(tabItem => {
                                     return (
                                         <TouchableOpacity
-                                            key={tabItem.Category}
-                                            onPress={() => setSelectedTab(tabItem.Category)}
-                                            style={[styles.tab, tabItem.Category === SelectedTab
+                                            key={tabItem}
+                                            onPress={() => setSelectedTab(tabItem)}
+                                            style={[styles.tab, tabItem === SelectedTab
                                                 ? styles.tabActive : null]}>
                                             <Text
-                                                style={[styles.tabText, tabItem.Category === SelectedTab
-                                                    ? styles.tabTextActive : { color: 'black' }]}>{tabItem.Category}</Text>
+                                                style={[styles.tabText, tabItem === SelectedTab
+                                                    ? styles.tabTextActive : { color: 'black' }]}>{tabItem}</Text>
                                         </TouchableOpacity>
                                     );
                                 })
@@ -310,105 +316,124 @@ const Tournaments = ({ navigation, route }) => {
                         }
                         {
                             SelectedTab === Tabs[1] &&
-                            <View>
+                            <View style={{ flexDirection: 'row', justifyContent: Tournaments.length === 1 ? "flex-start" : "flex-start", flexWrap: 'wrap' }}>
                                 {
-                                    StateObject[1].Matches
-                                        .filter(m => m.game.toLowerCase() === SelectedGame.GameName.toLocaleLowerCase())
-                                        .map(match => {
-                                            return (
-                                                <View key={match}>
-                                                    <View style={[styles.UMSlideContainer]}>
-                                                        <View style={[styles.liveMatchItemContainerUM]}>
-                                                            <View style={[styles.firstCont]}>
-                                                                <Image source={match.image} style={[styles.imgCont]} />
-                                                            </View>
-                                                            <View style={[styles.secCont]}>
-                                                                <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>{match.name}</Text>
-                                                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Slot {match.slot}</Text>
-                                                                <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>Eagle</Text>
-                                                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier {match.tier}</Text>
-                                                                {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text> */}
-                                                                {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text> */}
-                                                            </View>
-                                                            <View style={[styles.thirdCont]}>
-                                                                <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.datetime}</Text>
-                                                                <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.type}</Text>
-                                                                {
-                                                                    match.paid &&
-                                                                    <View style={[styles.paidSectionIndicator]}>
-                                                                        <MaterialCommunityIcons name="ticket-confirmation-outline" size={20} color="orange" />
-                                                                        <Text style={[styles.paidIndicatorText]}>Paid</Text>
-                                                                    </View>
-                                                                }
-                                                            </View>
-                                                        </View>
-                                                        <TouchableOpacity
-                                                            onPress={() => {
-                                                                setActionSheetCategory("Rounds")
-                                                                showActionSheet();
-                                                            }}
-                                                            style={[styles.lowerSectionUM, { marginTop: 10 }]}>
-                                                            <Text style={{ color: 'white' }}>Round {match.round}</Text>
-                                                            {/* <AntDesign name="down-square-o" size={20} color="black" /> */}
-                                                        </TouchableOpacity>
+                                    Tournaments.map(tournament => (
+                                        <TouchableOpacity
+                                            onPress={() => onNavigateToBookTournamentSlot(tournament)}
+                                            key={tournament.Title} style={{
+                                                width: Dimensions.get('screen').width / 2 - 20, height: Dimensions.get('screen').width / 2 - 20,
+                                                backgroundColor: 'white', borderRadius: 5, margin: 5,
+                                                shadowRadius: 5, shadowOpacity: 0.5, shadowColor: 'gray'
+                                            }}>
+                                            <Image source={{ uri: `${apiip}/${tournament.Banner}` }}
+                                                style={{ height: '60%', width: '100%', borderTopRightRadius: 5, borderTopLeftRadius: 5, resizeMode: 'stretch' }} />
+                                            <View style={{ width: '100%', height: '40%', flexDirection: 'row', paddingLeft: 5 }}>
+                                                <View style={{ flex: 1.5, borderBottomLeftRadius: 10, padding: 5, justifyContent: 'center', }}>
+                                                    <Text style={{ fontSize: 13 }}>{tournament.Title}</Text>
+                                                    <Text style={{ fontSize: 11, color: 'gray', marginTop: 3, marginBottom: 3 }}>{tournament.Sponsor}</Text>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                        <MaterialCommunityIcons name='ticket-outline' size={13} color={'orange'} style={{ marginRight: 5 }} />
+                                                        <Text style={{ fontSize: 10 }}>{tournament.Entrancefee} Coins</Text>
                                                     </View>
                                                 </View>
-                                            );
-                                        })
-                                }
-                            </View>
-
-                        }
-                        {
-                            SelectedTab === Tabs[2] &&
-                            <View>
-                                {
-                                    StateObject[2].Matches
-                                        .filter(m => m.game.toLowerCase() === SelectedGame.GameName.toLocaleLowerCase())
-                                        .map(match => {
-                                            return (
-                                                <View key={match}>
-                                                    <View style={[styles.MatchSlideCM]}>
-                                                        <View style={[styles.liveMatchItemContainer]}>
-                                                            <View style={[styles.firstCont]}>
-                                                                <Image source={match.image} style={[styles.imgCont]} />
-                                                            </View>
-                                                            <View style={[styles.secCont]}>
-                                                                <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>{match.name}</Text>
-                                                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Slot {match.slot}</Text>
-                                                                <Text style={{ fontSize: 13, marginTop: 4, marginBottom: 4, }}>Eagle</Text>
-                                                                <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, color: 'gray' }}>Tier {match.tier}</Text>
-                                                                {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>ID: {match.id}</Text> */}
-                                                                {/* <Text style={{ fontSize: 11, marginTop: 4, marginBottom: 4, }}>Password: {match.password}</Text> */}
-                                                            </View>
-                                                            <View style={[styles.thirdCont]}>
-                                                                <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.datetime}</Text>
-                                                                <Text style={{ fontSize: 10, marginTop: 4, marginBottom: 4, }}>{match.type}</Text>
-                                                            </View>
-                                                        </View>
-                                                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                                            <TouchableOpacity style={[styles.uploadButton2]}
-                                                                onPress={() => {
-                                                                    setActionSheetCategory("ViewResults")
-                                                                    showActionSheet();
-                                                                }}
-                                                            ><Text style={{ color: 'blue' }} >View Result</Text></TouchableOpacity>
-                                                            <TouchableOpacity style={[styles.uploadButton]}
-                                                                onPress={() => {
-                                                                    setActionSheetCategory("UploadScreenshots")
-                                                                    showActionSheet()
-                                                                }}
-                                                            ><Text style={{ color: 'white' }}>Upload Screenshots</Text></TouchableOpacity>
-                                                        </View>
+                                                <View style={{ flex: 1, borderBottomLeftRadius: 5, padding: 5, justifyContent: 'center', }}>
+                                                    <Text style={{ fontSize: 10, color: 'gray', marginTop: 3, marginBottom: 3 }}>{tournament.TournamentStartDate}</Text>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                                                        <AntDesign name='team' size={10} />
+                                                        <Text style={{ fontSize: 10, marginTop: 3, marginBottom: 3 }}>0/{tournament.TotalTeams}</Text>
                                                     </View>
                                                 </View>
-                                            );
-                                        })
+                                            </View>
+                                        </TouchableOpacity>
+                                    ))
                                 }
-
                             </View>
                         }
                     </View>
+                    {
+                        SelectedTab === Tabs[2] &&
+                        <View>
+                            {
+                                Tournaments.map(tournament => (
+                                    <View style={{ backgroundColor: 'white', minHeight: 40, margin: 15, borderRadius: 10, padding: 15 }}>
+                                        <View style={{
+                                            flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+                                        }}>
+                                            <View>
+                                                <Image source={{ uri: `${apiip}/${tournament.Banner}` }}
+                                                    style={{ height: 60, width: 60, borderRadius: 30, resizeMode: 'stretch' }} />
+                                            </View>
+                                            <View style={{ height: '100%' }}>
+                                                <Text style={{ fontSize: 15 }}>BGMI Tourney</Text>
+                                                <Text style={{ fontSize: 13, color: "gray", marginBottom: 10 }}>Slot 13</Text>
+                                                <Text style={{ fontSize: 13, color: "black", }}>Erangle</Text>
+                                                <Text style={{ fontSize: 13, color: "black", marginBottom: 10 }}>Haexr Esports</Text>
+                                                <Text style={{ fontSize: 13, color: "black", }}>ID</Text>
+                                                <Text style={{ fontSize: 13, color: "black", }}>Password</Text>
+                                            </View>
+                                            <View style={{ height: '100%' }}>
+                                                <Text style={{ fontSize: 16, color: "#384d82", marginBottom: 10 }}>Qualifier (Round 1)</Text>
+                                                <Text style={{ fontSize: 13, marginBottom: 10 }}>03:00 PM 06/06/2020</Text>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                                                    <AntDesign name='infocirlceo' size={13} style={{ marginRight: 5 }} />
+                                                    <Text>Tournament</Text>
+                                                </View>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                    <AntDesign name='team' size={13} style={{ marginRight: 5 }} />
+                                                    <Text style={{ fontSize: 13 }}>69/1000</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={{ paddingTop: 15 }}>
+                                            <TouchableOpacity style={{borderRadius:5,backgroundColor: "#384d82",width: 100, }}>
+                                                <Text style={{ textAlign: 'center', padding: 13, color: 'white', }}>Check In</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                ))
+                            }
+
+                            {/* 
+                            
+                                 <TouchableOpacity
+                                        onPress={() => onNavigateToBookTournamentSlot(tournament)}
+                                        key={tournament.Title} style={{
+                                            width: Dimensions.get('screen').width / 2 - 20, height: Dimensions.get('screen').width / 2 - 20,
+                                            backgroundColor: 'white', borderRadius: 5, margin: 5,
+                                            shadowRadius: 5, shadowOpacity: 0.5, shadowColor: 'gray'
+                                        }}>
+                                        
+                                        <View style={{ width: '100%', height: '40%', flexDirection: 'row', paddingLeft: 5 }}>
+                                            <View style={{ flex: 1.5, borderBottomLeftRadius: 10, padding: 5, justifyContent: 'center', }}>
+                                                <Text style={{ fontSize: 13 }}>{tournament.Title}</Text>
+                                                <Text style={{ fontSize: 11, color: 'gray', marginTop: 3, marginBottom: 3 }}>{tournament.Sponsor}</Text>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                    <AntDesign name='infocirlceo' size={11} style={{ marginRight: 5 }} />
+                                                    <Text style={{ fontSize: 10 }}>{tournament.Entrancefee} Coins</Text>
+                                                </View>
+                                            </View>
+                                            <View style={{ flex: 1, borderBottomLeftRadius: 5, padding: 5, justifyContent: 'center', }}>
+                                                <Text style={{ fontSize: 10, color: 'gray', marginTop: 3, marginBottom: 3 }}>{tournament.TournamentStartDate}</Text>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                                                    <AntDesign name='team' size={10} />
+                                                    <Text style={{ fontSize: 10, marginTop: 3, marginBottom: 3 }}>0/{tournament.TotalTeams}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    </TouchableOpacity>
+                            
+                            */}
+
+                            <View style={{ width: '100%', }}>
+                                <ScrollView style={{}} horizontal={true} >
+                                    <TouchableOpacity>
+                                        <Gif />
+                                    </TouchableOpacity>
+                                </ScrollView>
+                            </View>
+                        </View>
+                    }
                 </ScrollView>
             </View >
             <ActionSheet showActionSheetMethod={showActionSheet}
