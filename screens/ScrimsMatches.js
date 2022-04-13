@@ -192,7 +192,7 @@ const ScrimsMatches = ({ navigation }) => {
         <View>
             <View>
                 <ScrollView style={[styles.root]}>
-                    <AppBar navigation={navigation} profilePicture={ProfilePicture} title={'My Matches'}
+                    <AppBar navigation={navigation} profilePicture={ProfilePicture} title={'Scrims'}
                         showDrawer={false} whereTo={''} />
                     <View style={[styles.container]}>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.myMatchList]}>
