@@ -43,45 +43,46 @@ const Scrims = ({ navigation, route }) => {
         <View>
             <View style={[styles.container, styles.center]}>
                 <BackMenu navigation={navigation} whereTo={'Home'} title={route.params.GameName} />
-                <View style={{ width: '100%',marginBottom:40 }}>
+                <View style={{ width: '100%', marginBottom: 40 }}>
                     <ScrollView style={{ backgroundColor: 'white', }} horizontal={true}>
                         <Gif />
                     </ScrollView>
                 </View>
 
-
-
                 {
                     route.params.GameCategory.map(cat => (
-                        <TouchableOpacity onPress={() => onNavigate('Scrims')} style={styles.card}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
-                                <View style={styles.imgContainer}>
-                                    <Image
-                                        style={styles.img}
-                                        source={{ uri: `${apiip}/${route.params.GameLogo}` }}
-                                    />
-                                </View>
-                                <View style={{ width: '50%', justifyContent: 'center' }}>
-                                    <Text style={styles.heading}>{route.params.GameName}</Text>
-                                    <Text style={styles.text}>{route.params.GameTeamType}</Text>
-                                </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 5, flex: 1 }}>
-                                    <View style={{}}>
+                        <View>
+                            <Text style={{padding:10,marginLeft:10}}>{cat}</Text>
+                            <TouchableOpacity onPress={() => onNavigate('Scrims')} style={styles.card}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
+                                    <View style={styles.imgContainer}>
                                         <Image
-                                            style={styles.infoImg}
-                                            source={require('../assets/info.png')}
+                                            style={styles.img}
+                                            source={{ uri: `${apiip}/${route.params.GameLogo}` }}
                                         />
                                     </View>
-                                    <View style={{ height: '100%', justifyContent: 'center' }}>
-                                        {route.params.GameCategory !== undefined &&
-                                            // route.params.GameCategory.map(cat => (
-                                            <Text key={cat} style={styles.infoText}>{cat}</Text>
-                                            // ))
-                                        }
+                                    <View style={{ width: '50%', justifyContent: 'center' }}>
+                                        <Text style={styles.heading}>{route.params.GameName}</Text>
+                                        <Text style={styles.text}>{route.params.GameTeamType}</Text>
+                                    </View>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 5, flex: 1 }}>
+                                        <View style={{}}>
+                                            <Image
+                                                style={styles.infoImg}
+                                                source={require('../assets/info.png')}
+                                            />
+                                        </View>
+                                        <View style={{ height: '100%', justifyContent: 'center' }}>
+                                            {route.params.GameCategory !== undefined &&
+                                                // route.params.GameCategory.map(cat => (
+                                                <Text key={cat} style={styles.infoText}>{cat}</Text>
+                                                // ))
+                                            }
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
+                        </View>
                     ))
                 }
                 {/* <FlatList
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
         height: 100,
         borderRadius: 10,
         marginBottom: 10,
-         width: dimensions.width-30
+        width: dimensions.width - 30
 
     },
     heading: {
