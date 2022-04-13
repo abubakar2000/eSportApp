@@ -18,13 +18,12 @@ const Scrims = ({ navigation, route }) => {
     const [titles, settitles] = useState(route.params.GameCategory)
 
     const onNavigate = (screen, title) => {
-        return
         // var sendTitle = 'BGMI ' + title;
-        // var sendTitle = route.params.GameName
+        var sendTitle = route.params.GameName
         // console.log("Going to");
         // console.log(screen);
         // console.log(title);
-        // navigation.navigate(screen, sendTitle);
+        navigation.navigate(screen, sendTitle);
     }
 
     // const [cardData, setCardData] = useState([
@@ -53,7 +52,7 @@ const Scrims = ({ navigation, route }) => {
                     route.params.GameCategory.map(cat => (
                         <View>
                             <Text style={{padding:10,marginLeft:10}}>{cat}</Text>
-                            <TouchableOpacity onPress={() => onNavigate('Scrims')} style={styles.card}>
+                            <TouchableOpacity onPress={() => onNavigate('Matches')} style={styles.card}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
                                     <View style={styles.imgContainer}>
                                         <Image
