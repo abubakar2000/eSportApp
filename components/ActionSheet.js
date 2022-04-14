@@ -31,7 +31,7 @@ const ActionSheet = ({ showActionSheetMethod, alignment, setAlignment, content }
 
   const actionSheetInterpolate = alignment.interpolate({
     inputRange: [0, 1],
-    outputRange: [-(height), 0]
+    outputRange: [-(height+100), -Dimensions.get('screen').height/4]
   })
 
   const actionSheetStyle = {
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: '#F4F5F8',
     width: width,
-    // height: height / 2.4,
+    // height: height,
     bottom: 0,
     left: 0,
     right: 0,
