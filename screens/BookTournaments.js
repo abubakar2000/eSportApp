@@ -45,12 +45,13 @@ const BookTournaments = ({ navigation, route }) => {
         const source = CancelToken.source();
 
         setTournament(route.params)
-        console.log("Getting for " + Tournament.GameID);
+
         axios.post(`${apiip}/getgameinfo`, {
             "gameid": Tournament.GameID
         }, { cancelToken: source.token })
             .then(res => {
-                console.log(res.data);
+                setGameInformation(res.data)
+                console.log(`${apiip}/${GameInformation.GameLogo}`);
             })
             .catch(err => {
                 if (axios.isCancel(err)) {
@@ -63,8 +64,18 @@ const BookTournaments = ({ navigation, route }) => {
         }
     }, [route, axios])
 
+    const onNavigateToRoundsInformation = (roundObject) => {
+        console.log(roundObject);
+        navigation.navigate("RoundsInformation", {
+            GameRound: roundObject,
+            GameID: Tournament.GameID,
+            Tournament: Tournament,
+        })
+    }
+
+
     return (
-        <View>
+        <ScrollView>
             <AppBar navigation={navigation} showDrawer={true} centerFocused={false} title={Tournament.Title} profilePicture={ProfilePicture} />
             <View style={{ width: '100%', }}>
                 <ScrollView style={{}} horizontal={true} >
@@ -121,32 +132,48 @@ const BookTournaments = ({ navigation, route }) => {
             </View>
             <View style={{ padding: 15 }}>
                 <Text>Rounds</Text>
-
-                <View style={{ backgroundColor: 'white', height: 130, marginTop: 10, borderRadius: 10 }}>
-                    {/* <Image source={} */}
-                </View>
+                {
+                    Tournament.Rounds.map(round => (
+                        <View key={round.QualifierName}
+                            style={{
+                                backgroundColor: 'white', height: 100, marginTop: 10, padding: 15,
+                                borderRadius: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'
+                            }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                {(GameInformation !== undefined && GameInformation !== null && GameInformation.GameLogo !== undefined && GameInformation.GameLogo !== null) &&
+                                    <Image
+                                        source={{ uri: `${apiip}/${GameInformation.GameLogo}` }}
+                                        style={{
+                                            height: 50, width: 50, borderRadius: 25,
+                                            marginRight: 20
+                                        }}
+                                    />
+                                }
+                                <View>
+                                    <Text style={{ fontSize: 15, marginBottom: 3 }}>{round.QualifierName}</Text>
+                                    <Text style={{ fontSize: 12, color: 'gray' }}>{round.Dates[0]}</Text>
+                                </View>
+                            </View>
+                            <View>
+                                {
+                                    (GameInformation !== undefined && GameInformation !== null && GameInformation.GameLogo !== undefined && GameInformation.GameLogo !== null) &&
+                                    <TouchableOpacity
+                                        style={{ backgroundColor: 'rgb(230,230,230)', padding: 10, borderRadius: 5 }}
+                                        onPress={() => { onNavigateToRoundsInformation(round) }}>
+                                        <Text>{round.isLocked === true ? "Locked" : "Open"}</Text>
+                                    </TouchableOpacity>
+                                }
+                            </View>
+                        </View>
+                    ))
+                }
             </View>
-
-
-            {/* <Text>{Tournament.Banner}</Text>
-            <Text>{Tournament.Entrancefee}</Text>
-            <Text>{Tournament.GameID}</Text>
-            <Text>{Tournament.RegistrationLastDate}</Text>
-            <Text>{Tournament.RegistrationStartDate}</Text>
-            <Text>{Tournament.Sponsor}</Text>
-            <Text>{Tournament.Title}</Text>
-            <Text>{Tournament.TotalTeams}</Text>
-            <Text>{Tournament.TournamentEndDate}</Text>
-            <Text>{Tournament.TournamentStartDate}</Text>
-            <Text>{Tournament.TournamentsTeamType}</Text>
-            <Text>{Tournament.Winnings}</Text> */}
-
             <ActionSheet showActionSheetMethod={showActionSheet}
                 alignment={alignment}
                 setAlignment={setAlignment}
                 content={"Rewards"}
             />
-        </View>
+        </ScrollView>
     )
 }
 
