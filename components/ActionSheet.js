@@ -6,11 +6,12 @@ import RoundsList from './RoundsList';
 import Rewards from './Rewards';
 import UploadScreenShots from './UploadScreenShots';
 import ViewResults from './ViewResults';
+import DateAndTimeActionSheet from './DateAndTimeActionSheet';
 
 const { width, height } = Dimensions.get('screen');
 
 
-const ActionSheet = ({ showActionSheetMethod, alignment, setAlignment, content }) => {
+const ActionSheet = ({ showActionSheetMethod, alignment, setAlignment, content, TeamRegistrationObject = {} }) => {
   // const [alignment, setAlignment] = useState(new Animated.Value(0));
 
   const hideActionSheet = () => {
@@ -66,6 +67,11 @@ const ActionSheet = ({ showActionSheetMethod, alignment, setAlignment, content }
         {content === "UploadScreenshots" &&
           <UploadScreenShots />
         }
+        {
+          content === "DateTimes" && 
+          <DateAndTimeActionSheet TeamRegistrationObject={TeamRegistrationObject}/>
+        }
+
       </View>
     </Animated.View>
   )

@@ -407,37 +407,6 @@ const Tournaments = ({ navigation, route }) => {
                                     </View>
                                 ))
                             }
-                            {/* Not deleting from here cebause we might need some data from the old data idk why but have a gut feeling */}
-                            {/* 
-
-                                 <TouchableOpacity
-                                        onPress={() => onNavigateToBookTournamentSlot(tournament)}
-                                        key={tournament.Title} style={{
-                                            width: Dimensions.get('screen').width / 2 - 20, height: Dimensions.get('screen').width / 2 - 20,
-                                            backgroundColor: 'white', borderRadius: 5, margin: 5,
-                                            shadowRadius: 5, shadowOpacity: 0.5, shadowColor: 'gray'
-                                        }}>
-                                        
-                                        <View style={{ width: '100%', height: '40%', flexDirection: 'row', paddingLeft: 5 }}>
-                                            <View style={{ flex: 1.5, borderBottomLeftRadius: 10, padding: 5, justifyContent: 'center', }}>
-                                                <Text style={{ fontSize: 13 }}>{tournament.Title}</Text>
-                                                <Text style={{ fontSize: 11, color: 'gray', marginTop: 3, marginBottom: 3 }}>{tournament.Sponsor}</Text>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <AntDesign name='infocirlceo' size={11} style={{ marginRight: 5 }} />
-                                                    <Text style={{ fontSize: 10 }}>{tournament.Entrancefee} Coins</Text>
-                                                </View>
-                                            </View>
-                                            <View style={{ flex: 1, borderBottomLeftRadius: 5, padding: 5, justifyContent: 'center', }}>
-                                                <Text style={{ fontSize: 10, color: 'gray', marginTop: 3, marginBottom: 3 }}>{tournament.TournamentStartDate}</Text>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                                                    <AntDesign name='team' size={10} />
-                                                    <Text style={{ fontSize: 10, marginTop: 3, marginBottom: 3 }}>0/{tournament.TotalTeams}</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    </TouchableOpacity>
-                            
-                            */}
 
                             <View style={{ width: '100%', }}>
                                 <ScrollView style={{}} horizontal={true} >

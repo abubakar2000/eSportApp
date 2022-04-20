@@ -112,13 +112,13 @@ const BookTournaments = ({ navigation, route }) => {
                         <AntDesign name='team' size={22} style={{ marginRight: 5 }} />
                         <Text>69/1000</Text>
                     </View>
-                    <TouchableOpacity style={{ backgroundColor: "#384d83", borderRadius: 5 }}>
+                    {/* <TouchableOpacity style={{ backgroundColor: "#384d83", borderRadius: 5 }}>
                         <Text style={{
                             fontSize: 14,
                             color: 'white', paddingTop: 10, paddingBottom: 10,
                             paddingLeft: 20, paddingRight: 20
                         }}>Book Slot</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
 

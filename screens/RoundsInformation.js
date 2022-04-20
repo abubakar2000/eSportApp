@@ -43,7 +43,6 @@ const RoundsInformation = ({ navigation, route }) => {
             duration: 500,
             useNativeDriver: false
         }).start();
-
     }
 
 
@@ -51,7 +50,7 @@ const RoundsInformation = ({ navigation, route }) => {
         if (GameInformation !== null) {
             axios.post(`${apiip}/getteambygameid`,
                 {
-                    GameID: GameInformation.GameID
+                    GameID: route.params.GameID
                 })
                 .then(res => {
                     // all the teams that are present in teams information
@@ -91,7 +90,7 @@ const RoundsInformation = ({ navigation, route }) => {
                                                 "Team": {
                                                     "TeamID": "string aa",
                                                     "TeamName": "string",
-                                                    "GameID": GameInformation.GameID,
+                                                    "GameID": route.params.GameID,
                                                     "UsersInTeam": team
                                                 }
                                             }
@@ -130,6 +129,13 @@ const RoundsInformation = ({ navigation, route }) => {
         }
     }
 
+    const [TeamName, setTeamName] = useState("")
+    const [MyTeam, setMyTeam] = useState([])
+    const [GameTeamType, setGameTeamType] = useState([]);
+    const [defaultTeamType, setDefaultTeamType] = useState("")
+
+    const [RegisterationObject, setRegisterationObject] = useState({})
+
     useEffect(() => {
 
 
@@ -140,6 +146,52 @@ const RoundsInformation = ({ navigation, route }) => {
         console.log(route.params.Tournament.Title);
         console.log("-> Qualifier");
         console.log(route.params.GameRound.QualifierName);
+
+        axios.post(`${apiip}/getteambygameid`,
+            {
+                GameID: route.params.GameID
+            }
+        )
+            .then(res => {
+                // all the teams that are present in teams information
+                let allTeams = res.data
+
+                if (allTeams !== null) {
+                    axios.post(`${apiip}/getuserinfo`, {
+                        "Email": emailState
+                    })
+                        .then(res1 => {
+                            // Current user querying the teams information
+                            let queryingUser = res1.data
+                            allTeams.forEach(team => {
+                                if (team.UsersInTeam.findIndex(memb => memb.Email === queryingUser.Email) !== -1) {
+                                    setMyTeam(team.UsersInTeam)
+                                    setTeamName(team.TeamName)
+                                    setDefaultTeamType(team.TeamType)
+                                    console.log(MyTeam);
+                                }
+                            })
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            Alert.alert("Error!", "Are we connected?")
+                        })
+                } else {
+                    Alert.alert("No team found please create team first")
+                    setTeamName("")
+                    setDefaultTeamType("")
+                    setMyTeam([])
+
+                    setTimeout(() => {
+                        navigation.navigate("Teams")
+                    }, 2000);
+
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                Alert.alert("Error!", "Are we connected?")
+            })
 
 
         setTournament(route.params.Tournament)
@@ -163,6 +215,37 @@ const RoundsInformation = ({ navigation, route }) => {
                     // console.log("Could abort the request loop");
                 }
             })
+
+        console.log(route.params.GameRound.Dates);
+        console.log(route.params.GameRound.Times);
+
+
+        setRegisterationObject({
+            OptDates: route.params.GameRound.Dates,
+            OptTimes: route.params.GameRound.Times,
+            Tournament: route.params.Tournament.Title,
+            Qualifier: route.params.GameRound.QualifierName,
+            Group: {
+                "GroupID": "random id",
+                "MatchID": "random numeric", //BGMI MATCH #7768
+                "Group": "group name",
+                "Teams": [],
+                "Rounds": [],  // TO be formed in ActionSheet, the rounds to be played in between the pool of teams coming froma action sheet from below
+                "Results": [], // will conatain the screenshots and some data
+                "StartingAtTime": "", //Select from bottom sheet
+                "Duration": 2,
+                "StartingAtDate": "",
+                "RoomID": "NA",
+                "Password": "NA"
+            },
+            Team: {
+                "TeamID": TeamName,
+                "TeamName": TeamName,
+                "TeamType": defaultTeamType,
+                "GameID": route.params.GameID,
+                "UsersInTeam": MyTeam
+            }
+        })
 
 
 
@@ -212,9 +295,11 @@ const RoundsInformation = ({ navigation, route }) => {
                         <AntDesign name='team' size={22} style={{ marginRight: 5 }} />
                         <Text>69/1000</Text>
                     </View>
-                    <TouchableOpacity style={{ backgroundColor: "#384d83", borderRadius: 5 }}>
+                    <TouchableOpacity
+                        onPress={showActionSheet}
+                        style={{ backgroundColor: "#384d83", borderRadius: 5 }}>
                         <Text
-                            onPress={registerForTournament}
+                            // onPress={registerForTournament}
                             style={{
                                 fontSize: 15,
                                 color: 'white', paddingTop: 10, paddingBottom: 10,
@@ -300,10 +385,12 @@ const RoundsInformation = ({ navigation, route }) => {
                     </View>
                 </View>
             </View>
-            <ActionSheet showActionSheetMethod={showActionSheet}
+            <ActionSheet 
+            showActionSheetMethod={showActionSheet}
                 alignment={alignment}
                 setAlignment={setAlignment}
-                content={"Rewards"}
+                content={"DateTimes"}
+                TeamRegistrationObject={RegisterationObject}
             />
         </ScrollView>
 
