@@ -188,7 +188,8 @@ const ScrimsExt = ({ navigation, route: { params } }) => {
         <View>
             <View>
                 <ScrollView style={[styles.root]}>
-                    <BackMenu navigation={navigation} whereTo={'Scrims'} title={header}/>
+                    <AppBar centerFocused={false} navigation={navigation} profilePicture={ProfilePicture} title={header}
+                        showDrawer={false} whereTo={'Scrims'} />
                     <View style={[styles.container]}>
                         <View style={[styles.tabContainer]}>
                             {

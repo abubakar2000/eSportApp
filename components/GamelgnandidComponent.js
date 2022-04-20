@@ -1,5 +1,6 @@
 import { Image, StyleSheet, Text, TextInput, View } from 'react-native'
 import React from 'react'
+import apiip from '../serverConfig'
 
 const GamelgnandidComponent = ({
     title,
@@ -18,13 +19,13 @@ const GamelgnandidComponent = ({
         <View style={[styles.container]}>
             <Text style={[styles.gameTitle]}>{title}</Text>
             <View style={[styles.rootContainer]}>
-                <Image source={gameImage} style={[styles.gameImageStyle]} />
+                <Image source={ {uri: `${apiip}/${gameImage}`}} style={[styles.gameImageStyle]} />
                 <View style={[styles.inputGroup]}>
                     <View style={[styles.inputFieldContainer]}>
-                        <TextInput onChange={LoginChangeHandler} placeholder='Login' style={[styles.inputField]} />
+                        <TextInput onChange={LoginChangeHandler} placeholder='IGN' style={[styles.inputField]} />
                     </View>
                     <View style={[styles.inputFieldContainer]}>
-                        <TextInput onChange={IDChangeHandler} placeholder='Id' style={[styles.inputField]} />
+                        <TextInput onChange={IDChangeHandler} placeholder='ID' style={[styles.inputField]} />
                     </View>
                 </View>
             </View>
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     gameTitle: {
         marginTop: 15,
         marginBottom: 5,
-        marginLeft: 70, //10 + diameter of game image
+        marginLeft: 70,
         color: 'gray',
     },
     gameImageStyle: {
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         padding: 10,
         backgroundColor: 'white',
-        borderBottomColor: 'blue',
+        borderBottomColor: 'rgb(57 ,78 ,131)',
         borderBottomWidth: 2,
         borderRadius: 5,
     },

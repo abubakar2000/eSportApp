@@ -5,7 +5,6 @@ import AppBar from '../components/AppBar'
 import { Ionicons } from '@expo/vector-icons'
 import profilePicture from '../assets/10.jpg'
 import gameImage from '../assets/favicon.png';
-// import ProfilePicture from '../assets/10.jpg';
 import FormInputComponent from '../components/FormInputComponent'
 import GamelgnandidComponent from '../components/GamelgnandidComponent'
 import { useSelector } from 'react-redux'
@@ -23,6 +22,8 @@ function Account({ navigation }) {
     const [Email, setEmail] = useState("ammie78@gmail.com")
     const [Address, setAddress] = useState("House 79b, Gali 7, Kashmir Rd 51310, Punjab")
     const [ProfileImage, setProfileImage] = useState("")
+
+    const [Games, setGames] = useState([])
 
     useEffect(() => {
 
@@ -47,10 +48,19 @@ function Account({ navigation }) {
                     console.log('Successfully unsubscribed');
                 }
             })
+
+        axios.get(`${apiip}/enlistgames`)
+            .then(res => {
+                setGames(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
         return () => {
             source.cancel()
         }
-    }, [])
+    }, [axios,])
 
 
     return (
@@ -60,8 +70,7 @@ function Account({ navigation }) {
                 <View style={[styles.imageContainer]}>
                     {
                         ProfileImage !== "" &&
-                        // <Image source={ProfileImage} style={[styles.profilePicture]} />
-                        <Image source={{uri:`${apiip}/${ProfileImage}`}} style={[styles.profilePicture]} />
+                        <Image source={{ uri: `${apiip}/${ProfileImage}` }} style={[styles.profilePicture]} />
                     }
                     {
                         ProfileImage === "" &&
@@ -90,15 +99,18 @@ function Account({ navigation }) {
             <View style={[styles.gamesDetailSection]}>
                 <Text style={[styles.grayText, styles.padded]}>Game Details</Text>
                 <Text style={[styles.blueText, styles.padded]}>Enter Game lgn & Id here</Text>
-                <GamelgnandidComponent title={'BGMI'} gameImage={gameImage} />
-                <GamelgnandidComponent title={'Free Fire'} gameImage={gameImage} />
-                <GamelgnandidComponent title={'Call of Duty'} gameImage={gameImage} />
+                {
+                    Games.map(game => (
+                        <GamelgnandidComponent key={game.GameID} title={game.GameName} gameImage={game.GameLogo} />
+                    ))
+                }
             </View>
             <View style={[styles.footerAndSave]}>
                 <Text style={[styles.notice]}>Make sure to fill proper details & avoid unecessary interruption</Text>
                 <View style={[styles.grow]}>
                     <View>
-                        <TouchableOpacity style={[styles.saveButton]}>
+                        <TouchableOpacity
+                            style={[styles.saveButton]}>
                             <Text style={[styles.saveButtonInside]}>
                                 Save Details
                             </Text>
@@ -125,13 +137,13 @@ const styles = StyleSheet.create({
     email: { marginLeft: 20, fontSize: 12, },
     secondContainer: { width: '100%', flexDirection: 'row', justifyContent: 'space-between', padding: 20, },
     grayText: { color: 'gray', },
-    blueText: { color: 'blue', },
+    blueText: { color: 'rgb(57 ,78 ,131)', fontWeight: 'bold' },
     inputGroupContainer: { paddingLeft: 10, paddingRight: 10, width: '100%', },
     gamesDetailSection: { width: '100%', padding: 10, },
     padded: { padding: 10, },
     footerAndSave: { padding: 20, flexDirection: 'row', flex: 1, },
     notice: { flex: 3, padding: 5, fontSize: 12, color: 'gray', },
     grow: { flex: 2, justifyContent: 'center', alignItems: 'center', },
-    saveButton: { borderRadius: 5, backgroundColor: 'blue', },
+    saveButton: { borderRadius: 5, backgroundColor: 'rgb(57 ,78 ,131)', },
     saveButtonInside: { color: 'white', paddingTop: 8, paddingBottom: 8, paddingLeft: 20, paddingRight: 20, },
 });

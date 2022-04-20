@@ -9,6 +9,7 @@ import { Animated } from 'react-native';
 import ActionSheet from '../components/ActionSheet';
 import axios from 'axios';
 import apiip from '../serverConfig';
+import BackMenu from '../components/BackMenu';
 
 const BookTournaments = ({ navigation, route }) => {
     const [Tournament, setTournament] = useState(route.params)
@@ -41,17 +42,18 @@ const BookTournaments = ({ navigation, route }) => {
     }
 
     useEffect(() => {
+        setTournament(route.params)
+
         const CancelToken = axios.CancelToken;
         const source = CancelToken.source();
 
-        setTournament(route.params)
 
         axios.post(`${apiip}/getgameinfo`, {
-            "gameid": Tournament.GameID
+            // "gameid": Tournament.GameID //Faulty because of the state
+            "gameid": route.params.GameID
         }, { cancelToken: source.token })
             .then(res => {
                 setGameInformation(res.data)
-                console.log(`${apiip}/${GameInformation.GameLogo}`);
             })
             .catch(err => {
                 if (axios.isCancel(err)) {
@@ -74,9 +76,14 @@ const BookTournaments = ({ navigation, route }) => {
     }
 
 
+
     return (
         <ScrollView>
-            <AppBar navigation={navigation} showDrawer={true} centerFocused={false} title={Tournament.Title} profilePicture={ProfilePicture} />
+            {
+                (GameInformation !== undefined && GameInformation !== null && GameInformation.GameName !== undefined && GameInformation.GameName !== null) &&
+                <AppBar centerFocused={false} navigation={navigation} profilePicture={ProfilePicture} title={GameInformation.GameName}
+                showDrawer={false} whereTo={''} />
+            }
             <View style={{ width: '100%', }}>
                 <ScrollView style={{}} horizontal={true} >
                     <TouchableOpacity>
@@ -90,23 +97,24 @@ const BookTournaments = ({ navigation, route }) => {
             </View>
             <View style={{ flexDirection: 'row', width: '100%', padding: 15 }}>
                 <View style={{ flex: 1 }}>
-                    <Text style={{ marginBottom: 5, fontSize: 18 }}>BGMI Match #7768</Text>
-                    <Text style={{ marginBottom: 5, fontSize: 16 }}>Haexr Esports</Text>
-                    <Text style={{ marginBottom: 5, fontSize: 12, color: 'gray' }}>Registrations Ends on 06/06/2020</Text>
+                    <Text style={{ marginBottom: 5, fontSize: 18 }}>{Tournament.Title}</Text>
+                    <Text style={{ marginBottom: 5, fontSize: 16 }}>{Tournament.Sponsor}</Text>
+                    <Text style={{ marginBottom: 5, fontSize: 12, color: 'gray' }}>Registrations Ends on {Tournament.RegistrationLastDate}</Text>
                 </View>
                 <View style={{ flex: 1, alignItems: 'flex-end', }}>
                     <View style={{ flexDirection: "row", alignItems: 'center', marginBottom: 5 }}>
                         <MaterialCommunityIcons name='trophy' size={22} style={{ marginRight: 5 }} />
-                        <Text style={{ fontSize: 16 }}>100007₹ Prizepool</Text>
+                        <Text style={{ fontSize: 16 }}>{Tournament.Winnings}</Text>
+                        {/* 100007₹ Prizepool */}
                     </View>
-                    <Text style={{ fontSize: 12, marginBottom: 10 }}>Entry Fee: 230 Coins</Text>
+                    <Text style={{ fontSize: 12, marginBottom: 10 }}>Entry Fee: {Tournament.Entrancefee} Coins</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
                         <AntDesign name='team' size={22} style={{ marginRight: 5 }} />
                         <Text>69/1000</Text>
                     </View>
                     <TouchableOpacity style={{ backgroundColor: "#384d83", borderRadius: 5 }}>
                         <Text style={{
-                            fontSize: 18,
+                            fontSize: 14,
                             color: 'white', paddingTop: 10, paddingBottom: 10,
                             paddingLeft: 20, paddingRight: 20
                         }}>Book Slot</Text>

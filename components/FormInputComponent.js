@@ -13,7 +13,7 @@ const FormInputComponent = (
 ) => {
 
     const handleInputChnage = (e) => {
-        // valueMutator("Mutated")
+        valueMutator(e)
     }
 
     return (
@@ -24,7 +24,7 @@ const FormInputComponent = (
             </Text>
             <TextInput
                 keyboardType={keyboardType}
-                onChange={handleInputChnage}
+                onChangeText={handleInputChnage}
                 value={value}
                 placeholder={placeholder}
                 style={[styles.inputField]} />

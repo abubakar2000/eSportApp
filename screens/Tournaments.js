@@ -191,17 +191,28 @@ const Tournaments = ({ navigation, route }) => {
     // localhost:3000/gettournamentbygame {GameID:""} is the body format
     const [Tournaments, setTournaments] = useState([])
     useEffect(() => {
-        
+
         const CancelToken = axios.CancelToken;
         const source = CancelToken.source();
-        
+
         setSelectedGame(route.params)
         // Getting all the games
         axios.get(`${apiip}/enlistgames`, { cancelToken: source.token })
             .then(res => {
                 setGames(res.data)
                 setSelectedGame(route.params)
-                LoadGameTournaments(SelectedGame.GameID)
+                LoadGameTournaments(route.params.GameID)
+                console.log(route.params.GameID);
+
+                setSelectedGame({
+                    GameCategory: route.params.GameCategory,
+                    GameID: route.params.GameID,
+                    GameLogo: route.params.GameLogo,
+                    GameName: route.params.GameName,
+                    GameTeamType: route.params.GameTeamType,
+                })
+
+
             })
             .catch(err => {
                 if (axios.isCancel(err)) {

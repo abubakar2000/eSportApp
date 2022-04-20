@@ -86,7 +86,17 @@ const Login = ({ navigation }) => {
                         </View>
                     </View>
                 </Modal>
-                <Text style={{ fontSize: 37, color: 'gray', marginTop: 170 }}>Haexr</Text>
+                <Text style={{ fontSize: 37, color: 'gray', marginTop: 170 }}
+                    onPress={() => {
+                        axios.get("http://localhost:3000/test")
+                            .then(res => {
+                                console.log(res.data);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    }}
+                >Haexr</Text>
                 <Text style={styles.inputFieldLabel}>Email</Text>
                 <TextInput
                     onChangeText={text => setEmail(text)}

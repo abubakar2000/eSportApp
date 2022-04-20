@@ -6,6 +6,8 @@ import BackMenu from '../components/BackMenu';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import apiip from '../serverConfig';
 import { Image } from 'react-native';
+import AppBar from '../components/AppBar';
+import ProfilePicture from '../assets/10.jpg';
 
 const dimensions = Dimensions.get('window');
 const scrHeight = dimensions.height / 100 * 11;
@@ -20,17 +22,9 @@ const Scrims = ({ navigation, route }) => {
     const onNavigate = (screen, params) => {
         // var sendTitle = 'BGMI ' + title;
         var sendTitle = route.params.GameName
-        // console.log("Going to");
-        // console.log(screen);
-        // console.log(title);
         navigation.navigate(screen, params);
     }
 
-    // const [cardData, setCardData] = useState([
-    //     {title: titles[0], nextPage: 'ScrimsExt'},
-    //     {title: titles[1], nextPage: 'ScrimsExt'},
-    //     {title: titles[2], nextPage: 'ScrimsExt'}
-    // ])
     useEffect(() => {
         settitles(route.params.GameCategory)
         return () => {
@@ -41,7 +35,8 @@ const Scrims = ({ navigation, route }) => {
     return (
         <View>
             <View style={[styles.container, styles.center]}>
-                <BackMenu navigation={navigation} whereTo={'Home'} title={route.params.GameName} />
+                <AppBar centerFocused={false} navigation={navigation} profilePicture={ProfilePicture} title={route.params.GameName}
+                        showDrawer={false} whereTo={'Home'} />
                 <View style={{ width: '100%', marginBottom: 40 }}>
                     <ScrollView style={{ backgroundColor: 'white', }} horizontal={true}>
                         <Gif />

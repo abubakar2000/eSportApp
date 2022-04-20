@@ -29,7 +29,7 @@ const AppBar = ({ title, navigation, whereTo, showDrawer, profilePicture,centerF
                 {
                     showDrawer === false &&
                     <TouchableOpacity style={styles.ico}>
-                        <Ionicons name='ios-arrow-back-sharp' size={28} onPress={onPressBack} />
+                        <MaterialIcons name='arrow-back-ios' size={24} onPress={onPressBack} />
                     </TouchableOpacity>
                 }
 
